@@ -60,7 +60,7 @@ public class Map {
 	
 	}
 	
-	public void addObject(Ally monster) {
+	public void addObject(Ally ally) {
 	/* Realoca e adiciona objeto recebido em seu respectivo vetor */
 		
 	}
@@ -70,7 +70,7 @@ public class Map {
 	
 	}
 	
-	public void removeObject(Object id) {
+	public void removeObject(int id) {
 	/* Dado o ID de um objeto, procura nas listas allies, monsters e sceneObjects(respectivamente)
 	 * ate encontrar o objeto e o remove da lista */
 	

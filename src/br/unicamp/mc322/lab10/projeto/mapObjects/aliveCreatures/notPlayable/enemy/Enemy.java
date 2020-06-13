@@ -13,7 +13,7 @@ public class Enemy extends NotPlayable{
 	
 	}
 	
-	public MonsterClass getmonsterClass() {
+	public MonsterClass getMonsterClass() {
 		return monsterClass;
 	}
 }

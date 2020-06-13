@@ -32,7 +32,7 @@ public class Alive extends GameObject {
 	
 	}
 	
-	public void SetAttackValue(int newAttackValue) {
+	public void setAttackValue(int newAttackValue) {
 	/* Obtido o valor de ataque padrao da criatura, soma ele com o bonus do equipamento se existir */
 	
 	}

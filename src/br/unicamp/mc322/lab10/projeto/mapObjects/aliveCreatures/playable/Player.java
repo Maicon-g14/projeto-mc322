@@ -12,8 +12,8 @@ public class Player extends Alive{
 	private final String SPRITE = "";
 	private final int ID = 0;
 	private String name = "";
-	private int ATTACK_DICES;
-	private int DEFENSE_DICES;
+	private int attackDices;
+	private int defenseDices;
 	private HeroClass heroClass;
 	
 	public Player(String name, HeroClass heroClass) {
@@ -29,7 +29,7 @@ public class Player extends Alive{
 		
 	}
 	
-	public Defense unequipDefenseEquipament() {
+	public Defense[] unequipDefenseEquipament() {
 	/* Desequipa armadura e escudo e retorna ela */	
 		
 	}

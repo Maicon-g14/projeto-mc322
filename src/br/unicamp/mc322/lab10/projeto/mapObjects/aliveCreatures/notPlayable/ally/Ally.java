@@ -20,13 +20,13 @@ public class Ally extends NotPlayable {
 		
 	}
 	
-	public Defense unequipDefenseEquipament(int id) {
+	public Defense unequipDefenseEquipment(int id) {
 	/* Desequipa armadura ou escudo e retorna ela */	
 		
 	}
 	
-	public Defense unequipDefenseEquipament() {
-	/* Desequipa armadura e escudo e retorna ela */	
+	public Defense[] unequipDefenseEquipment() {
+	/* Desequipa armadura e escudo e retorna eles */	
 		
 	}
 	

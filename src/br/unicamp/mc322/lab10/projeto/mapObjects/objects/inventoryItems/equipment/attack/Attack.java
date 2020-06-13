@@ -9,7 +9,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.objects.NotAlive;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.Equipment;
 
 public class Attack extends Equipment{
-	private int ATK;
+	private int attack;
 	private int bonusDiceNumber;
 	private NotAlive bonus = null;
 	private boolean breaksAfterUse;
@@ -25,11 +25,11 @@ public class Attack extends Equipment{
 	
 	}
 	
-	public int getATK() {
+	public int getAttack() {
 		
 	}
 	
-	public int doATK() {
+	public int doAttack() {
 	/* Se for do tipo quebravel, quebra, retorna o ataque e reduz ataque a 0 */
 		
 	}
