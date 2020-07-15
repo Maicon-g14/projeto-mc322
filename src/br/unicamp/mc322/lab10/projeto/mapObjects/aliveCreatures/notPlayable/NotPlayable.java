@@ -6,12 +6,15 @@
 
 package br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable;
 
+import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
+import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.Alive;
+import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class NotPlayable extends Alive {
 	
-	public NotPlayable(String name, int hp, int mp, int atk, int def, String sprite, int attackDices, int defenseDices) {
-	
+	public NotPlayable(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position) {
+		super(name,id,hp,mp,sprite,attackDices,defenseDices,position);
 	}
 	
 	public void searchAttack(Alive creatures) {

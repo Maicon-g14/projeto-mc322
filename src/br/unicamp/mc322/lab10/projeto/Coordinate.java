@@ -4,31 +4,36 @@ public class Coordinate {
 	/* Representa a coordenada de um objeto no Mapa */
 	private int x;
 	private int y;
-	private Boolean inInventory = false;
+	private Boolean onMap;
 	
 	public Coordinate() {
-		x = 0;
-		y = 0;
+		onMap = false;
 	}
 	
-	public void setInventory() {
-		inInventory = true;
+	public Coordinate(int x, int y) {
+		this.x = x;
+		this.y = y;
+		onMap = true;
 	}
 	
-	public void unsetInventory(int x, int y) {
-		inInventory = false;
+	public void setOnInventory() {
+		onMap = false;
+	}
+	
+	public void setOnMap(int x, int y) {
 		setX(x);
 		setY(y);
+		onMap = true;
 	}
 	
 	public int getX(){
-		if (inInventory)
+		if (!onMap)
 			return -1;
 		return x;
 	}
 	
 	public int getY(){
-		if (inInventory)
+		if (!onMap)
 			return -1;
 		return y;
 	}
@@ -42,7 +47,7 @@ public class Coordinate {
 	}
 	
 	public String toString() {
-		if (inInventory)
+		if (!onMap)
 			return "Objeto não esta no mapa";
 		return "("+x+","+y+")";
 	}

@@ -5,30 +5,27 @@
 
 package br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes;
 
+import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
+import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.Structure;
+import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class Door extends Structure{
-	private final String SPRITE = "";
-	private final int ID = 0;
-	private final String NAME = "Door";
-	private boolean isOpen = false;
+	private static final String NAME = "Door";
+	private static final char SPRITE = 'U';
+	private static final GameTypeObjects ID = GameTypeObjects.DOOR;
 	
-	public Door() {
-		
+	public Door(Coordinate position) {
+		super(NAME,new Sprite(SPRITE),ID,position);
 	}
 	
-	public void discoverDoor() {
-		
+	protected Door(String name, Sprite sprite, GameTypeObjects id,Coordinate position) {
+		super(name,sprite,id,position);
 	}
 	
-	public void changeStatus() {
-	/* Abre e fecha porta ao interagir */
-	
+	public void open() {
+	/* Abre porta */
+		disable = true;
 	}
 	
-	public String toString() {
-		if (!isVisible)
-			return null;
-		return SPRITE;
-	}
 }

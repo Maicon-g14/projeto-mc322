@@ -4,18 +4,24 @@
 //
 
 package br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.enemyTypes;
+import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
+import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.Enemy;
 import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.MonsterClass;
+import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class Skeleton extends Enemy{
-	private final String SPRITE = "";
-	private final String STANDART_NAME = "";
-	private final int ID = 7;
-	private final int ATTACK_DICES = 1;
-	private final int DEFENSE_DICES = 1;
-	private final MonsterClass monsterClass = MonsterClass.SKELETON;
+	private static final char SPRITE = 'K';
+	private static final String NAME = "Skeleton";
+	private static final GameTypeObjects ID = GameTypeObjects.SKELETON;
+	private static final int ATTACK_DICES = 1;
+	private static final int DEFENSE_DICES = 1;
+	private static final int HP = 1;
+	private static final int MP = 1;
 	
-	public Skeleton() {
-		
+	private static final MonsterClass MONSTER_CLASS = MonsterClass.SKELETON;
+	
+	public Skeleton(Coordinate position) {
+		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,MONSTER_CLASS,position);
 	}
 }

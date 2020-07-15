@@ -5,18 +5,28 @@
 
 package br.unicamp.mc322.lab10.projeto;
 
+import br.unicamp.mc322.lab10.projeto.mapConstructor.MapLoad;
+import br.unicamp.mc322.lab10.projeto.mapConstructor.PresetMap;
+import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.ally.Ally;
 import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.Enemy;
 
 public class Map {
-	private GameObject[] sceneObjects;		//todos os objetos da cena
-	private Enemy[] monsters;		//monstros da cena
-	private Ally[] allies;		//aliados da cena incluindo o player
-	private GameObject[][] map;		//mapa de paredes(paredes são objetos com colisao)
+	private MapLoad map;
 	
-	public Map(String[][] map) {
-		LoadMap(map);
+	public Map(GameMode gameMode, MapMode mapMode) {
+		if (mapMode == MapMode.PREDEFINED)
+			map = new PresetMap(gameMode);
+		else if (mapMode == MapMode.RANDOM)
+			map = new RandomMap(gameMode);
+		
+		map.mapPrint();
+		
+		
+		
+		
+		//LoadMap(map);
 	}
 	
 	public void printMap() {
@@ -27,7 +37,7 @@ public class Map {
 	public GameObject refreshMap() {
 	/* Tira copia do map e preenche a copia com os sceneObjects, monsters e allies
 	 * em suas devidas posições e os retorna */
-		
+		return null;
 	}
 	
 	private void createObjectMap(String[][] map) {
@@ -50,9 +60,9 @@ public class Map {
 	
 	public void LoadMap(String[][] map) {
 	/* Dado uma nova cena, prepara o map para receber as nova informações */
-		sceneObjects = null;
-		monsters = null;
-		createObjectMap(map);
+		//sceneObjects = null;
+		//monsters = null;
+		//createObjectMap(map);
 	}
 	
 	public void addObject(Enemy monster) {

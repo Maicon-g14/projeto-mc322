@@ -5,8 +5,11 @@
 
 package br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
+import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
+import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.Attack;
+import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class Alive extends GameObject {
 	private int HP;
@@ -20,39 +23,43 @@ public class Alive extends GameObject {
 	private Attack[] attackEquipament = new Attack[2];		//equipamento de ataque dos seres vivos ou null caso use as maos/garras/dentes etc
 	private Boolean dead = false;
 	
-	public Alive(String name, int hp, int mp, int atk, int def, String sprite, int attackDices, int defenseDices) {
-	
+	public Alive(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position) {
+		super(name,sprite,id,position);
+		this.HP = hp;
+		this.MP = mp;
+		ATKValue = attackDices;
+		DEFValue = defenseDices;
 	}
 	
 	public int getHp() {
-		
+		return HP;
 	}
 	
 	public void setHp(int newHp) {
-	
+		HP = newHp;
 	}
 	
 	public void setAttackValue(int newAttackValue) {
 	/* Obtido o valor de ataque padrao da criatura, soma ele com o bonus do equipamento se existir */
-	
+		ATKValue = newAttackValue;
 	}
 	
 	public int getAttackValue() {
-		
+		return ATKValue;
 	}
 	
 	public void SetDefenseValue(int newDEFValue) {
 	/* O valor da defesa ja deve chegar tendo seu valor acrescido do bonus da armadura/escudo */
-		
+		DEFValue = newDEFValue;
 	}
 	
 	public int getDefenseValue() {
-		
+		return DEFValue;
 	}
 	
 	public void takeDamage(int amount) {
 	/* Desconta do HP atual a quantidade dada, se morrer, ativa o dead */
-		
+		HP -= amount;
 	}
 	
 	public Boolean isDead() {
@@ -61,12 +68,12 @@ public class Alive extends GameObject {
 
 	public CanCarry dropItem(int id) {
 	/* Remove e retorna o item com o id do inventário */
-		
+		return null;
 	}
 	
 	public CanCarry[] dropItems() {
 	/* Retorna todos os itens do inventário */
-		
+		return null;
 	}
 	
 	public void addInventory(CanCarry item) {
@@ -82,6 +89,6 @@ public class Alive extends GameObject {
 	}
 	
 	public Attack unequipAttackEquipament() {
-		
+		return null;
 	}
 }

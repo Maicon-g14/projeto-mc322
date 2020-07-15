@@ -8,14 +8,21 @@ import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class GameObject {
 	private String name;
-	private boolean visible = true;
-	private boolean collide = true;		//antes de mover algo sempre verificar se nao exite obj no lugar e caso exista se ele tem colisao
-											//obj sem colisao sao sobrescritos pelos que se movem
+	private GameTypeObjects id;		//cada tipo de objeto tem seu ID proprio para busca
 	private Coordinate mapPosition;		//posicao do objeto no mapa
-	private String sprite;		//simbolo que representa cada objeto no mapa(uma constante)
-	private int id;		//cada tipo de objeto tem seu ID proprio para busca
+	private Sprite sprite;		//simbolo que representa cada objeto no mapa(uma constante)
+	private boolean visible = true;
+	private boolean collide = true;
+	protected boolean disable = false;
 	
-	public GameObject(String name, String sprite, int id) {
+	public GameObject(String name, Sprite sprite, GameTypeObjects id, Coordinate mapPosition) {
+		this.name = name;
+		this.sprite = sprite;
+		this.id = id;
+		this.mapPosition = mapPosition;
+	}
+	
+	public GameObject(String name, Sprite sprite, GameTypeObjects id) {
 		this.name = name;
 		this.sprite = sprite;
 		this.id = id;
@@ -33,29 +40,31 @@ public class GameObject {
 		mapPosition = position;
 	}
 	
-	public String getSprite() {
-		return sprite;
+	public void print() {
+		sprite.showSprite();
 	}
 	
-	public void setSprite(String sprite) {
+	public void setSprite(Sprite sprite) {
 	/* Muda sprite do objeto */
 		this.sprite = sprite;
 	}
 	
-	public void disableCollision() {
+	protected void disableCollision() {
 		collide = false;		//pode ser usado para pisar em cima da escada depois que derrotar todos os monstros
 	}
 	
-	public void enableCollision() {
+	protected void enableCollision() {
 		collide = true;
 	}
 	
-	public void turnOnVisibility() {
-		visible = true;		//simula o que o player consegue enxergar
+	protected void turnOnVisibility() {
+		visible = true;
+		sprite.show();
 	}
 	
-	public void turnOffVisibility() {
+	protected void turnOffVisibility() {
 		visible = false;
+		sprite.hide();
 	}
 	
 	public Boolean willCollide() {
@@ -66,7 +75,13 @@ public class GameObject {
 		return visible;
 	}
 	
-	public int getiId() {
+	public GameTypeObjects getId() {
 		return id;		//id usado para encontrar um objeto
 	}
+	
+	public Boolean disabled() {
+		/* Checagem se o objeto ja foi usado e deve ser excluido do mapa */
+		return disable;
+	}
+	
 }
