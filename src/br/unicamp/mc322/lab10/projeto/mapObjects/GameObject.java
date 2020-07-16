@@ -84,4 +84,6 @@ public class GameObject {
 		return disable;
 	}
 	
+	public abstract void accept(MapObjectVisitor visitor);
+	
 }

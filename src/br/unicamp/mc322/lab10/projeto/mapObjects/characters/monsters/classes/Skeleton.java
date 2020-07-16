@@ -1,16 +1,13 @@
-//RAs
-//
-//
-//
+package br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes;
 
-package br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.enemyTypes;
+import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.Enemy;
 import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.MonsterClass;
-import br.unicamp.mc322.lab10.projeto.Coordinate;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 
-public class Skeleton extends Enemy{
+public class Skeleton extends Monster{
+
 	private static final char SPRITE = 'K';
 	private static final String NAME = "Skeleton";
 	private static final GameTypeObjects ID = GameTypeObjects.SKELETON;
@@ -21,7 +18,8 @@ public class Skeleton extends Enemy{
 	
 	private static final MonsterClass MONSTER_CLASS = MonsterClass.SKELETON;
 	
-	public Skeleton(Coordinate position) {
-		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,MONSTER_CLASS,position);
+	public Skeleton() {
+		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,MONSTER_CLASS);
 	}
+
 }
