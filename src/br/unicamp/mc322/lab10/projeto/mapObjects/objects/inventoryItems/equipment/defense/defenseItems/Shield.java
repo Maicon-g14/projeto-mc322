@@ -12,7 +12,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipmen
 
 public class Shield extends Defense{
 	
-	public Shield(String name, Sprite sprite, GameTypeObjects id, int defense, ArmorClasses armorClass, int diceBonus,Coordinate position) {
-		super(name,sprite,id,defense,armorClass,diceBonus,position);
+	public Shield(String name, Sprite sprite, GameTypeObjects id, int defense, ArmorClasses armorClass, int diceBonus) {
+		super(name,sprite,id,defense,armorClass,diceBonus);
 	}
 }

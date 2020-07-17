@@ -11,6 +11,7 @@ import br.unicamp.mc322.lab10.projeto.mapConstructor.PresetMap;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.CpuHero;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Player;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Barbarian;
@@ -22,7 +23,9 @@ public class HeroQuest {
 	
 	private Map map;
 	private GameMode gameMode;		//dificuldade do jogo
-	private HeroController[] heroes;		//heroes[0] = player, heroes[1-3] = npcs
+	private HeroController[] heroesController;		//heroes[0] = player, heroes[1-3] = npcs
+	private Market market;
+	private EquipmentLoad findableEquipment;
 	
 	public HeroQuest(GameMode gameMode, MapMode mapMode,PlayableClasses choosenClass, String playerName) {
 	/* Inicializa classe Map, MapLoad, todos os elementos do jogo e passa eles para a classe Map ja
@@ -31,21 +34,28 @@ public class HeroQuest {
 		//gerar a quest aqui antes
 		this.gameMode = gameMode;
 		
+		findableEquipment = new EquipmentLoad();
+		
 		QuestBase questItems = quest();
 		
 		map = new Map(gameMode,mapMode);
 		
-		heroes = map.setPlayer(choosenClass,playerName);
+		heroesController = map.setPlayer(choosenClass,playerName);
+		
 		
 		map.setQuest(questItems);
 		
+		market = new Market(findableEquipment.getMarketItems());
+		
 		map.printScenes();
+		
 		
 	}
 	
 	public void market() {
-	/* Cria loja para comprar item entre as quests */	
-		
+		/* Cria loja para comprar item entre as quests */
+		Hero player = heroesController[0].getCharacter();
+		market.doShopping(player);
 	}
 	
 	public int rollRedDice(int qtde) {
@@ -95,7 +105,7 @@ public class HeroQuest {
 	public void startGame() {
 	/* Loop principal do jogo, chama a criacao de novos mapas, chama verificacao de inimigo
 	 * em area de ataque em map */	
-		
+		market();
 	}
 	
 	public void loadMap() {

@@ -5,7 +5,6 @@
 
 package br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.Money;
 
-import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
@@ -17,15 +16,21 @@ public class Money extends CanCarry{
 	private int value = 0;
 	
 	public Money() {
-		super(NAME,new Sprite(SPRITE),ID,new Coordinate());
+		super(NAME,new Sprite(SPRITE),ID);
 	}
 	
 	public void addMoney(int value) {
 		this.value += value;
 	}
 	
-	public void removeMoney(int value) {
-		this.value -= value;
+	public Boolean removeMoney(int value) {
+		/* Remove uma quantia de dinheiro e retorna true se a quantia puder ser removida */
+		if(this.value - value >= 0) {
+			this.value -= value;
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public void setMoney(int value) {

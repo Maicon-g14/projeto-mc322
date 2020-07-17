@@ -17,8 +17,10 @@ public class BetterHeavyArmor extends Armor{
 	private static final int DEFENSE = 1;
 	private static final int DICE_NUMBER = 1;
 	private static final ArmorClasses ARMOR_CLASS = ArmorClasses.HEAVY_ARMOR;
+	private static final int PRICE = 200;
 	
 	public BetterHeavyArmor() {
-		super(NAME,new Sprite(SPRITE),ID,DEFENSE,ARMOR_CLASS,DICE_NUMBER,new Coordinate());
+		super(NAME,new Sprite(SPRITE),ID,DEFENSE,ARMOR_CLASS,DICE_NUMBER);
+		price = PRICE;
 	}
 }

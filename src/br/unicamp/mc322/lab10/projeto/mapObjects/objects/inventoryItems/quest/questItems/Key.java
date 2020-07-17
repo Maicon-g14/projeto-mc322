@@ -17,6 +17,6 @@ public class Key extends QuestItems{
 	private static final QuestType QUEST_TYPE = QuestType.KEY;
 	
 	public Key() {
-		super(NAME,new Sprite(SPRITE),ID,QUEST_TYPE,new Coordinate());
+		super(NAME,new Sprite(SPRITE),ID,QUEST_TYPE);
 	}
 }

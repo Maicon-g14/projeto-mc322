@@ -17,10 +17,6 @@ public class MageSkeleton extends Monster {
 	private static final int MP = 1;
 	private static final MonsterClasses MONSTER_CLASS = MonsterClasses.MAGE_SKELETON;
 	
-	public MageSkeleton() {
-		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,MONSTER_CLASS);
-	}
-
 	public MageSkeleton(Coordinate position) {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,MONSTER_CLASS,position);
 	}

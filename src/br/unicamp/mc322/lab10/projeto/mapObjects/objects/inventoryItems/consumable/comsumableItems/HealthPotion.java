@@ -14,10 +14,12 @@ public class HealthPotion extends Consumable{
 	private static final char SPRITE = '+';
 	private static final GameTypeObjects ID = GameTypeObjects.HEALTH_POTION;
 	private static final int AMOUNT_TO_RECOVER = 50;
+	private static final int PRICE = 50;
 	private Boolean isUsed = false;
 	
 	public HealthPotion() {
-		super(NAME,new Sprite(SPRITE),ID,new Coordinate());
+		super(NAME,new Sprite(SPRITE),ID);
+		price = PRICE;
 	}
 	
 	public int getAmount() {

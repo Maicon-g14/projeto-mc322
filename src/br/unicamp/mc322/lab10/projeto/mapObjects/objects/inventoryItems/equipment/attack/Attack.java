@@ -5,7 +5,6 @@
 
 package br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack;
 
-import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.NotAlive;
@@ -15,13 +14,13 @@ public class Attack extends Equipment{
 	private int attack;
 	private int bonusDiceNumber;
 	private NotAlive bonus = null;
-	private boolean breaksAfterUse;
+	protected boolean breaksAfterUse = false;
 	private boolean breaked = false;
 	private int reach;
 	private WeaponsTypes weaponClasses;
 	
-	public Attack(String name, Sprite sprite, GameTypeObjects id, int atk, int diceNumber, int reach, boolean breaksAfterUse, WeaponsTypes weaponClasses,Coordinate position) {
-		super(name,sprite,id,position);
+	public Attack(String name, Sprite sprite, GameTypeObjects id, int atk, int diceNumber, int reach, boolean breaksAfterUse, WeaponsTypes weaponClasses) {
+		super(name,sprite,id);
 		this.attack = atk;
 		this.bonusDiceNumber = diceNumber;
 		this.reach = reach;
@@ -29,8 +28,8 @@ public class Attack extends Equipment{
 		this.weaponClasses = weaponClasses;
 	}
 	
-	public Attack(String name, Sprite sprite, GameTypeObjects id, int atk, int diceNumber, int reach, boolean breaksAfterUse, WeaponsTypes weaponClasses, NotAlive bonus,Coordinate position) {
-		super(name,sprite,id,position);
+	public Attack(String name, Sprite sprite, GameTypeObjects id, int atk, int diceNumber, int reach, boolean breaksAfterUse, WeaponsTypes weaponClasses, NotAlive bonus) {
+		super(name,sprite,id);
 		this.attack = atk;
 		this.bonusDiceNumber = diceNumber;
 		this.reach = reach;

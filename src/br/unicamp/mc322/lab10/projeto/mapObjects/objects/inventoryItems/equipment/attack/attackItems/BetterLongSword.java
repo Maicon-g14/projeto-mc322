@@ -19,8 +19,10 @@ public class BetterLongSword extends Attack{
 	private static final boolean BREAKABLE = false;
 	private static final int REACH = 1;
 	private static final WeaponsTypes WEAPON_CLASS = WeaponsTypes.LONG_SWORD;
+	private static final int PRICE = 100;
 	
-	public BetterLongSword(Coordinate position) {
-		super(NAME,new Sprite(SPRITE),ID,ATTACK,DICE_NUMBER,REACH,BREAKABLE,WEAPON_CLASS,position);
+	public BetterLongSword() {
+		super(NAME,new Sprite(SPRITE),ID,ATTACK,DICE_NUMBER,REACH,BREAKABLE,WEAPON_CLASS);
+		price = PRICE;
 	}
 }
