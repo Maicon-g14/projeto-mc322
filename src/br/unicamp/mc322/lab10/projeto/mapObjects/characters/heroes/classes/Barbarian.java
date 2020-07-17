@@ -15,13 +15,9 @@ public class Barbarian extends Hero {
 	private static final int MP = 1;
 	private static final int ATTACK_DICES = 1;
 	private static final int DEFENSE_DICES = 1;
-	private static final HeroClass HERO_CLASS = HeroClass.BARBARIAN;
 	
 	public Barbarian() {
-		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,HERO_CLASS);
+		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES);
 	}
 	
-	public Barbarian(String name) {
-		super(name,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,HERO_CLASS);
-	}
 }

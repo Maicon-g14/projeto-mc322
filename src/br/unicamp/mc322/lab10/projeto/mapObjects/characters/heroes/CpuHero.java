@@ -1,5 +1,4 @@
 package br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes;
-import java.util.Random;
 
 import br.unicamp.mc322.lab10.projeto.Map;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Command;

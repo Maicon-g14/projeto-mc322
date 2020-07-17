@@ -21,6 +21,14 @@ public abstract class Character extends GameObject{
 	private Attack[] attackEquipament = new Attack[2];		//equipamento de ataque dos seres vivos ou null caso use as maos/garras/dentes etc
 	private Boolean dead = false;
 	
+	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices) {
+		super(name,sprite,id);
+		this.HP = hp;
+		this.MP = mp;
+		ATKValue = attackDices;
+		DEFValue = defenseDices;
+	}
+	
 	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position) {
 		super(name,sprite,id,position);
 		this.HP = hp;

@@ -15,7 +15,6 @@ import java.util.Random;
 
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.GameMode;
-import br.unicamp.mc322.lab10.projeto.QuestBase;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Door;
@@ -50,7 +49,6 @@ public class RandomMap extends MapLoad{
 			else
 				setItemQuest(i);
 			
-			setAllies(i);
 			setMonsters(i);
 			
 			if (randomlyChoice())
@@ -131,18 +129,6 @@ public class RandomMap extends MapLoad{
 		int k = (int) MAPS_WIDTH/2;
 		
 		maps[i][j][k] = createObject('C', new Coordinate(j,k));
-	}
-	
-	private void setAllies(int i) {
-		/* Define lugar de inicio dos players sempre no centro do mapa
-		 * em volta da escada se existir */
-		int j = (int) MAPS_HEIGHT/2;
-		int k = (int) MAPS_WIDTH/2;
-		
-		maps[i][j+1][k] = createObject('E', new Coordinate(j+1,k));
-		maps[i][j][k+1] = createObject('D', new Coordinate(j,k+1));
-		maps[i][j-1][k] = createObject('B', new Coordinate(j-1,k));
-		maps[i][j][k-1] = createObject('W', new Coordinate(j,k-1));
 	}
 	
 	private Coordinate getEmptyPosition(int i) {

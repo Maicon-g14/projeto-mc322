@@ -10,6 +10,9 @@ import br.unicamp.mc322.lab10.projeto.mapConstructor.MapLoad;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.PresetMap;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.CpuHero;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Player;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Barbarian;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Dwarf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Elf;
@@ -19,8 +22,9 @@ public class HeroQuest {
 	
 	private Map map;
 	private GameMode gameMode;		//dificuldade do jogo
+	private HeroController[] heroes;		//heroes[0] = player, heroes[1-3] = npcs
 	
-	public HeroQuest(GameMode gameMode, MapMode mapMode) {
+	public HeroQuest(GameMode gameMode, MapMode mapMode,PlayableClasses choosenClass, String playerName) {
 	/* Inicializa classe Map, MapLoad, todos os elementos do jogo e passa eles para a classe Map ja
 	 * com suas coordenadas(uma vez recebido o mapa é preciso identificar as quantidades de 
 	 * cada item nele e chamar a criação desses com as coordenadas obtidas */
@@ -30,26 +34,12 @@ public class HeroQuest {
 		QuestBase questItems = quest();
 		
 		map = new Map(gameMode,mapMode);
-		Wizard heroi = new Wizard("Mago", 0, 0, 0, 0, 0, 0);		//ver como vai ser a criacao desses
-		Barbarian ally1 = new Barbarian("barbaro", 0,0, 0, 0, 0, 0);
-		Dwarf ally2 = new Dwarf("Anao", 0, 0, 0, 0, 0, 0 );
-		Elf ally3 = new Elf("Elfo", 0, 0, 0, 0, 0, 0);
 		
-		heroi.setPosition(new Coordinate(0, 0));
-		ally1.setPosition(new Coordinate(9, 0));
-		ally2.setPosition(new Coordinate(2, 1));
-		ally3.setPosition(new Coordinate(5, 1));
+		heroes = map.setPlayer(choosenClass,playerName);
 		
+		map.setQuest(questItems);
 		
-		Player jogador = new Player(heroi);
-		CpuHero cpuAlly1 = new CpuHero(ally1);
-		CpuHero cpuAlly2 = new CpuHero(ally2);
-		CpuHero cpuAlly3 = new CpuHero(ally3);
-			
-		//map.addController(jogador);
-		//map.addController(cpuAlly1);
-		//map.addController(cpuAlly2);
-		//map.addController(cpuAlly3);
+		map.printScenes();
 		
 	}
 	

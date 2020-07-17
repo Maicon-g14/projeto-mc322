@@ -5,11 +5,10 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.Command;
 import br.unicamp.mc322.lab10.projeto.Map;
 
 public class Player extends HeroController {
-
 	
-	
-	public Player(Hero personagem) {
+	public Player(Hero personagem, String name) {
 		super(personagem);
+		personagem.setPlayerName(name,personagem.getId());
 	}
 	
 	public Command readCommandFromKeyboard(Scanner scanner) {

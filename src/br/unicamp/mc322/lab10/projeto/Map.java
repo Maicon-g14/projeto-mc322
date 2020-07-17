@@ -9,8 +9,7 @@ import br.unicamp.mc322.lab10.projeto.mapConstructor.MapLoad;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.PresetMap;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.ally.Ally;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.Enemy;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
 
 public class Map {
 	private MapLoad map;
@@ -21,17 +20,35 @@ public class Map {
 		else if (mapMode == MapMode.RANDOM)
 			map = new RandomMap(gameMode);
 		
-		map.mapPrint();
-		
-		
-		
-		
-		//LoadMap(map);
 	}
 	
-	public void printMap() {
-	/* Chama refreshMap e mostra map recebido na tela */
+	public HeroController[] setPlayer(PlayableClasses choosenClass, String playerName) {
+		return map.addHeroes(choosenClass,playerName);
+	}
 	
+	public void printScenes() {
+		//DEBUG
+		printMap(map.getMap());
+		printMap(map.nextMap());
+		printMap(map.nextMap());
+	}
+	
+	public void setQuest(QuestBase quest) {
+		map.setQuest(quest);
+	}
+	
+	private void printMap(GameObject[][] map) {
+	/* Chama refreshMap e mostra map recebido na tela */
+		for (int j = 0; j < map.length; j++) {
+			for (int k = 0; k < map[0].length; k++) {
+				if (map[j][k] == null)
+					System.out.printf(" ");
+				else
+					map[j][k].print();
+			}
+			System.out.printf("\n");
+		}
+		System.out.printf("\n");
 	}
 	
 	public GameObject refreshMap() {

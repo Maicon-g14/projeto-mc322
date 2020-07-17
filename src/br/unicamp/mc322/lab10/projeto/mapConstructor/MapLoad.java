@@ -5,11 +5,20 @@ import java.util.Random;
 
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.GameMode;
+import br.unicamp.mc322.lab10.projeto.PlayableClasses;
+import br.unicamp.mc322.lab10.projeto.QuestBase;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.enemyTypes.Goblin;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.enemyTypes.MageSkeleton;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.enemyTypes.Skeleton;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.CpuHero;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Player;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Barbarian;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Dwarf;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Elf;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Wizard;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Goblin;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.MageSkeleton;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Skeleton;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.forniture.fornitureTypes.Trap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Door;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.HiddenDoor;
@@ -27,8 +36,10 @@ public class MapLoad {
 	protected GameMode gameMode;
 	private static final int TRAP_DAMAGE_STANDART_MODE = 20;
 	private static final int TRAP_DAMAGE_HARD_MODE = 10;
+	HeroController[] heroes;
 	
 	public MapLoad() {
+		heroes = new HeroController[4];
 		currentMap = 0;
 	}
 	
@@ -39,13 +50,19 @@ public class MapLoad {
 	public GameObject[][] previousMap(){
 		if (currentMap == 0)
 			return null;
-		return (GameObject[][]) maps[--currentMap];
+		
+		GameObject[][] map = maps[--currentMap];
+		resetHeroesPosition();
+		return map;
 	}
 	
 	public GameObject[][] nextMap(){
 		if (currentMap >= maps.length)
 			return null;
-		return (GameObject[][]) maps[++currentMap];
+		
+		GameObject[][] map = maps[++currentMap];
+		resetHeroesPosition();
+		return map;
 	}
 	
 	protected Boolean randomlyChoice() {
@@ -98,20 +115,86 @@ public class MapLoad {
 	}
 	
 	public void mapPrint() {
-		//DEBUG
+		//DEBUG - mostra todas as cenas
 		for (int i = 0; i < mapsAmount; i++) {
 			for (int j = 0; j < mapsHeight; j++) {
 				for (int k = 0; k < mapsWidth; k++) {
 					if (maps[i][j][k] == null)
 						System.out.printf(" ");
 					else
-						System.out.printf("%s",maps[i][j][k].toString());
+						maps[i][j][k].print();
 				}
 				System.out.printf("\n");
 			}
 			System.out.printf("\n");
 			System.out.printf("\n");
 		}
+	}
+	
+	private void resetHeroesPosition() {
+		/* Ao subir ou decer um andar, move os player para o entorno da escada no centro da sala*/
+		int j = (int) mapsHeight/2;
+		int k = (int) mapsWidth/2;
+		
+		maps[currentMap][j+1][k] = heroes[0].getCharacter();
+		maps[currentMap][j+1][k].setPosition(new Coordinate(j+1, k));
+		maps[currentMap][j][k+1] = heroes[1].getCharacter();
+		maps[currentMap][j][k+1].setPosition(new Coordinate(j+1, k));
+		maps[currentMap][j-1][k] = heroes[2].getCharacter();
+		maps[currentMap][j-1][k].setPosition(new Coordinate(j+1, k));
+		maps[currentMap][j][k-1] = heroes[3].getCharacter();
+		maps[currentMap][j][k-1].setPosition(new Coordinate(j+1, k));
+	}
+	
+	public HeroController[] addHeroes(PlayableClasses choosenClass, String playerName) {
+		/* Define lugar de inicio dos players sempre no centro do mapa
+		 * em volta da escada se existir */
+		int j = (int) mapsHeight/2;
+		int k = (int) mapsWidth/2;
+		
+		Barbarian barbarian = new Barbarian();
+		Dwarf dwarf = new Dwarf();
+		Elf elf = new Elf();
+		Wizard wizard = new Wizard();
+		
+		barbarian.setPosition(new Coordinate(j+1, k));
+		dwarf.setPosition(new Coordinate(j-1, k));
+		elf.setPosition(new Coordinate(j, k+1));
+		wizard.setPosition(new Coordinate(j, k-1));
+		
+		if(choosenClass == PlayableClasses.BARBARIAN) {
+			heroes[0] = new Player(barbarian,playerName);
+			heroes[1] = new CpuHero(elf);
+			heroes[2] = new CpuHero(dwarf);
+			heroes[3] = new CpuHero(wizard);
+		} else if (choosenClass == PlayableClasses.DWARF) {
+			heroes[0] = new Player(dwarf,playerName);
+			heroes[1] = new CpuHero(elf);
+			heroes[2] = new CpuHero(barbarian);
+			heroes[3] = new CpuHero(wizard);
+		} else if (choosenClass == PlayableClasses.ELF) {
+			heroes[0] = new Player(elf,playerName);
+			heroes[1] = new CpuHero(barbarian);
+			heroes[2] = new CpuHero(dwarf);
+			heroes[3] = new CpuHero(wizard);
+		} else if (choosenClass == PlayableClasses.WIZARD) {
+			heroes[0] = new Player(wizard,playerName);
+			heroes[1] = new CpuHero(elf);
+			heroes[2] = new CpuHero(dwarf);
+			heroes[3] = new CpuHero(barbarian);
+		} else
+			throw new NullPointerException("Classe de personagem invalida!");
+		
+		maps[0][j+1][k] = barbarian;
+		maps[0][j][k+1] = elf;
+		maps[0][j-1][k] = dwarf;
+		maps[0][j][k-1] = wizard;
+		
+		return heroes;
+	}
+	
+	public void setQuest(QuestBase quest) {
+		
 	}
 	
 }

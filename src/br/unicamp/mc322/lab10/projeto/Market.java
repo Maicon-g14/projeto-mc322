@@ -5,7 +5,6 @@
 
 package br.unicamp.mc322.lab10.projeto;
 
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.playable.Player;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 
 public class Market {
@@ -32,7 +31,7 @@ public class Market {
 		
 	}
 	
-	public void doShopping(Player player) {
+	public void doShopping() {
 	/* Loop de compras na loja, chama exibição dos itens da loja e selecionado um item
 	 * para compra tenta debitar o valor da classe Money no Player, se retornar true,
 	 * adiciona item no inventário do Player */

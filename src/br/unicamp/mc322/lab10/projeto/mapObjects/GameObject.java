@@ -26,6 +26,13 @@ public class GameObject {
 		this.name = name;
 		this.sprite = sprite;
 		this.id = id;
+		this.mapPosition = null;
+	}
+	
+	public void setPlayerName(String name, GameTypeObjects player) {
+		/* O nome de um objeto so pode ser trocado se o objeto for o nome do player */
+		if (player == GameTypeObjects.PLAYER)
+			this.name = name;
 	}
 	
 	public String getName() {
@@ -83,7 +90,5 @@ public class GameObject {
 		/* Checagem se o objeto ja foi usado e deve ser excluido do mapa */
 		return disable;
 	}
-	
-	public abstract void accept(MapObjectVisitor visitor);
 	
 }
