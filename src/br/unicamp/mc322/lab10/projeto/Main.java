@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 	/* Chamada para iniciar o jogo */
 	
-		HeroQuest game = new HeroQuest(GameMode.STANDART, MapMode.RANDOM, PlayableClasses.WIZARD, "Mago implacavel");
+		HeroQuest game = new HeroQuest(GameMode.STANDART, MapMode.PREDEFINED, PlayableClasses.WIZARD, "Mago implacavel");
 	
 		//game.startGame();
 	}
