@@ -17,8 +17,10 @@ public class Shield2 extends Shield{
 	private static final int DEFENSE = 1;
 	private static final int DICE_NUMBER = 1;
 	private static final ArmorClasses SHIELD_CLASS = ArmorClasses.SHIELD;
+	private static final int PRICE = 250;
 	
 	public Shield2() {
-		super(NAME,new Sprite(SPRITE),ID,DEFENSE,SHIELD_CLASS,DICE_NUMBER,new Coordinate());
+		super(NAME,new Sprite(SPRITE),ID,DEFENSE,SHIELD_CLASS,DICE_NUMBER);
+		price = PRICE;
 	}
 }

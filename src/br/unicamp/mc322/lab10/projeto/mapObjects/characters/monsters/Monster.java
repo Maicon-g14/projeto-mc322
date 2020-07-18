@@ -17,12 +17,6 @@ public class Monster extends Character {
 	
 	public MonsterClasses getMonsterClass() {
 		return monsterClass;
-	}
-
-	@Override
-	public void accept(MapObjectVisitor visitor) {
-		// TODO Auto-generated method stub
-		
 	}	
 	
 }

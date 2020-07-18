@@ -12,7 +12,7 @@ public class Main {
 	
 		HeroQuest game = new HeroQuest(GameMode.STANDART, MapMode.PREDEFINED, PlayableClasses.WIZARD, "Mago implacavel");
 	
-		//game.startGame();
+		game.startGame();
 	}
 
 }

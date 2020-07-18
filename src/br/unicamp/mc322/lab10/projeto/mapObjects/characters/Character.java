@@ -7,19 +7,22 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
+import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.Money.Money;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.Attack;
 
 public abstract class Character extends GameObject{
+	private static final int INVENTORY_MAX_AMOUNT = 30;
 	private int HP;
 	private int ATKValue;
 	private int DEFValue;
-	private CanCarry[] inventory;		//todos os seres vivos precisam de inventario, pois � onde fica o drop deles que deve cair no chao caso morrerem
-									//inclusive as armas e armaduras de aliados/monstros
+	protected CanCarry[] inventory;		//todos os seres vivos precisam de inventario, pois � onde fica o drop deles que deve cair no chao caso morrerem
+	protected int inventoryLoad = 0;
 	private int MP;		//BodyPoints
 	private int attackDices;
 	private int defenseDices;
 	private Attack[] attackEquipament = new Attack[2];		//equipamento de ataque dos seres vivos ou null caso use as maos/garras/dentes etc
 	private Boolean dead = false;
+	private Money money = new Money();
 	
 	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices) {
 		super(name,sprite,id);
@@ -27,6 +30,7 @@ public abstract class Character extends GameObject{
 		this.MP = mp;
 		ATKValue = attackDices;
 		DEFValue = defenseDices;
+		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
 	}
 	
 	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position) {
@@ -35,6 +39,7 @@ public abstract class Character extends GameObject{
 		this.MP = mp;
 		ATKValue = attackDices;
 		DEFValue = defenseDices;
+		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
 	}
 	
 	public int getHp() {
@@ -93,9 +98,52 @@ public abstract class Character extends GameObject{
 	public Boolean isDead() {
 		return dead;
 	}
+	
+	public int showMoney() {
+		return money.getMoney();
+	}
+	
+	public void addEquipment(CanCarry item) {
+		if(inventoryLoad < INVENTORY_MAX_AMOUNT)
+			inventory[inventoryLoad++] = item;
+		else
+			System.out.println("Inventario cheio!");
+	}
 
 	public void removeInventory(int id) {
+		/* Dado a posicao do item no inventario, remove ele */
+		inventory[id] = inventory[--inventoryLoad];
+		inventory[inventoryLoad] = null;
+	}
 	
+	public void sell(int id) {
+		int price = inventory[id].getPrice();
+		money.addMoney(price);
+		removeInventory(id);
+	}
+	
+	public Boolean buy(CanCarry item) {
+		/* Se houver saldo, desconta e adiciona o item ao inventario */
+		int price = item.getPrice();
+		
+		if (inventoryLoad < INVENTORY_MAX_AMOUNT && money.removeMoney(price)) {
+			inventory[inventoryLoad++] = item;
+			return true;
+		} else if (inventoryLoad < INVENTORY_MAX_AMOUNT)
+			System.out.println("Saldo insuficiente!");
+		else
+			System.out.println("Inventario cheio!");		//trocar esses por throws
+		
+		return false;
+	}
+	
+	public int getInventoryLoad() {
+		return inventoryLoad;
+	}
+	
+	public CanCarry[] getInventory() {
+		/* Retorna uma copia de todos os itens no inventario */
+		return inventory;
 	}
 	
 	public void move(Command direction, Map map) {

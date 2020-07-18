@@ -9,6 +9,7 @@ import br.unicamp.mc322.lab10.projeto.mapConstructor.MapLoad;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.PresetMap;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
 
 public class Map {
@@ -24,6 +25,10 @@ public class Map {
 	
 	public HeroController[] setPlayer(PlayableClasses choosenClass, String playerName) {
 		return map.addHeroes(choosenClass,playerName);
+	}
+	
+	public Hero[] getHeroes() {
+		return map.getHeroes();
 	}
 	
 	public void printScenes() {

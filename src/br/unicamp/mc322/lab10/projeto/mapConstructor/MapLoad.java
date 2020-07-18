@@ -7,6 +7,7 @@ import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.GameMode;
 import br.unicamp.mc322.lab10.projeto.PlayableClasses;
 import br.unicamp.mc322.lab10.projeto.QuestBase;
+import br.unicamp.mc322.lab10.projeto.StartEquipment;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.CpuHero;
@@ -152,10 +153,12 @@ public class MapLoad {
 		int j = (int) mapsHeight/2;
 		int k = (int) mapsWidth/2;
 		
-		Barbarian barbarian = new Barbarian();
-		Dwarf dwarf = new Dwarf();
-		Elf elf = new Elf();
-		Wizard wizard = new Wizard();
+		StartEquipment startEquipment = new StartEquipment();
+		
+		Barbarian barbarian = new Barbarian(startEquipment.getBarbarian());
+		Dwarf dwarf = new Dwarf(startEquipment.getDwarf());
+		Elf elf = new Elf(startEquipment.getElf());
+		Wizard wizard = new Wizard(startEquipment.getWizard());
 		
 		barbarian.setPosition(new Coordinate(j+1, k));
 		dwarf.setPosition(new Coordinate(j-1, k));

@@ -8,7 +8,6 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.Attack;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.WeaponsTypes;
-import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class Dagger extends Attack{
 	private static final char SPRITE = 's';
@@ -19,8 +18,11 @@ public class Dagger extends Attack{
 	private static final boolean BREAKABLE = false;
 	private static final int REACH = 1;
 	private static final WeaponsTypes WEAPON_CLASS = WeaponsTypes.DAGGER;
+	private static final int PRICE = 5;
 	
-	public Dagger(Coordinate position) {
-		super(NAME,new Sprite(SPRITE),ID,ATTACK,DICE_NUMBER,REACH,BREAKABLE,WEAPON_CLASS,position);
+	public Dagger() {
+		super(NAME,new Sprite(SPRITE),ID,ATTACK,DICE_NUMBER,REACH,BREAKABLE,WEAPON_CLASS);
+		price = PRICE;
+		breaksAfterUse = true;
 	}
 }
