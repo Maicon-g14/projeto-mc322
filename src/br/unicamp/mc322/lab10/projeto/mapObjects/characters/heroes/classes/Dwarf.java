@@ -24,6 +24,7 @@ public class Dwarf extends Hero{
 	public Dwarf(CanCarry[] initialEquipment) {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES);
 		inventory = initialEquipment;
+		inventoryLoad = initialEquipment.length;
 	}
 	
 }

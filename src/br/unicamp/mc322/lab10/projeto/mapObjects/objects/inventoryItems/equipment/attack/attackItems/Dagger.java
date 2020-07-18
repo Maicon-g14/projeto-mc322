@@ -8,7 +8,6 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.Attack;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.WeaponsTypes;
-import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class Dagger extends Attack{
 	private static final char SPRITE = 's';

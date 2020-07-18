@@ -23,6 +23,7 @@ public class Elf extends Hero {
 	public Elf(CanCarry[] initialEquipment) {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES);
 		inventory = initialEquipment;
+		inventoryLoad = initialEquipment.length;
 	}
 	
 }

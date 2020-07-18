@@ -16,7 +16,7 @@ public abstract class Character extends GameObject{
 	private int ATKValue;
 	private int DEFValue;
 	protected CanCarry[] inventory;		//todos os seres vivos precisam de inventario, pois � onde fica o drop deles que deve cair no chao caso morrerem
-	private int inventoryLoad = 0;
+	protected int inventoryLoad = 0;
 	private int MP;		//BodyPoints
 	private int attackDices;
 	private int defenseDices;
@@ -99,6 +99,10 @@ public abstract class Character extends GameObject{
 		return dead;
 	}
 	
+	public int showMoney() {
+		return money.getMoney();
+	}
+	
 	public void addEquipment(CanCarry item) {
 		if(inventoryLoad < INVENTORY_MAX_AMOUNT)
 			inventory[inventoryLoad++] = item;
@@ -112,6 +116,12 @@ public abstract class Character extends GameObject{
 		inventory[inventoryLoad] = null;
 	}
 	
+	public void sell(int id) {
+		int price = inventory[id].getPrice();
+		money.addMoney(price);
+		removeInventory(id);
+	}
+	
 	public Boolean buy(CanCarry item) {
 		/* Se houver saldo, desconta e adiciona o item ao inventario */
 		int price = item.getPrice();
@@ -119,9 +129,10 @@ public abstract class Character extends GameObject{
 		if (inventoryLoad < INVENTORY_MAX_AMOUNT && money.removeMoney(price)) {
 			inventory[inventoryLoad++] = item;
 			return true;
-		} else {
+		} else if (inventoryLoad < INVENTORY_MAX_AMOUNT)
+			System.out.println("Saldo insuficiente!");
+		else
 			System.out.println("Inventario cheio!");		//trocar esses por throws
-		}
 		
 		return false;
 	}

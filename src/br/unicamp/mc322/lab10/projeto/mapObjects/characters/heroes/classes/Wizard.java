@@ -22,6 +22,7 @@ public class Wizard extends Hero {
 	public Wizard(CanCarry[] initialEquipment) {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES);
 		inventory = initialEquipment;
+		inventoryLoad = initialEquipment.length;
 	}
 
 }
