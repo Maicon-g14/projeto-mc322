@@ -12,7 +12,9 @@ public class Player extends HeroController {
 	}
 	
 	public Command readCommandFromKeyboard(Scanner scanner) {
+		/* Pergunta ao player a acao que pretende fazer */
 		String entrada;
+		System.out.println("Acao pretendida: ");
 		entrada = scanner.nextLine();
 		switch(entrada.toUpperCase()) {
 		case "W" : return Command.MOVE_UP;
