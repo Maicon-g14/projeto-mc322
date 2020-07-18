@@ -14,7 +14,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.Money.Money;
 
 public class Market {
-	private static final int INITIAL_FUNDS = 250;
+	private static final int INITIAL_FUNDS = 300;
 	private static final int OUT = 0;
 	private static final int BUY = 1;
 	private static final int SELL = 2;

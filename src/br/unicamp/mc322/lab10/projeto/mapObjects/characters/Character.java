@@ -149,18 +149,19 @@ public abstract class Character extends GameObject{
 	public void move(Command direction, Map map) {
 		int destinoX = getPosition().getX();
 		int destinoY = getPosition().getY();
+		
 		switch(direction) {
 			case MOVE_UP: 
-					destinoY--; 
+				destinoY--; 
 				break;
 			case MOVE_DOWN: 
-					destinoY++; 
+				destinoY++; 
 				break;
 			case MOVE_RIGHT: 
-					destinoX++; 
+				destinoX++; 
 				break;
 			case MOVE_LEFT:
-					destinoX--;
+				destinoX--;
 				break;
 			default : break;
 		}

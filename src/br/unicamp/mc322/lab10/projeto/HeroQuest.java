@@ -105,7 +105,7 @@ public class HeroQuest {
 	public void startGame() {
 	/* Loop principal do jogo, chama a criacao de novos mapas, chama verificacao de inimigo
 	 * em area de ataque em map */	
-		market();
+		//market();
 	}
 	
 	public void loadMap() {
