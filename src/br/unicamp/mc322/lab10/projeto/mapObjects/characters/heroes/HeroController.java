@@ -18,7 +18,7 @@ public abstract class HeroController implements Controller {
 		return personagem;
 	}
 	
-	public int rollDices(int n) {
+	public int rollRedDices(int n) {
 		int result = 0;
 		Random gerador = new Random();
 		for(int i = 0; i < n; i ++) {

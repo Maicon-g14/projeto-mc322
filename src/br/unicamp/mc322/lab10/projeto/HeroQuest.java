@@ -18,14 +18,18 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Barba
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Dwarf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Elf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Wizard;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 
 public class HeroQuest {
-	
+	private int floorsNumber = 0;
 	private Map map;
 	private GameMode gameMode;		//dificuldade do jogo
 	private HeroController[] heroesController;		//heroes[0] = player, heroes[1-3] = npcs
 	private Market market;
 	private EquipmentLoad findableEquipment;
+	private Boolean running = false;
+	private QuestBase[] quest;
+	private CpuMonster[] monstersController;
 	
 	public HeroQuest(GameMode gameMode, MapMode mapMode,PlayableClasses choosenClass, String playerName) {
 	/* Inicializa classe Map, MapLoad, todos os elementos do jogo e passa eles para a classe Map ja
@@ -42,14 +46,15 @@ public class HeroQuest {
 		
 		heroesController = map.setPlayer(choosenClass,playerName);
 		
+		floorsNumber = map.getFloorsNumber();
 		
 		map.setQuest(questItems);
 		
 		market = new Market(findableEquipment.getMarketItems());
 		
-		map.printScenes();
+		//map.printScenes();
 		
-		
+		monstersController = null;
 	}
 	
 	public void market() {
@@ -58,7 +63,7 @@ public class HeroQuest {
 		market.doShopping(player);
 	}
 	
-	public int rollRedDice(int qtde) {
+	public int rollRedDice(int qtde) {		//tirar essa, ja tem em hero controller
 		/* rola n d6 e devolve a soma dos valores */	
 		int sum = 0;
 		Random dice = new Random();
@@ -99,40 +104,61 @@ public class HeroQuest {
 	
 	public QuestBase quest() {
 	/* Define ou chama classe(precisa ser implementada) que monta uma quest */
+		quest = new QuestBase[1];
 		return null;
+	}
+	
+	private void checkGameOver() {
+		Hero player = heroesController[0].getCharacter();
+		
+		//acrescentar caso onde ganha com fim de quest
+		if(player.isDead()) {
+			System.out.println("Voce perdeu!");
+			running = false;
+		}
+	}
+	
+	private void heroesTurn() {
+		for(int i = 0; i < heroesController.length; i++)
+			heroesController[0].playTurn(map);
+	}
+	
+	private void monstersTurn() {
+		if (monstersController != null)
+			for(int i = 0; i < monstersController.length; i++)
+				monstersController[0].playTurn(map);
 	}
 	
 	public void startGame() {
 	/* Loop principal do jogo, chama a criacao de novos mapas, chama verificacao de inimigo
 	 * em area de ataque em map */	
 		//market();
-	}
-	
-	public void loadMap() {
-	/* Recebendo o tipo de mapa(gerado ou aleatorio), chama classe que contem 
-	 * as informacoes do mapa(disposicao de paredes, portas, armadilhas, 
-	 * monstros e baús) e devolve esse para ser passado a classe Mapa */	
+		System.out.println("Game started!");
+		Boolean turn = true;
+		running = true;
+		int floor = 1, questNumber = 1;
 		
-	}
-	
-	public void createPlayer(Coordinate position) {
-	/* Pergunta ao usuário qual a classe escolhida e nome para o personagem
-	 * (por padrão ja é sugerido um nome de acordo com a classe escolhida),
-	 * cria esse personagem e adiciona no Mapa */	
+		map.printScene();
 		
-	}
-	
-	public void createMonsters(Coordinate[] position) {
-	/* Aleatoriamente(ou por nivel de dificuldade que pode ser recebido), cria 
-	 * uma N quantidade de monstros e adiciona no Mapa */	
-		
-	}
-	
-	public void createAllies(Coordinate position) {
-	/* Desconsiderando a classe escolhida pelo player, cria e adiciona 3 aliados
-	 * das demais classes no Mapa(se a dificuldade escolhida for mais alta,
-	 * adiciona menos aliados), a posição recebida sera a posição do player */	
-		
+		while(running && questNumber <= quest.length) {
+			//set quest items, talv load outro mapa
+			market();
+			while(running && floor < floorsNumber) {
+				turn = true;
+				while(running && turn) {
+					//heroesController[0].playTurn(map);
+					heroesTurn();
+					monstersTurn();
+					
+					map.printScene();
+					checkGameOver();
+				}		//ver como vai ser feito o climb pra sair dessa sala
+				
+				floor++;
+				
+			}
+		}
+		System.out.println("Game terminated. Bye!");
 	}
 	
 	public GameObject createQuestItem(GameObject content) {
@@ -144,17 +170,6 @@ public class HeroQuest {
 	 * vai de fato acrescentar o item nele, ou se vai ser preciso definir o conteudo do monstro/bau
 	 * antes de por ele no mapa) */	
 		return null;
-	}
-	
-	public void createMoney() {
-	/* Inicializa classe Money(representa o dinheiro do personagem) e 
-	 * a adiciona no Player */	
-		
-	}
-	
-	public void createTrap(Coordinate[] position) {
-	/* Inicializa N classes Trap com as coordenadas P e as adiciona no Mapa */	
-		
 	}
 	
 	public void createChest(Coordinate[] position) {

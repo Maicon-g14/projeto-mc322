@@ -10,13 +10,16 @@ import br.unicamp.mc322.lab10.projeto.QuestBase;
 import br.unicamp.mc322.lab10.projeto.StartEquipment;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.CpuHero;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Player;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Barbarian;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Dwarf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Elf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Wizard;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Goblin;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.MageSkeleton;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Skeleton;
@@ -39,6 +42,8 @@ public class MapLoad {
 	private static final int TRAP_DAMAGE_HARD_MODE = 10;
 	HeroController[] heroes;
 	
+	//criar vetor de monstros(pelo controlador), salvar e retornar
+	
 	public MapLoad() {
 		heroes = new HeroController[4];
 		currentMap = 0;
@@ -50,7 +55,7 @@ public class MapLoad {
 	
 	public GameObject[][] previousMap(){
 		if (currentMap == 0)
-			return null;
+			return getMap();
 		
 		GameObject[][] map = maps[--currentMap];
 		resetHeroesPosition();
@@ -58,8 +63,8 @@ public class MapLoad {
 	}
 	
 	public GameObject[][] nextMap(){
-		if (currentMap >= maps.length)
-			return null;
+		if (currentMap+1 >= maps.length)
+			return getMap();
 		
 		GameObject[][] map = maps[++currentMap];
 		resetHeroesPosition();
@@ -194,6 +199,55 @@ public class MapLoad {
 		maps[0][j][k-1] = wizard;
 		
 		return heroes;
+	}
+	
+	public int getFloorsNumber() {
+		return mapsAmount;
+	}
+	
+	public Boolean isValid(Coordinate position) {
+		int x = position.getX();
+		int y = position.getY();
+		
+		if(x > 0 && y > 0 && x < mapsHeight && y < mapsWidth)
+			return true;
+		return false;
+	}
+	
+	public GameObject getPosition(Coordinate position) {
+		int x = position.getX();
+		int y = position.getY();
+		
+		return maps[currentMap][x][y];
+	}
+	
+	private void trap(Hero hero, Coordinate position) {
+		/* Se tiver armadilha na posicao, ativa ela, senao apenas move
+		 * o heroi */
+		int x = position.getX();
+		int y = position.getY();
+		
+		if(maps[currentMap][x][y].getId() == GameTypeObjects.TRAP) {
+			Trap trap = (Trap) maps[currentMap][x][y];
+			trap.doDamage(hero);
+		}
+	}
+	
+	public void setPosition(GameObject item, Coordinate position) {
+		/* Dado um objeto e uma nova posicao para ele(ja verificada),
+		 * move esse objeto para a nova posicao */
+		Coordinate oldPosition = item.getPosition();
+		int x = position.getX();
+		int y = position.getY();
+		int w = oldPosition.getX();
+		int z = oldPosition.getY();
+		
+		if(maps[currentMap][x][y] != null)
+			trap((Hero) item,position);
+		
+		maps[currentMap][x][y] = maps[currentMap][w][z];
+		maps[currentMap][w][z] = null;
+		maps[currentMap][x][y].setPosition(position);
 	}
 	
 	public void setQuest(QuestBase quest) {

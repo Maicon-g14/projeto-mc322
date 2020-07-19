@@ -23,23 +23,26 @@ public abstract class Character extends GameObject{
 	private Attack[] attackEquipament = new Attack[2];		//equipamento de ataque dos seres vivos ou null caso use as maos/garras/dentes etc
 	private Boolean dead = false;
 	private Money money = new Money();
+	private GameTypeObjects type;
 	
-	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices) {
-		super(name,sprite,id);
+	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, GameTypeObjects type) {
+		super(name,sprite,id,type);
 		this.HP = hp;
 		this.MP = mp;
 		ATKValue = attackDices;
 		DEFValue = defenseDices;
 		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
+		this.type = type;
 	}
 	
-	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position) {
-		super(name,sprite,id,position);
+	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position, GameTypeObjects type) {
+		super(name,sprite,id,position,type);
 		this.HP = hp;
 		this.MP = mp;
 		ATKValue = attackDices;
 		DEFValue = defenseDices;
 		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
+		this.type = type;
 	}
 	
 	public int getHp() {
@@ -149,27 +152,34 @@ public abstract class Character extends GameObject{
 	public void move(Command direction, Map map) {
 		int destinoX = getPosition().getX();
 		int destinoY = getPosition().getY();
+		Coordinate newPosition = new Coordinate(destinoX, destinoY);
 		
 		switch(direction) {
 			case MOVE_UP: 
-				destinoY--; 
+				newPosition.setX(--destinoX);
+				if(!map.isEmptyPosition(newPosition,type))
+					return;
 				break;
 			case MOVE_DOWN: 
-				destinoY++; 
+				newPosition.setX(++destinoX);
+				if(!map.isEmptyPosition(newPosition,type))
+					return;
 				break;
 			case MOVE_RIGHT: 
-				destinoX++; 
+				newPosition.setY(++destinoY);
+				if(!map.isEmptyPosition(newPosition,type))
+					return;
 				break;
 			case MOVE_LEFT:
-				destinoX--;
+				newPosition.setY(--destinoY);
+				if(!map.isEmptyPosition(newPosition,type))
+					return;
 				break;
 			default : break;
 		}
 		
-		setPosition(new Coordinate(destinoX, destinoY));
-
+		map.setPosition(this,newPosition);
 	}
-	
 
 }
 

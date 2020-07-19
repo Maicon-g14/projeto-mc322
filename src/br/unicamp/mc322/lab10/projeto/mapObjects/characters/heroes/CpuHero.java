@@ -12,7 +12,7 @@ public class CpuHero extends HeroController {
 
 	public void playTurn(Map mapa){
 		Command newCommand = Command.MOVE_DOWN;
-		getCharacter().move(newCommand, mapa);
+		//getCharacter().move(newCommand, mapa);
 	}
 	
 	

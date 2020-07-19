@@ -9,8 +9,11 @@ import br.unicamp.mc322.lab10.projeto.mapConstructor.MapLoad;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.PresetMap;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
+import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
 
 public class Map {
 	private MapLoad map;
@@ -24,22 +27,21 @@ public class Map {
 	}
 	
 	public HeroController[] setPlayer(PlayableClasses choosenClass, String playerName) {
+		/* Chama a criacao dos herois no mapa do jogo */
 		return map.addHeroes(choosenClass,playerName);
 	}
 	
-	public Hero[] getHeroes() {
-		return map.getHeroes();
-	}
-	
-	public void printScenes() {
-		//DEBUG
+	public void printScene() {
 		printMap(map.getMap());
-		printMap(map.nextMap());
-		printMap(map.nextMap());
 	}
 	
 	public void setQuest(QuestBase quest) {
 		map.setQuest(quest);
+	}
+	
+	public int getFloorsNumber() {
+		/* Adquire o numero de andares da torre */
+		return map.getFloorsNumber();
 	}
 	
 	private void printMap(GameObject[][] map) {
@@ -57,15 +59,29 @@ public class Map {
 	}
 	
 	public GameObject refreshMap() {
-	/* Tira copia do map e preenche a copia com os sceneObjects, monsters e allies
-	 * em suas devidas posições e os retorna */
+		/* Tira copia do map e preenche a copia com os sceneObjects, monsters e allies
+		 * em suas devidas posições e os retorna */
 		return null;
 	}
 	
+	public Boolean isEmptyPosition(Coordinate position, GameTypeObjects type) {
+		/* Checa se personagem pode se mover para a posicao dada.
+		 * Monstros nao se movem para cima de armadilhas */
+		if(map.isValid(position) && (map.getPosition(position) == null || (map.getPosition(position).getId() == GameTypeObjects.TRAP && type == GameTypeObjects.HERO)))
+			return true;
+		return false;
+	}
+	
+	public void setPosition(Character character, Coordinate position) {
+		/* Move personagem para a posicao dada(ja verificada antes) e, se for um heroi se movendo para uma
+		 * armadilha, ativa ela */
+		map.setPosition(character, position);
+	}
+	
 	private void createObjectMap(String[][] map) {
-	/* Transforma o mapa de strigns dado em um mapa de objetos e salva em map,
-	 * inicialmente só se coloca as paredes no map e o que for imovel/imutavel, 
-	 * o refresh se encarrega de por os objetos sempre que for printar */
+		/* Transforma o mapa de strigns dado em um mapa de objetos e salva em map,
+		 * inicialmente só se coloca as paredes no map e o que for imovel/imutavel, 
+		 * o refresh se encarrega de por os objetos sempre que for printar */
 		
 	}
 	
@@ -80,31 +96,4 @@ public class Map {
 		
 	}
 	
-	public void LoadMap(String[][] map) {
-	/* Dado uma nova cena, prepara o map para receber as nova informações */
-		//sceneObjects = null;
-		//monsters = null;
-		//createObjectMap(map);
-	}
-	
-	public void addObject(Enemy monster) {
-	/* Realoca e adiciona objeto recebido em seu respectivo vetor */
-	
-	}
-	
-	public void addObject(Ally ally) {
-	/* Realoca e adiciona objeto recebido em seu respectivo vetor */
-		
-	}
-	
-	public void addObject(GameObject object) {
-	/* Realoca e adiciona objeto recebido em seu respectivo vetor */
-	
-	}
-	
-	public void removeObject(int id) {
-	/* Dado o ID de um objeto, procura nas listas allies, monsters e sceneObjects(respectivamente)
-	 * ate encontrar o objeto e o remove da lista */
-	
-	}
 }

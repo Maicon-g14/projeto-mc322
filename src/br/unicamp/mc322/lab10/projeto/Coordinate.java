@@ -46,6 +46,12 @@ public class Coordinate {
 		this.y = y;
 	}
 	
+	public Boolean equals(Coordinate position) {
+		if(x == position.getX() && y == position.getY())
+			return true;
+		return false;
+	}
+	
 	public String toString() {
 		if (!onMap)
 			return "Objeto não esta no mapa";
