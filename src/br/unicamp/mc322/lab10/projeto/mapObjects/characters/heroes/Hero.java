@@ -5,8 +5,8 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
 
 public abstract class Hero extends Character {
 
-	public Hero(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices);
+	public Hero(String name, GameTypeObjects id, int hp, int mp, int intelligence, Sprite sprite, int attackDices, int defenseDices) {
+		super(name, id, hp, mp, intelligence, sprite, attackDices, defenseDices);
 	}
 	
 }

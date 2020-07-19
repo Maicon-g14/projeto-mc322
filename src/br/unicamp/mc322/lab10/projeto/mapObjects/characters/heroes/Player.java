@@ -22,6 +22,8 @@ public class Player extends HeroController {
 		case "D" : return Command.MOVE_RIGHT;
 		case "A" : return Command.MOVE_LEFT;
 		case "P" : return Command.SEARCH;
+		case "M" : return Command.USE_MAGIC;
+		case "T" : return Command.ATTACK;
 		default : return null;
 		}
 	}
@@ -35,7 +37,9 @@ public class Player extends HeroController {
 			if(newCommand != null) {
 				switch(newCommand) {
 				//Adicionar outras açoes que o jogador podera fazer
-					case SEARCH : treasureSearch(mapa);
+					case SEARCH : treasureSearch(mapa);break;
+					case USE_MAGIC : break;//chamar funcao que usa magia
+					case ATTACK : findTarget(mapa);break;
 					default :	{
 									getCharacter().move(newCommand, mapa);
 									steps--;
