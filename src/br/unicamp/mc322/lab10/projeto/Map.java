@@ -9,6 +9,7 @@ import br.unicamp.mc322.lab10.projeto.mapConstructor.MapLoad;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.PresetMap;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Controller;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
 
@@ -28,7 +29,7 @@ public class Map {
 	}
 	
 	public Hero[] getHeroes() {
-		return map.getHeroes();
+		return null;
 	}
 	
 	public void printScenes() {
@@ -58,21 +59,21 @@ public class Map {
 	
 	public GameObject refreshMap() {
 	/* Tira copia do map e preenche a copia com os sceneObjects, monsters e allies
-	 * em suas devidas posições e os retorna */
+	 * em suas devidas posiï¿½ï¿½es e os retorna */
 		return null;
 	}
 	
 	private void createObjectMap(String[][] map) {
 	/* Transforma o mapa de strigns dado em um mapa de objetos e salva em map,
-	 * inicialmente só se coloca as paredes no map e o que for imovel/imutavel, 
+	 * inicialmente sï¿½ se coloca as paredes no map e o que for imovel/imutavel, 
 	 * o refresh se encarrega de por os objetos sempre que for printar */
 		
 	}
 	
-	public void searchOpponent() {
+	public Controller searchOpponent(Coordinate position, int range) {
 	/* Pros inimigos verifica se existem aliados na area de ataque e pros aliados
 	 * verifica se existem inimigos na areade ataque, se existirem, inicia o ataque */	
-		
+		return null;
 	}
 	
 	public void getGroundItem() {
@@ -81,7 +82,7 @@ public class Map {
 	}
 	
 	public void LoadMap(String[][] map) {
-	/* Dado uma nova cena, prepara o map para receber as nova informações */
+	/* Dado uma nova cena, prepara o map para receber as nova informaï¿½ï¿½es */
 		//sceneObjects = null;
 		//monsters = null;
 		//createObjectMap(map);
