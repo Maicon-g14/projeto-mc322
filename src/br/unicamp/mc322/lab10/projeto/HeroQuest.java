@@ -29,7 +29,7 @@ public class HeroQuest {
 	private EquipmentLoad findableEquipment;
 	private Boolean running = false;
 	private QuestBase[] quest;
-	private CpuMonster[] monstersController;
+	private CpuMonster[][] monstersController;
 	
 	public HeroQuest(GameMode gameMode, MapMode mapMode,PlayableClasses choosenClass, String playerName) {
 	/* Inicializa classe Map, MapLoad, todos os elementos do jogo e passa eles para a classe Map ja
@@ -54,7 +54,7 @@ public class HeroQuest {
 		
 		//map.printScenes();
 		
-		monstersController = null;
+		monstersController = map.getMonsters();
 	}
 	
 	public void market() {
@@ -119,20 +119,19 @@ public class HeroQuest {
 	}
 	
 	private void heroesTurn() {
-		for(int i = 0; i < heroesController.length; i++)
-			heroesController[0].playTurn(map);
+		for(int i = 0; i < heroesController.length; i++)			//heroesController.length
+			heroesController[i].playTurn(map);
 	}
 	
-	private void monstersTurn() {
+	private void monstersTurn(int floor) {
 		if (monstersController != null)
-			for(int i = 0; i < monstersController.length; i++)
-				monstersController[0].playTurn(map);
+			for(int i = 0; i < monstersController[floor-1].length; i++)
+				monstersController[floor-1][i].playTurn(map);
 	}
 	
 	public void startGame() {
 	/* Loop principal do jogo, chama a criacao de novos mapas, chama verificacao de inimigo
 	 * em area de ataque em map */	
-		//market();
 		System.out.println("Game started!");
 		Boolean turn = true;
 		running = true;
@@ -142,13 +141,11 @@ public class HeroQuest {
 		
 		while(running && questNumber <= quest.length) {
 			//set quest items, talv load outro mapa
-			market();
 			while(running && floor < floorsNumber) {
 				turn = true;
 				while(running && turn) {
-					//heroesController[0].playTurn(map);
 					heroesTurn();
-					monstersTurn();
+					monstersTurn(1);
 					
 					map.printScene();
 					checkGameOver();
@@ -157,6 +154,7 @@ public class HeroQuest {
 				floor++;
 				
 			}
+			market();
 		}
 		System.out.println("Game terminated. Bye!");
 	}

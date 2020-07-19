@@ -17,6 +17,7 @@ import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.GameMode;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Door;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Wall;
 
@@ -36,6 +37,8 @@ public class RandomMap extends MapLoad{
 		mapsAmount = MAPS_AMOUNT;
 		mapsHeight = MAPS_HEIGHT;
 		mapsWidth = MAPS_WIDTH;
+		
+		monsters = new CpuMonster[mapsAmount][];		//aloca so uma dimensao do array 2d
 		
 		this.gameMode = gameMode;
 		
@@ -119,7 +122,7 @@ public class RandomMap extends MapLoad{
 		int j = (int) MAPS_HEIGHT/2;
 		int k = (int) MAPS_WIDTH/2;
 		
-		maps[i][j][k] = createObject('S', new Coordinate(j,k));
+		maps[i][j][k] = createObject('S', new Coordinate(j,k),i);
 	}
 	
 	private void setItemQuest(int i) {		//ver a fundo
@@ -128,7 +131,7 @@ public class RandomMap extends MapLoad{
 		int j = (int) MAPS_HEIGHT/2;
 		int k = (int) MAPS_WIDTH/2;
 		
-		maps[i][j][k] = createObject('C', new Coordinate(j,k));
+		maps[i][j][k] = createObject('C', new Coordinate(j,k),i);
 	}
 	
 	private Coordinate getEmptyPosition(int i) {
@@ -157,12 +160,12 @@ public class RandomMap extends MapLoad{
 			
 			if(randomlyChoice())		//escolhe esqueleto como monstro
 				if(randomlyChoice())
-					maps[i][pos.getX()][pos.getY()] = createObject('M',pos);		//mage skeleton
+					maps[i][pos.getX()][pos.getY()] = createObject('M',pos,i);		//mage skeleton
 				else
-					maps[i][pos.getX()][pos.getY()] = createObject('K',pos);		//skeleton
+					maps[i][pos.getX()][pos.getY()] = createObject('K',pos,i);		//skeleton
 				
 			else
-				maps[i][pos.getX()][pos.getY()] = createObject('G',pos);
+				maps[i][pos.getX()][pos.getY()] = createObject('G',pos,i);
 		}
 	}
 	
@@ -176,7 +179,7 @@ public class RandomMap extends MapLoad{
 		for(int b = 0; b < trapsAmount; b++) {
 			pos = getEmptyPosition(i);
 			
-			maps[i][pos.getX()][pos.getY()] = createObject('T',pos);
+			maps[i][pos.getX()][pos.getY()] = createObject('T',pos,i);
 		}
 	}
 	
@@ -217,7 +220,7 @@ public class RandomMap extends MapLoad{
 		for(int b = 0; b < hiddenDoorsAmount; b++) {
 			pos = getWallPosition(i);
 			
-			maps[i][pos.getX()][pos.getY()] = createObject('H',pos);
+			maps[i][pos.getX()][pos.getY()] = createObject('H',pos,i);
 		}
 	}
 	

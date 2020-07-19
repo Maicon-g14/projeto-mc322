@@ -52,6 +52,25 @@ public class Coordinate {
 		return false;
 	}
 	
+	private int positivize(int number) {
+		/* Torna numero dado em valor positivo */
+		if(number < 0)
+			return number*-1;
+		return number;
+	}
+	
+	public int measureDistance(Coordinate position) {
+		/* Retorna a soma das distancias em X e Y da coordenada passada
+		 * com a do objeto atual */
+		int x = getX() - position.getX();
+		int y = getY() - position.getY();
+		
+		x = positivize(x);
+		y = positivize(y);
+		
+		return (int) (x + y)/2;
+	}
+	
 	public String toString() {
 		if (!onMap)
 			return "Objeto não esta no mapa";

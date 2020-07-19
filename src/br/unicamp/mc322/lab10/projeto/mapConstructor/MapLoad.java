@@ -19,6 +19,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Barba
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Dwarf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Elf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Wizard;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Goblin;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.MageSkeleton;
@@ -41,6 +42,7 @@ public class MapLoad {
 	private static final int TRAP_DAMAGE_STANDART_MODE = 20;
 	private static final int TRAP_DAMAGE_HARD_MODE = 10;
 	HeroController[] heroes;
+	CpuMonster[][] monsters;
 	
 	//criar vetor de monstros(pelo controlador), salvar e retornar
 	
@@ -85,12 +87,30 @@ public class MapLoad {
 			coordinateArray = Arrays.copyOf(coordinateArray, coordinateArray.length+1);
 	}
 	
+	public HeroController[] getHeroes() {
+		return heroes;
+	}
+	
 	protected void storeCoordinate(int y, int z, GameTypeObjects type) {		//ver
 		resizeCoordinateArray();
 		coordinateArray[coordinateArray.length-1] = new Coordinate(y,z);
 	}
 	
-	protected GameObject createObject(char type, Coordinate position) {
+	public CpuMonster[][] getMonsters() {
+		return monsters;
+	}
+	
+	private Monster increaseMonster(Monster monster, int mapNumber) {
+		if(monsters[mapNumber] == null)
+			monsters[mapNumber] = new CpuMonster[1];
+		else
+			monsters[mapNumber] = Arrays.copyOf(monsters[mapNumber], monsters[mapNumber].length+1);
+		monsters[mapNumber][monsters[mapNumber].length-1] = new CpuMonster(monster);
+		
+		return monster;
+	}
+	
+	protected GameObject createObject(char type, Coordinate position, int mapNumber) {
 		/* Dado o caractere correspondente ao objeto, cria e retorna o 
 		 * objeto criado */
 		
@@ -109,11 +129,11 @@ public class MapLoad {
 		if (type == 'S')
 			return new Stair(position);
 		if (type == 'M')
-			return new MageSkeleton(position);
+			return increaseMonster(new MageSkeleton(position), mapNumber);
 		if (type == 'G')
-			return new Goblin(position);
+			return increaseMonster(new Goblin(position), mapNumber);
 		if (type == 'K')
-			return new Skeleton(position);
+			return increaseMonster(new Skeleton(position), mapNumber);
 		if (type != ' ')
 			System.out.println("Objeto do tipo "+type+" não pode ser criado!");
 		
@@ -237,10 +257,10 @@ public class MapLoad {
 		/* Dado um objeto e uma nova posicao para ele(ja verificada),
 		 * move esse objeto para a nova posicao */
 		Coordinate oldPosition = item.getPosition();
-		int x = position.getX();
-		int y = position.getY();
 		int w = oldPosition.getX();
 		int z = oldPosition.getY();
+		int x = position.getX();
+		int y = position.getY();
 		
 		if(maps[currentMap][x][y] != null)
 			trap((Hero) item,position);

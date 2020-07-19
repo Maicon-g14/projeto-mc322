@@ -12,6 +12,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
 
@@ -35,8 +36,21 @@ public class Map {
 		printMap(map.getMap());
 	}
 	
+	public CpuMonster[][] getMonsters() {
+		return map.getMonsters();
+	}
+	
 	public void setQuest(QuestBase quest) {
 		map.setQuest(quest);
+	}
+	
+	public HeroController[] getHeroes() {
+		return map.getHeroes();
+	}
+	
+	public Character findTarget(Coordinate position) {
+		/* Busca nos arredores da posicao dada se tem oponente pra atacar */
+		return null;
 	}
 	
 	public int getFloorsNumber() {

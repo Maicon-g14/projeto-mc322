@@ -149,7 +149,7 @@ public abstract class Character extends GameObject{
 		return inventory;
 	}
 	
-	public void move(Command direction, Map map) {
+	public boolean move(Command direction, Map map) {
 		int destinoX = getPosition().getX();
 		int destinoY = getPosition().getY();
 		Coordinate newPosition = new Coordinate(destinoX, destinoY);
@@ -158,27 +158,29 @@ public abstract class Character extends GameObject{
 			case MOVE_UP: 
 				newPosition.setX(--destinoX);
 				if(!map.isEmptyPosition(newPosition,type))
-					return;
+					return false;
 				break;
 			case MOVE_DOWN: 
 				newPosition.setX(++destinoX);
 				if(!map.isEmptyPosition(newPosition,type))
-					return;
+					return false;
 				break;
 			case MOVE_RIGHT: 
 				newPosition.setY(++destinoY);
 				if(!map.isEmptyPosition(newPosition,type))
-					return;
+					return false;
 				break;
 			case MOVE_LEFT:
 				newPosition.setY(--destinoY);
 				if(!map.isEmptyPosition(newPosition,type))
-					return;
+					return false;
 				break;
 			default : break;
 		}
 		
 		map.setPosition(this,newPosition);
+		
+		return true;
 	}
 
 }
