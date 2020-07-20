@@ -3,7 +3,6 @@ package br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes;
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.MonsterClass;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 
 public class Goblin extends Monster {

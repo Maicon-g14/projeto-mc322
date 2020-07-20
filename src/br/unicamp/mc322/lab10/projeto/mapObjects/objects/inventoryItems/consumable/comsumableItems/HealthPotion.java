@@ -7,7 +7,6 @@ package br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.consuma
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.consumable.Consumable;
-import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class HealthPotion extends Consumable{
 	private static final String NAME = "Potion";
@@ -18,11 +17,10 @@ public class HealthPotion extends Consumable{
 	private Boolean isUsed = false;
 	
 	public HealthPotion() {
-		super(NAME,new Sprite(SPRITE),ID);
-		price = PRICE;
+		super(NAME,new Sprite(SPRITE),ID,PRICE);
 	}
 	
-	public int getAmount() {
+	public int usePotion() {
 		if(isUsed)
 			return 0;
 		return AMOUNT_TO_RECOVER;

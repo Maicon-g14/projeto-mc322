@@ -10,7 +10,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry
 
 public class Equipment extends CanCarry{
 	
-	public Equipment(String name, Sprite sprite, GameTypeObjects id) {
-		super(name,sprite,id);
+	public Equipment(String name, Sprite sprite, GameTypeObjects id, int price) {
+		super(name,sprite,id,price);
 	}
 }

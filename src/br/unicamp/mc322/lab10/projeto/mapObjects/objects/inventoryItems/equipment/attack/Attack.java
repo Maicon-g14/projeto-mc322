@@ -7,67 +7,64 @@ package br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipme
 
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
-import br.unicamp.mc322.lab10.projeto.mapObjects.objects.NotAlive;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.Equipment;
 
 public class Attack extends Equipment{
-	private int attack;
-	private int bonusDiceNumber;
-	private NotAlive bonus = null;
-	protected boolean breaksAfterUse = false;
-	private boolean breaked = false;
+	private boolean breakable;
+	private boolean twoHands;
+	private int bonusAttack;
+	private int lifeBonus;
 	private int reach;
 	private WeaponsTypes weaponClasses;
 	
-	public Attack(String name, Sprite sprite, GameTypeObjects id, int atk, int diceNumber, int reach, boolean breaksAfterUse, WeaponsTypes weaponClasses) {
-		super(name,sprite,id);
-		this.attack = atk;
-		this.bonusDiceNumber = diceNumber;
+	public Attack(String name, Sprite sprite, GameTypeObjects id, boolean twoHands, int diceAttack, int reach, boolean breakable, WeaponsTypes weaponClasses, int price) {
+		super(name,sprite,id,price);
+		this.breakable = breakable;
+		this.bonusAttack = diceAttack;
 		this.reach = reach;
-		this.breaksAfterUse = breaksAfterUse;
+		this.twoHands = twoHands;
+		this.breakable = breakable;
 		this.weaponClasses = weaponClasses;
+		this.lifeBonus = 0;
 	}
 	
-	public Attack(String name, Sprite sprite, GameTypeObjects id, int atk, int diceNumber, int reach, boolean breaksAfterUse, WeaponsTypes weaponClasses, NotAlive bonus) {
-		super(name,sprite,id);
-		this.attack = atk;
-		this.bonusDiceNumber = diceNumber;
+	public Attack(String name, Sprite sprite, GameTypeObjects id, boolean twoHands, int diceAttack, int reach, boolean breakable, WeaponsTypes weaponClasses, int lifeBonus, int price) {
+		super(name,sprite,id,price);
+		this.breakable = breakable;
+		this.bonusAttack = diceAttack;
 		this.reach = reach;
-		this.breaksAfterUse = breaksAfterUse;
+		this.twoHands = twoHands;
+		this.breakable = breakable;
 		this.weaponClasses = weaponClasses;
-		this.bonus = bonus;		//bonus eh bonnus de HP ou MP
+		this.lifeBonus = lifeBonus;		//bonus eh bonnus de HP ou MP
 	}
 	
-	public int getAttack() {
-		return attack;
+	public boolean removeAfterUse() {
+		/* Sinal para indicar que a arma deve quebrar apos o uso */
+		return breakable;
 	}
 	
-	public int doAttack(int reach) {
-		if(reach <= this.reach) {
-			if(breaksAfterUse && !breaked) {
-				breaked = true;
-				return attack;
-			
-			} else if (!breaksAfterUse)
-				return attack;
-		}
-		
-		return 0;	
+	public boolean isTwoHanded() {
+		return twoHands;
 	}
 	
-	public int getBonusDiceNumber() {
-		return bonusDiceNumber;
+	public int getBonusAttack() {
+		/* Bonus de ataque da arma, verificar ao equipar */
+		return bonusAttack;
 	}
 	
-	public NotAlive getBonus() {
-		return bonus;
+	public int getBonus() {
+		/* Bonus de vida que pode ser concedido pela arma */
+		return lifeBonus;
 	}
 	
 	public int getReach() {
+		/* Alcance da arma */
 		return reach;
 	}
 	
 	public WeaponsTypes getWeaponClass() {
+		/* Tipo da arma, ex: espada curta, adaga, espada longa etc. */
 		return weaponClasses;
 	}
 }

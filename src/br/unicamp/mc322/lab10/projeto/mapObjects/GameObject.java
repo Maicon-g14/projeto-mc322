@@ -13,8 +13,6 @@ public class GameObject {
 	private Coordinate mapPosition;		//posicao do objeto no mapa
 	private Sprite sprite;		//simbolo que representa cada objeto no mapa(uma constante)
 	private boolean visible = true;
-	private boolean collide = true;
-	protected boolean disable = false;
 	
 	public GameObject(String name, Sprite sprite, GameTypeObjects id, Coordinate mapPosition) {
 		this.name = name;
@@ -68,21 +66,16 @@ public class GameObject {
 		sprite.showSprite();
 	}
 	
-	public void setSprite(Sprite sprite) {
-	/* Muda sprite do objeto */
-		this.sprite = sprite;
+	public void nextSprite(int n) {
+		sprite.nextSprite();
 	}
 	
-	protected void disableCollision() {
-		collide = false;		//pode ser usado para pisar em cima da escada depois que derrotar todos os monstros
-	}
-	
-	protected void enableCollision() {
-		collide = true;
+	public void previousSprite(int n) {
+		sprite.prevSprite();
 	}
 	
 	public GameTypeObjects getType() {
-		return type;
+		return type;		//tipo generico do item
 	}
 	
 	protected void turnOnVisibility() {
@@ -95,21 +88,12 @@ public class GameObject {
 		sprite.hide();
 	}
 	
-	public Boolean willCollide() {
-		return collide;
-	}
-	
 	public Boolean isVisible() {
 		return visible;
 	}
 	
 	public GameTypeObjects getId() {
-		return id;		//id usado para encontrar um objeto
-	}
-	
-	public Boolean disabled() {
-		/* Checagem se o objeto ja foi usado e deve ser excluido do mapa */
-		return disable;
+		return id;		//tipo especifico do item
 	}
 	
 }
