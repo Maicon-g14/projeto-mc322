@@ -9,21 +9,16 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.Equipment;
 
 public class Defense extends Equipment{
-	private int defense;
-	private int diceBonus;
+	private int defenseDice;
 	private ArmorClasses armorClass;
 	
-	public Defense(String name, Sprite sprite, GameTypeObjects id, int defense, ArmorClasses armorClass, int diceBonus) {
-		super(name,sprite,id);
+	public Defense(String name, Sprite sprite, GameTypeObjects id, ArmorClasses armorClass, int defenseDice, int price) {
+		super(name,sprite,id,price);
 		this.armorClass = armorClass;
 	}
 	
-	public int getDefense() {
-		return defense;
-	}
-	
-	public int getDices() {
-		return diceBonus;
+	public int getBonusDefense() {
+		return defenseDice;
 	}
 	
 	public ArmorClasses getArmorClass() {

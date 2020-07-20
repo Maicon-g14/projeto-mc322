@@ -7,6 +7,7 @@ package br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.forniture.for
 
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.forniture.Forniture;
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 
@@ -24,8 +25,9 @@ public class Trap extends Forniture{
 		disableCollision();
 	}
 	
-	public int doDamage() {
-		return damageValue;
+	public void doDamage(Hero hero) {
+		System.out.println(hero.getName() + " tomou " + damageValue + " de dano em uma armadilha oculta!\nBody Points restantes: " + hero.getHp());
+		hero.takeDamage(damageValue);
 	}
 	
 	public void disarmTrap() {

@@ -1,17 +1,22 @@
 package br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes;
 
 import java.util.Random;
-
+import java.util.Scanner;
 import br.unicamp.mc322.lab10.projeto.Map;
 import br.unicamp.mc322.lab10.projeto.WhiteDiceSides;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.CharacterController;
+import br.unicamp.mc322.lab10.projeto.mapObjects.Command;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Controller;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.Attack;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.defense.Defense;
 
+
 public abstract class HeroController extends CharacterController {
-	
+	protected static final int MOVE_DICES = 2;
+	protected Command direction;
+	protected int remainingSteps;
+	protected boolean moving = false; 
 	
 	public HeroController(Hero personagem) {
 		super(personagem);
@@ -21,6 +26,7 @@ public abstract class HeroController extends CharacterController {
 		return (Hero)super.getCharacter();
 	}
 	
+
 	@Override
 	public int rollDefenseDices() {
 		//rola um numero de dados brancos e retorna o numero de escudos obtidos
@@ -83,6 +89,31 @@ public abstract class HeroController extends CharacterController {
 		personagem.setDefenseValue(personagem.getDefenseDices());
 	}
 	
+
+	protected void callMove(Map map) {
+		/* Chama movimentacao do player, se encontrar com obstaculo, desativa sinal
+		 * de que esta se movimentando */
+		if(!getCharacter().move(direction, map))
+			moving = false;
+	}
 	
+	public void playTurn(Map map){
+		/* Turno do jogador */
+		Scanner scanner = new Scanner(System.in);
+		
+		if(!moving) {
+			//action(map,scanner);
+			newDirection(map,scanner);
+		} else {
+			callMove(map);
+			//action(map,scanner);
+		}
+		
+		if(--remainingSteps <= 0)
+			moving = false;
+	}
 	
+	protected abstract void newDirection(Map map, Scanner scanner);		//possibilidade de controlar todos os demais herois
+	
+	protected abstract void action(Map map, Scanner scanner);
 }

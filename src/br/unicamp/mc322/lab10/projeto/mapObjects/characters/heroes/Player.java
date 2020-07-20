@@ -6,54 +6,90 @@ import br.unicamp.mc322.lab10.projeto.Map;
 
 public class Player extends HeroController {
 	
+	
 	public Player(Hero personagem, String name) {
 		super(personagem);
 		personagem.setPlayerName(name,personagem.getId());
 	}
 	
-	public Command readCommandFromKeyboard(Scanner scanner) {
-		/* Pergunta ao player a acao que pretende fazer */
-		String entrada;
-		System.out.println("Acao pretendida: ");
-		entrada = scanner.nextLine();
-		switch(entrada.toUpperCase()) {
-		case "W" : return Command.MOVE_UP;
-		case "S" : return Command.MOVE_DOWN;
-		case "D" : return Command.MOVE_RIGHT;
-		case "A" : return Command.MOVE_LEFT;
-		case "P" : return Command.SEARCH;
-		case "M" : return Command.USE_MAGIC;
-		case "T" : return Command.ATTACK;
-		default : return null;
-		}
+
+	private int getFinalSteps(Scanner scanner, int maxSteps) {
+		/* Pergunta ao player quantidade de passos que quer dar */
+		int amount = maxSteps+1;
+		
+		do {
+			System.out.println("Quantidade de passos (max: " + maxSteps + "): ");
+			
+			if(!scanner.hasNextInt())
+				scanner.next();
+			else
+				amount = scanner.nextInt();
+		
+		} while(amount > maxSteps || amount < 0);
+		
+		System.out.println("lado: "+amount);
+		
+		return amount;
 	}
-
-
-	public void playTurn(Map mapa){
-		int steps = rollDices(2);
-		while(steps > 0) {
-			Scanner scanner = new Scanner(System.in);
-			Command newCommand = readCommandFromKeyboard(scanner);
-			if(newCommand != null) {
-				switch(newCommand) {
-				//Adicionar outras açoes que o jogador podera fazer
-					case SEARCH : treasureSearch(mapa);break;
-					case USE_MAGIC : break;//chamar funcao que usa magia
-					case ATTACK : findTarget(mapa);break;
-					default :	{
-									getCharacter().move(newCommand, mapa);
-									steps--;
-								}
-				}
-			}
+	
+	public void readMovementDirection(Scanner scanner) {
+		/* Pergunta ao player lado para se mover */
+		
+		
+		char in; //= scanner.nextLine();
+		
+		do {
+			System.out.println("Lado para se mover(WASD): ");
+			in = scanner.next().toUpperCase().charAt(0);
+		
+		} while(in != 'W' && in != 'A' && in != 'S' && in != 'D');
+		
+		System.out.println("lado: "+in);
+		switch(in) {
+			case 'W' : 
+				direction = Command.MOVE_UP;
+				break;
+			case 'S' : 
+				direction = Command.MOVE_DOWN;
+				break;
+			case 'D' : 
+				direction = Command.MOVE_RIGHT;
+				break;
+			case 'A' : 
+				direction = Command.MOVE_LEFT;
+				break;
 		}
 	}
 	
+	protected void action(Map map, Scanner scanner) {
+		/* Pergunta ao player se quer fazer outra acao alem de andar */
+		System.out.println("Acao nesse turno: ");
+		String entrada = scanner.nextLine();
+		
+		switch(entrada.toUpperCase()) {
+		/*case "P" : return Command.SEARCH;
+		case "M" : return Command.USE_MAGIC;
+		case "A" : return Command.ATTACK;
+		case "I" : return Command.USE_ITEM;
+		default : return null;*/
+		}
+	}
+	
+	
+	
+	protected void newDirection(Map map, Scanner scanner) {
+		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */
+		readMovementDirection(scanner);
+		
+		int steps = rollRedDices(MOVE_DICES);		//rola dados de movimento
+		remainingSteps = getFinalSteps(scanner,steps);
+		
+		moving = true;
+		callMove(map);
+	}
 	
 	public void treasureSearch(Map mapa) {
 		//Procurar um tesouro no mapa, tem chance de encontrar um monstro
-	}
-	
-	
+	}	
 	
 }

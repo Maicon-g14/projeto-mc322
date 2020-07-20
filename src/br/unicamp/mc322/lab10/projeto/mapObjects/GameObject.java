@@ -9,11 +9,10 @@ import br.unicamp.mc322.lab10.projeto.Coordinate;
 public class GameObject {
 	private String name;
 	private GameTypeObjects id;		//cada tipo de objeto tem seu ID proprio para busca
+	protected GameTypeObjects type = GameTypeObjects.GAME_OBJECT;
 	private Coordinate mapPosition;		//posicao do objeto no mapa
 	private Sprite sprite;		//simbolo que representa cada objeto no mapa(uma constante)
 	private boolean visible = true;
-	private boolean collide = true;
-	protected boolean disable = false;
 	
 	public GameObject(String name, Sprite sprite, GameTypeObjects id, Coordinate mapPosition) {
 		this.name = name;
@@ -27,6 +26,22 @@ public class GameObject {
 		this.sprite = sprite;
 		this.id = id;
 		this.mapPosition = null;
+	}
+	
+	public GameObject(String name, Sprite sprite, GameTypeObjects id, Coordinate mapPosition, GameTypeObjects type) {
+		this.name = name;
+		this.sprite = sprite;
+		this.id = id;
+		this.mapPosition = mapPosition;
+		this.type = type;
+	}
+	
+	public GameObject(String name, Sprite sprite, GameTypeObjects id, GameTypeObjects type) {
+		this.name = name;
+		this.sprite = sprite;
+		this.id = id;
+		this.mapPosition = null;
+		this.type = type;
 	}
 	
 	public void setPlayerName(String name, GameTypeObjects player) {
@@ -51,17 +66,16 @@ public class GameObject {
 		sprite.showSprite();
 	}
 	
-	public void setSprite(Sprite sprite) {
-	/* Muda sprite do objeto */
-		this.sprite = sprite;
+	public void nextSprite(int n) {
+		sprite.nextSprite();
 	}
 	
-	protected void disableCollision() {
-		collide = false;		//pode ser usado para pisar em cima da escada depois que derrotar todos os monstros
+	public void previousSprite(int n) {
+		sprite.prevSprite();
 	}
 	
-	protected void enableCollision() {
-		collide = true;
+	public GameTypeObjects getType() {
+		return type;		//tipo generico do item
 	}
 	
 	protected void turnOnVisibility() {
@@ -74,21 +88,12 @@ public class GameObject {
 		sprite.hide();
 	}
 	
-	public Boolean willCollide() {
-		return collide;
-	}
-	
 	public Boolean isVisible() {
 		return visible;
 	}
 	
 	public GameTypeObjects getId() {
-		return id;		//id usado para encontrar um objeto
-	}
-	
-	public Boolean disabled() {
-		/* Checagem se o objeto ja foi usado e deve ser excluido do mapa */
-		return disable;
+		return id;		//tipo especifico do item
 	}
 	
 }

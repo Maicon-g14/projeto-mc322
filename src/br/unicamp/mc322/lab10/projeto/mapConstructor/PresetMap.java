@@ -16,6 +16,7 @@ import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.GameMode;
 import br.unicamp.mc322.lab10.projeto.QuestBase;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 
 public class PresetMap extends MapLoad{
 	/* le do HD os mapas e os armazena em um vetor, cria um mapa de strings
@@ -64,6 +65,8 @@ public class PresetMap extends MapLoad{
 		line = bufferedReader.readLine();
 		aux = line.split("=");
 		mapsHeight = Integer.parseInt(aux[1]);
+		
+		monsters = new CpuMonster[mapsAmount][];		//aloca so uma dimensao do array 2d
 	}
 	
 	private void makeMatrix(BufferedReader bufferedReader) throws IOException {
@@ -78,7 +81,7 @@ public class PresetMap extends MapLoad{
 			while(line != null && !line.isEmpty() && y < mapsHeight) {		//enquanto a linha nao for vazia
 			
 				for (int z = 0; z < mapsWidth; z++)
-					maps[x][y][z] = createObject(line.charAt(z), new Coordinate(y,z));		//le cada caractere da linha
+					maps[x][y][z] = createObject(line.charAt(z), new Coordinate(y,z),x);		//le cada caractere da linha
 					
 				line = bufferedReader.readLine();		//avança para proxima linha
 				y++;

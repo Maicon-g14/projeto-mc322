@@ -16,7 +16,7 @@ public class Money extends CanCarry{
 	private int value = 0;
 	
 	public Money() {
-		super(NAME,new Sprite(SPRITE),ID);
+		super(NAME,new Sprite(SPRITE),ID,0);
 	}
 	
 	public void addMoney(int value) {
