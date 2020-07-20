@@ -10,14 +10,13 @@ import br.unicamp.mc322.lab10.projeto.mapConstructor.PresetMap;
 import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
-import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
-import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Stair;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
 
 public class Map {
+	/* Mesclagem da classe MapLoad para a classe Map */
 	private MapLoad map;
 	
 	public Map(GameMode gameMode, MapMode mapMode) {
