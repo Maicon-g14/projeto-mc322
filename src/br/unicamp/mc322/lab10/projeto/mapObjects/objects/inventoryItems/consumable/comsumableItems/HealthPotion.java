@@ -23,6 +23,7 @@ public class HealthPotion extends Consumable{
 	public int usePotion() {
 		if(isUsed)
 			return 0;
+		isUsed = true;
 		return AMOUNT_TO_RECOVER;
 	}
 }

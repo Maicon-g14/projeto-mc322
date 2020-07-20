@@ -9,7 +9,7 @@ import br.unicamp.mc322.lab10.projeto.Coordinate;
 public class GameObject {
 	private String name;
 	private GameTypeObjects id;		//cada tipo de objeto tem seu ID proprio para busca
-	private GameTypeObjects type = GameTypeObjects.GAME_OBJECT;
+	protected GameTypeObjects type = GameTypeObjects.GAME_OBJECT;
 	private Coordinate mapPosition;		//posicao do objeto no mapa
 	private Sprite sprite;		//simbolo que representa cada objeto no mapa(uma constante)
 	private boolean visible = true;

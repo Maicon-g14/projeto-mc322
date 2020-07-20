@@ -8,49 +8,90 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.Money.Money;
+import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.consumable.comsumableItems.HealthPotion;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.Attack;
 
 public abstract class Character extends GameObject{
 	private static final int INVENTORY_MAX_AMOUNT = 30;
 	private int HP;
+	private int maxHP;
+	private int intellect;
 	private int ATKValue;
 	private int DEFValue;
 	protected CanCarry[] inventory;		//todos os seres vivos precisam de inventario, pois � onde fica o drop deles que deve cair no chao caso morrerem
 	protected int inventoryLoad = 0;
-	private int MP;		//BodyPoints
-	private int attackDices;
-	private int defenseDices;
+	
+	private int finalAttack;		//ataque padrao + item equipado
+	private int finalDefense;
 	private Attack[] attackEquipament = new Attack[2];		//equipamento de ataque dos seres vivos ou null caso use as maos/garras/dentes etc
 	private Boolean dead = false;
 	private Money money = new Money();
-	private GameTypeObjects type;
 	
-	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, GameTypeObjects type) {
+	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, GameTypeObjects type) {
 		super(name,sprite,id,type);
-		this.HP = hp;
-		this.MP = mp;
-		ATKValue = attackDices;
-		DEFValue = defenseDices;
+		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
 		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
-		this.type = type;
 	}
 	
-	public Character(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position, GameTypeObjects type) {
+	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, GameTypeObjects type, CanCarry[] initialEquipment) {
+		super(name,sprite,id,type);
+		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
+		inventory = initialEquipment;
+		inventoryLoad = initialEquipment.length;
+	}
+	
+	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, Coordinate position, GameTypeObjects type) {
 		super(name,sprite,id,position,type);
-		this.HP = hp;
-		this.MP = mp;
-		ATKValue = attackDices;
-		DEFValue = defenseDices;
+		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
 		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
-		this.type = type;
+	}
+	
+	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, Coordinate position, GameTypeObjects type, CanCarry[] initialEquipment) {
+		super(name,sprite,id,position,type);
+		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
+		inventory = initialEquipment;
+		inventoryLoad = initialEquipment.length;
+	}
+	
+	private void setCharacterStandarts(int hp, int intellect, int ATKValue, int DEFValue) {
+		this.HP = hp;
+		this.intellect = intellect;
+		maxHP = hp;
+		this.ATKValue = ATKValue;
+		this.DEFValue = DEFValue;
 	}
 	
 	public int getHp() {
 		return HP;
 	}
 	
-	public void setHp(int newHp) {
-		HP = newHp;
+	public void usePotion() {
+		/* Procura por potion no inventario, usa e apaga item */
+		for (int i = 0; i < inventoryLoad; i++)
+			if (inventory[i].getId() == GameTypeObjects.HEALTH_POTION) {
+				HealthPotion potion = (HealthPotion) inventory[i];
+				recoverHp(potion.usePotion());
+				inventory[i] = inventory[inventoryLoad-1];
+				inventory[inventoryLoad-1] = null;
+				inventoryLoad--;
+			}
+	}
+	
+	protected void recoverHp(int amount) {
+		if(HP + amount < maxHP)
+			HP += amount;
+		else
+			HP = maxHP;
+		System.out.println("Body points restaurados!	HP:" + HP);
+	}
+	
+	protected void loseHp(int amount) {
+		if(HP - amount > 0)
+			HP -= amount;
+		else {
+			HP = 0;
+			dead = true;
+		}
 	}
 	
 	public void setAttackValue(int newAttackValue) {
@@ -72,26 +113,24 @@ public abstract class Character extends GameObject{
 	}
 	
 	public void setAttackDices(int newAttackDices) {
-		attackDices = newAttackDices;
+		ATKValue = newAttackDices;
 	}
 	
 	public int getAttackDices() {
-		return attackDices;
+		return ATKValue;
 	}
 	
 	public void setDefenseDices(int newDefenseDices) {
-		defenseDices = newDefenseDices;
+		DEFValue = newDefenseDices;
 	}
 	
 	public int getDefenseDices() {
-		return defenseDices;
+		return DEFValue;
 	}
 	
 	public void takeDamage(int damage) {
-	/* Desconta do HP atual a quantidade dada, se morrer, ativa o dead */
-		setHp(HP - damage);
-		if(HP < 0)
-			dead = true;
+		/* Desconta do HP atual a quantidade dada, se morrer, ativa o dead */
+		loseHp(damage);
 	}
 	
 	public void attack(Character target, int damage) {

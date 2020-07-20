@@ -1,9 +1,7 @@
 package br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes;
 
-import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.ally.HeroClass;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 
@@ -22,9 +20,7 @@ public class Dwarf extends Hero{
 	}
 	
 	public Dwarf(CanCarry[] initialEquipment) {
-		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES);
-		inventory = initialEquipment;
-		inventoryLoad = initialEquipment.length;
+		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,initialEquipment);
 	}
 	
 }
