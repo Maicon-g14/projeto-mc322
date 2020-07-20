@@ -1,4 +1,4 @@
-package br.unicamp.mc322.lab10.projeto;
+package br.unicamp.mc322.lab10.projeto.mapConstructor;
 
 import java.util.Random;
 

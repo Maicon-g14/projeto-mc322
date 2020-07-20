@@ -6,8 +6,6 @@ import java.util.Random;
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.GameMode;
 import br.unicamp.mc322.lab10.projeto.PlayableClasses;
-import br.unicamp.mc322.lab10.projeto.QuestBase;
-import br.unicamp.mc322.lab10.projeto.StartEquipment;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
@@ -25,6 +23,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Goblin;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.MageSkeleton;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Skeleton;
+import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.StartEquipment;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.forniture.fornitureTypes.Trap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Door;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.HiddenDoor;
@@ -273,10 +272,6 @@ public class MapLoad {
 		maps[currentMap][x][y] = maps[currentMap][w][z];
 		maps[currentMap][w][z] = null;
 		maps[currentMap][x][y].setPosition(position);
-	}
-	
-	public void setQuest(QuestBase quest) {
-		
 	}
 	
 }

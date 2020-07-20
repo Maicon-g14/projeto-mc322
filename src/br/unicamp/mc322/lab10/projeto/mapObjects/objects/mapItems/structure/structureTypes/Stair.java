@@ -19,8 +19,4 @@ public class Stair extends Structure{
 		super(NAME,new Sprite(SPRITE),ID,position);
 	}
 	
-	public void changeStatus() {
-	/* Desabilita colisao pra poder ir em cima da escada e chamar troca de mapa */	
-		disableCollision();
-	}
 }
