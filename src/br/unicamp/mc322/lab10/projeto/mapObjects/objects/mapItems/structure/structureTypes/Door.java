@@ -23,9 +23,4 @@ public class Door extends Structure{
 		super(name,sprite,id,position);
 	}
 	
-	public void open() {
-	/* Abre porta */
-		disable = true;
-	}
-	
 }

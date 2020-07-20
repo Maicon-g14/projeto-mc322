@@ -22,7 +22,6 @@ public class Trap extends Forniture{
 		super(NAME,new Sprite(SPRITE,HIDDEN_SPRITE),ID,position);
 		damageValue = damage;
 		turnOffVisibility();
-		disableCollision();
 	}
 	
 	public void doDamage(Hero hero) {

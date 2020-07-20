@@ -14,6 +14,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
+import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Stair;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
 
 public class Map {
@@ -40,10 +41,18 @@ public class Map {
 		return map.getMonsters();
 	}
 	
-	public void setQuest(QuestBase quest) {
-		map.setQuest(quest);
+	public void climbStair(Stair stair) {
+		
 	}
 	
+	public void openChest() {
+		
+	}
+	
+	public void searchTrap() {
+		
+	}
+		
 	public HeroController[] getHeroes() {
 		return map.getHeroes();
 	}
@@ -92,20 +101,7 @@ public class Map {
 		map.setPosition(character, position);
 	}
 	
-	private void createObjectMap(String[][] map) {
-		/* Transforma o mapa de strigns dado em um mapa de objetos e salva em map,
-		 * inicialmente só se coloca as paredes no map e o que for imovel/imutavel, 
-		 * o refresh se encarrega de por os objetos sempre que for printar */
-		
-	}
-	
-	public void searchOpponent() {
-	/* Pros inimigos verifica se existem aliados na area de ataque e pros aliados
-	 * verifica se existem inimigos na areade ataque, se existirem, inicia o ataque */	
-		
-	}
-	
-	public void getGroundItem() {
+	public void searchItem() {
 	/* Se pos do player for igual a de algum objeto CanCarry no chao, pega ele pra por no inventario */	
 		
 	}

@@ -6,8 +6,7 @@ import java.util.Scanner;
 import br.unicamp.mc322.lab10.projeto.Map;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Command;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Controller;
-import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.Attack;
-import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.defense.Defense;
+import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 
 public abstract class HeroController implements Controller {
 	private Hero personagem;
@@ -34,14 +33,40 @@ public abstract class HeroController implements Controller {
 		return result;
 	}
 	
+	private int rollWhiteDices(int qtde, WhiteDiceSides lookingFor) {
+		/* rola n d6 com 1 lado parar monster defense, 2 lados para hero defense e 3 para ataque.
+		 * Sendo especificado o que o invocador busca, faz a soma das n ocorrencias aleatórias
+		 * e a retorna. 
+		 * Ex: funcao eh chamada buscando o ataque do jogador com 6 dados,
+		 * logo sao rolados 6 dados e eh somado a quantidade de vezes que cada dado obteve a face
+		 * ataque. */	
+		int sum = 0, number;
+		Random dice = new Random();
+        
+        for(int i = 0; i < qtde; i++) {
+            number = dice.nextInt(6) + 1;
+            
+            if (number == 1 && lookingFor == WhiteDiceSides.MONSTER_DEFENSE)
+            	sum += 1;
+            
+            else if ((number == 2 || number == 3) && lookingFor == WhiteDiceSides.HERO_DEFENSE)
+            	sum += 1;
+            
+            else if (lookingFor == WhiteDiceSides.ATTACK)
+            	sum += 1;
+        }
+        
+        return sum;
+	}
+	
 	public int rollAttackDices() {
 		//rola todos os dados de ataque do personagem e retorna o numero de caveiras obtidas
-		return 0;
+		return rollWhiteDices(personagem.getAttackDices(),WhiteDiceSides.ATTACK);
 	}
 	
 	public int rollDefenseDices() {
 		//rola todos os dados de defesa do personagem e retorna o numero de escudos obtidos
-		return 0;
+		return rollWhiteDices(personagem.getDefenseDices(),WhiteDiceSides.HERO_DEFENSE);
 	}
 	
 	public void attack(Controller target) {
@@ -52,20 +77,14 @@ public abstract class HeroController implements Controller {
 			personagem.attack(target.getCharacter(), skulls - shields);
 	}
 	
-	public void equipAttackEquipment(Attack equipment) {
-		//equipa o equipamento no personagem e altera o numero de dados de ataque de acordo com as propriedades do equipamento
+	public void addToInventory(CanCarry item) {
+		/* Adiciona um item qualquer(carregavel) ao inventario, se for equipamento e melhor que o atual,
+		 * equipa automaticamente */
+		getCharacter().addToInventory(item);
 	}
 	
-	public void unequipAttackEquipment() {
-		//remove equipamento do personagem e altera o numero de dados de ataque de acordo com as propriedades do equipamento
-	}
-	
-	public void equipDefenseEquipment(Defense equipment) {
-		//equipa o equipamento no personagem e altera o numero de dados de ataque de acordo com as propriedades do equipamento
-	}
-	
-	public void unequipDefenseEquipment() {
-		//remove equipamento do personagem e altera o numero de dados de ataque de acordo com as propriedades do equipamento
+	public void usePotion() {
+		getCharacter().usePotion();
 	}
 	
 	protected void callMove(Map map) {

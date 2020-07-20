@@ -1,6 +1,5 @@
-package br.unicamp.mc322.lab10.projeto;
+package br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment;
 
-import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.Equipment;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.attackItems.Dagger;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.attackItems.LongSword;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.attackItems.ShortSword;

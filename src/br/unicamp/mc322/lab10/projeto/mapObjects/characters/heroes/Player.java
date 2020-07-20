@@ -74,8 +74,6 @@ public class Player extends HeroController {
 		}
 	}
 	
-	
-	
 	protected void newDirection(Map map, Scanner scanner) {
 		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */
 		readMovementDirection(scanner);
