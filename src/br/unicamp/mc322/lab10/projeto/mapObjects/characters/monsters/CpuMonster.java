@@ -1,4 +1,6 @@
 package br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters;
+import java.util.Random;
+
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.Map;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Command;
@@ -21,61 +23,6 @@ public class CpuMonster implements Controller {
 		action(map);
 	}
 	
-	private void findNearest(HeroController[] heroes) {
-		/* Escolhe o lado que o mosntro deve se mover para chegar no heroi mais proximo */
-		int[] range = new int[heroes.length];
-		Coordinate position = getCharacter().getPosition();
-		Coordinate heroPosition;
-		
-		for(int i = 0; i < heroes.length; i++) {
-			heroPosition = heroes[i].getCharacter().getPosition();
-			range[i] = position.measureDistance(heroPosition);
-		}
-		
-		int choosenHero = smallestEllement(range);
-		
-		setNearest(position,heroes[choosenHero].getCharacter().getPosition());
-	}
-	
-	private int smallestEllement(int[] array) {
-		int smallestPosition = 0;
-		
-		for(int i = 1; i < array.length; i++)
-			if(array[i] < array[smallestPosition])
-				smallestPosition = i;
-		
-		return smallestPosition;
-	}
-	
-	private int positivize(int number) {
-		if(number < 0)
-			return number*-1;
-		return number;
-	}
-	
-	private void setNearest(Coordinate source, Coordinate target) {
-		/* A partir da posicao do heroi mais proximo, 
-		 * escolhe uma direcao para o monstro se mover */
-		int x = source.getX() - target.getX();
-		int y = source.getY() - target.getY();
-		
-		int w = positivize(x);
-		int z = positivize(y);
-		
-		if(w >= z) {
-			if(x > 0)
-				direction = Command.MOVE_UP;
-			else
-				direction = Command.MOVE_DOWN;
-			
-		} else {
-			if(y > 0)
-				direction = Command.MOVE_LEFT;
-			else
-				direction = Command.MOVE_RIGHT;
-		}
-	}
-	
 	private void action(Map map) {
 		/* Acao do monstro alem de andar(por padrao eh atacar tudo que estiver no alcance) */
 		Coordinate position = getCharacter().getPosition();
@@ -86,17 +33,18 @@ public class CpuMonster implements Controller {
 		}
 	}
 	
-	private void newDirection(Map map) {
-		/* Chama a escolha do lado e movimentacao do monstro */
-		HeroController[] heroes = map.getHeroes();
-		
-		findNearest(heroes);
+	protected void newDirection(Map map) {
+		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */		
+		chooseMovementDirection();
 		callMove(map);
 	}
 	
-	private void callMove(Map map) {
+	private void chooseMovementDirection() {
+		direction = Command.getRandomDirection();
+	}
+	
+	protected void callMove(Map map) {
 		/* Chama movimentacao do monstro */
-		
 		getCharacter().move(direction, map);
 	}
 

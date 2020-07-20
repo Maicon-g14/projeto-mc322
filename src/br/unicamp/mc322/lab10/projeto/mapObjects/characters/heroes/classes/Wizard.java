@@ -11,9 +11,9 @@ public class Wizard extends Hero {
 	private static final String NAME = "Wizard";
 	private static final GameTypeObjects ID = GameTypeObjects.WIZARD;
 	private static final int HP = 4;
-	private static final int MP = 4;
+	private static final int MP = 6;
 	private static final int ATTACK_DICES = 1;
-	private static final int DEFENSE_DICES = 1;
+	private static final int DEFENSE_DICES = 2;
 	
 	public Wizard() {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES);

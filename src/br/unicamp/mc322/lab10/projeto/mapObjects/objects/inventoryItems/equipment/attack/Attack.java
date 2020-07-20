@@ -35,7 +35,7 @@ public class Attack extends Equipment{
 		this.reach = reach;
 		this.breaksAfterUse = breaksAfterUse;
 		this.weaponClasses = weaponClasses;
-		this.bonus = bonus;
+		this.bonus = bonus;		//bonus eh bonnus de HP ou MP
 	}
 	
 	public int getAttack() {

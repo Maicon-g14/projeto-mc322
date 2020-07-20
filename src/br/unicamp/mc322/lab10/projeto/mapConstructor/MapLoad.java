@@ -19,6 +19,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Barba
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Dwarf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Elf;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.Wizard;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuHeroHunter;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Goblin;
@@ -105,7 +106,11 @@ public class MapLoad {
 			monsters[mapNumber] = new CpuMonster[1];
 		else
 			monsters[mapNumber] = Arrays.copyOf(monsters[mapNumber], monsters[mapNumber].length+1);
-		monsters[mapNumber][monsters[mapNumber].length-1] = new CpuMonster(monster);
+		
+		if(monster.getId() == GameTypeObjects.GOBLIN)
+			monsters[mapNumber][monsters[mapNumber].length-1] = new CpuHeroHunter(monster);
+		else
+			monsters[mapNumber][monsters[mapNumber].length-1] = new CpuMonster(monster);
 		
 		return monster;
 	}

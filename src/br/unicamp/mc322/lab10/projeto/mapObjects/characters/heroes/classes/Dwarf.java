@@ -12,10 +12,10 @@ public class Dwarf extends Hero{
 	private static final char SPRITE = 'D';
 	private static final String NAME = "Dwarf";
 	private static final GameTypeObjects ID = GameTypeObjects.DWARF;
-	private static final int HP = 2;
-	private static final int MP = 2;
-	private static final int ATTACK_DICES = 1;
-	private static final int DEFENSE_DICES = 1;
+	private static final int HP = 7;
+	private static final int MP = 3;
+	private static final int ATTACK_DICES = 2;
+	private static final int DEFENSE_DICES = 2;
 	
 	public Dwarf() {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES);
