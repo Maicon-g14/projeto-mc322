@@ -3,7 +3,6 @@ package br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes;
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.MonsterClass;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 
 public class Skeleton extends Monster{
@@ -13,8 +12,8 @@ public class Skeleton extends Monster{
 	private static final GameTypeObjects ID = GameTypeObjects.SKELETON;
 	private static final int ATTACK_DICES = 1;
 	private static final int DEFENSE_DICES = 1;
-	private static final int HP = 1;
-	private static final int MP = 1;
+	private static final int HP = 4;
+	private static final int MP = 2;
 	private static final MonsterClasses MONSTER_CLASS = MonsterClasses.SKELETON;
 	
 	public Skeleton(Coordinate position) {

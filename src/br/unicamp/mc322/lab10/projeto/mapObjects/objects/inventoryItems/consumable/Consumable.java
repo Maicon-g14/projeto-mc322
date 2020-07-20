@@ -9,7 +9,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 
 public class Consumable extends CanCarry{
-	public Consumable(String name, Sprite sprite, GameTypeObjects id) {
-		super(name,sprite,id);
+	public Consumable(String name, Sprite sprite, GameTypeObjects id, int price) {
+		super(name,sprite,id,price);
 	}
 }

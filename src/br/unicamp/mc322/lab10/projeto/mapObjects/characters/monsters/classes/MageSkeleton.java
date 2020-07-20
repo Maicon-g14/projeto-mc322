@@ -12,8 +12,8 @@ public class MageSkeleton extends Monster {
 	private static final GameTypeObjects ID = GameTypeObjects.MAGE_SKELETON;
 	private static final int ATTACK_DICES = 1;
 	private static final int DEFENSE_DICES = 1;
-	private static final int HP = 1;
-	private static final int MP = 1;
+	private static final int HP = 3;
+	private static final int MP = 5;
 	private static final MonsterClasses MONSTER_CLASS = MonsterClasses.MAGE_SKELETON;
 	
 	public MageSkeleton(Coordinate position) {

@@ -1,9 +1,7 @@
 package br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters;
 import br.unicamp.mc322.lab10.projeto.Coordinate;
-import br.unicamp.mc322.lab10.projeto.engine.MapObjectVisitor;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
-import br.unicamp.mc322.lab10.projeto.mapObjects.aliveCreatures.notPlayable.enemy.MonsterClass;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.MonsterClasses;
 
