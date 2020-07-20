@@ -9,6 +9,7 @@ import br.unicamp.mc322.lab10.projeto.Coordinate;
 public class GameObject {
 	private String name;
 	private GameTypeObjects id;		//cada tipo de objeto tem seu ID proprio para busca
+	private GameTypeObjects type = GameTypeObjects.GAME_OBJECT;
 	private Coordinate mapPosition;		//posicao do objeto no mapa
 	private Sprite sprite;		//simbolo que representa cada objeto no mapa(uma constante)
 	private boolean visible = true;
@@ -27,6 +28,22 @@ public class GameObject {
 		this.sprite = sprite;
 		this.id = id;
 		this.mapPosition = null;
+	}
+	
+	public GameObject(String name, Sprite sprite, GameTypeObjects id, Coordinate mapPosition, GameTypeObjects type) {
+		this.name = name;
+		this.sprite = sprite;
+		this.id = id;
+		this.mapPosition = mapPosition;
+		this.type = type;
+	}
+	
+	public GameObject(String name, Sprite sprite, GameTypeObjects id, GameTypeObjects type) {
+		this.name = name;
+		this.sprite = sprite;
+		this.id = id;
+		this.mapPosition = null;
+		this.type = type;
 	}
 	
 	public void setPlayerName(String name, GameTypeObjects player) {
@@ -62,6 +79,10 @@ public class GameObject {
 	
 	protected void enableCollision() {
 		collide = true;
+	}
+	
+	public GameTypeObjects getType() {
+		return type;
 	}
 	
 	protected void turnOnVisibility() {

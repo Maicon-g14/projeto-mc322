@@ -9,9 +9,10 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Mon
 
 public class Monster extends Character {
 	private MonsterClasses monsterClass;
+	private static final GameTypeObjects type = GameTypeObjects.MONSTER;
 	
 	public Monster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, MonsterClasses monsterClass, Coordinate position) {
-		super(name,id,hp,mp,sprite,attackDices,defenseDices,position);
+		super(name,id,hp,mp,sprite,attackDices,defenseDices,position,type);
 		this.monsterClass = monsterClass;
 	}
 	
