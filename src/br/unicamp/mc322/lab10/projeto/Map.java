@@ -41,8 +41,8 @@ public class Map {
 	protected Coordinate[] coordinateArray;
 	protected GameObject[][][] maps;
 	protected GameMode gameMode;
-	private static final int TRAP_DAMAGE_STANDART_MODE = 20;
-	private static final int TRAP_DAMAGE_HARD_MODE = 10;
+	private static final int TRAP_DAMAGE_STANDART_MODE = 1;
+	private static final int TRAP_DAMAGE_HARD_MODE = 2;
 	protected HeroController[] heroes;
 	protected CpuMonster[][] monsters;
 	private Chest[] chests;
@@ -141,8 +141,8 @@ public class Map {
 	
 	public void printScene() {
 		/* Chama refreshMap e mostra map recebido na tela */
-		for (int j = 0; j < mapsWidth; j++) {
-			for (int k = 0; k < mapsHeight; k++) {
+		for (int j = 0; j < mapsHeight; j++) {
+			for (int k = 0; k < mapsWidth; k++) {
 				if (maps[currentMap][j][k] == null)
 					System.out.printf(" ");
 				else
