@@ -51,6 +51,14 @@ public class Player extends HeroController {
 		}
 	}
 	
+	private void castSpell(Map map) {		//vou fazer semelhante porem aleatorio pra mageSkeleton e outros heroes
+		/* Chamada inicial pra lançar um feitiço */		//nao verificado e nem testado
+		displaySpells();
+		System.out.println("Selecione o numero da magia: ");
+		int spellNumber = numberFromKeyboard();
+		useMagic(map,spellNumber);
+	}
+	
 	protected boolean action(Map map, Scanner scanner) {
 		/* Pergunta ao player se quer fazer outra acao alem de andar */
 		System.out.println("Acao nesse turno: (P = procurar, M = magia, A = atacar, U = usar item)");
@@ -59,7 +67,7 @@ public class Player extends HeroController {
 		switch(entrada.toUpperCase()) {
 		case "P" : map.search(getCharacter());		
 		break;
-		case "M" : ;
+		case "M" : castSpell(map);
 		break;
 		case "A" : ;
 		break;

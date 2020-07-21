@@ -34,6 +34,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.stru
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Stair;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.structure.structureTypes.Wall;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Controller;
 
 public class Map {
 	private int currentMap;
@@ -98,7 +99,7 @@ public class Map {
 		return monsters[currentMap];
 	}
 	
-	public Character findTarget(Coordinate position) {		//vazia
+	public Controller findTarget(Controller person) {		//vazia
 		/* Busca nos arredores da posicao dada se tem oponente pra atacar */
 		return null;
 	}

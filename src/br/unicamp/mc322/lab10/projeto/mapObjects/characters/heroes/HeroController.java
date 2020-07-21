@@ -7,6 +7,7 @@ import br.unicamp.mc322.lab10.projeto.Map;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Command;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Controller;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.SpellCaster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.spells.SpellTypes;
@@ -97,7 +98,7 @@ public abstract class HeroController implements Controller {
 	
 
 	
-	public void useMagic() {
+	public void useMagic(Map map, int index) {
 		int n = 0;//precisa ser lido do teclado o indice da magia na lista de magias do personagem
 		SpellCaster caster;
 		Spell spell;
@@ -113,7 +114,7 @@ public abstract class HeroController implements Controller {
 				caster.castSpell(this, spell, dice);//magias de support são sempre utilizadas no próprio usuario
 				
 			}else if(spell.getSpellType() == SpellTypes.ATTACK) {
-				target = findTarget();//chamar funcao que escolhe o alvo
+				target = map.findTarget(this);//chamar funcao que escolhe o alvo
 				caster.castSpell(target, spell, dice);
 				
 			}

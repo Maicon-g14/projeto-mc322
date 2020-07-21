@@ -6,7 +6,6 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Controller;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.spells.Spell;
-import br.unicamp.mc322.lab10.projeto.mapObjects.objects.spells.SpellTypes;
 
 public class SpellCaster extends Hero{
 
@@ -67,7 +66,6 @@ public class SpellCaster extends Hero{
 			spell.use(target);
 		}
 	}
-	
 	
 	public Spell getSpell(int n) {
 		return spells[n];
