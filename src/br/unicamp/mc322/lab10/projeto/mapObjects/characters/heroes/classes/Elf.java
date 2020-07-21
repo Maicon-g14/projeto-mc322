@@ -4,8 +4,9 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
+import br.unicamp.mc322.lab10.projeto.mapObjects.objects.spells.Spell;
 
-public class Elf extends Hero {
+public class Elf extends SpellCaster {
 	private static final char SPRITE = 'E';
 	private static final String NAME = "Elf";
 	private static final GameTypeObjects ID = GameTypeObjects.ELF;
@@ -18,8 +19,16 @@ public class Elf extends Hero {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES);
 	}
 	
+	public Elf(Spell[] initialSpells) {
+		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,initialSpells);
+	}
+	
 	public Elf(CanCarry[] initialEquipment) {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,initialEquipment);
+	}
+	
+	public Elf(CanCarry[] initialEquipment, Spell[] initialSpells) {
+		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,initialEquipment,initialSpells);
 	}
 	
 }

@@ -2,6 +2,8 @@ package br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes;
 import java.util.Scanner;
 
 import br.unicamp.mc322.lab10.projeto.mapObjects.Command;
+import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.classes.SpellCaster;
+import br.unicamp.mc322.lab10.projeto.mapObjects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.Map;
 
 public class Player extends HeroController {
@@ -83,6 +85,18 @@ public class Player extends HeroController {
 		
 		moving = true;
 		callMove(map);
+	}
+	
+	public Spell chooseSpell(Spell[] spells) {
+		int n;
+		Spell chosenSpell;
+		displaySpells();
+		n = numberFromKeyboard();
+		if(n < spells.length) {
+			chosenSpell = spells[n];
+			return chosenSpell;
+		}
+		return null;
 	}
 	
 	public void treasureSearch(Map mapa) {
