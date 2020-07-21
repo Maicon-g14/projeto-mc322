@@ -5,14 +5,13 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Character;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 
 public abstract class Hero extends Character {
-	private static final GameTypeObjects type = GameTypeObjects.HERO;
 
 	public Hero(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices,type);
+		super(name, id, hp, mp, sprite, attackDices, defenseDices);
 	}
 	
 	public Hero(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, CanCarry[] initialEquipment) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices,type,initialEquipment);
+		super(name, id, hp, mp, sprite, attackDices, defenseDices,initialEquipment);
 	}
 	
 }

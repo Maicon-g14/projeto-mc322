@@ -26,15 +26,14 @@ public class CpuHero extends HeroController {
 		callMove(map);
 	}
 
-	private void chooseMovementDirection() {
-		direction = Command.getRandomDirection();
-	}
-
 	@Override
-	protected void action(Map map, Scanner scanner) {
+	protected void action(Map map, Scanner scanner, boolean turn) {
 		// TODO Auto-generated method stub
 		
 	}
 	
-	
+	private void chooseMovementDirection() {
+		direction = Command.getRandomDirection();
+	}
+
 }

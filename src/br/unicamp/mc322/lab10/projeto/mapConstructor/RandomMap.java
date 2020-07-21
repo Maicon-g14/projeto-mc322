@@ -32,7 +32,7 @@ public class RandomMap extends Map{
 	private static final int HIDDEN_DOORS_MAX_AMOUNT_STANDART_MODE = 20;
 	private static final int HIDDEN_DOORS_MAX_AMOUNT_HARD_MODE = 10;
 	
-	public RandomMap(GameMode gameMode, PlayableClasses choosenClass, String playerName) {
+	public RandomMap(GameMode gameMode, PlayableClasses choosenClass, String playerName, EquipmentLoad findableEquipment) {
 		/* A partir de um mapa pré-definido de paredes e possives posicoes de portas
 		 * lido do HD, gera aleatoriamente um mapa com monstros, armadilhas e portas
 		 * ocultas */
@@ -47,6 +47,7 @@ public class RandomMap extends Map{
 		maps = new GameObject[mapsAmount][mapsHeight][mapsWidth];
 		
 		setFixedContent();
+		this.findableEquipment = findableEquipment;
 		
 		for (int i = 0; i < mapsAmount; i++) {			
 			if (i < mapsAmount-1)
@@ -72,20 +73,6 @@ public class RandomMap extends Map{
 		if (maps[x][y][z] != null && maps[x][y][z].getId() ==  GameTypeObjects.WALL && ((maps[x][y][z+1] == null && maps[x][y][z-1] == null) || (maps[x][y+1][z] == null && maps[x][y-1][z] == null)))
 			return true;
 		return false;
-	}
-	
-	private Coordinate getEmptyPosition(int i) {
-		/* Retorna um tipo coordenada com uma posicao vazia do mapa escolhida aleatoriamente */
-		Random randomize = new Random();
-		int x,y;
-		
-		do {
-			x = randomize.nextInt(mapsHeight-1);
-			y = randomize.nextInt(mapsWidth-1);
-		
-		} while(maps[i][x][y] != null);
-		
-		return new Coordinate(x,y);
 	}
 	
 	private Coordinate getWallPosition(int x) {
@@ -171,29 +158,6 @@ public class RandomMap extends Map{
 		int k = (int) MAPS_WIDTH/2;
 		
 		maps[i][j][k] = createObject('C', new Coordinate(j,k),i);
-	}
-		
-	private void setMonsters(int i) {
-		/* Chama a inicializacao dos monstros do mapa na posicao escolhida aleatoriamente */
-		Coordinate pos;
-		Random randomize = new Random();
-		
-		int monstersAmount = randomize.nextInt(3)+3;
-		
-		for(int b = 0; b < monstersAmount; b++) {
-			pos = getEmptyPosition(i);
-			
-			if(randomlyChoice()) {		//escolhe esqueleto como monstro
-				
-				if(randomlyChoice())
-					maps[i][pos.getX()][pos.getY()] = createObject('M',pos,i);		//mage skeleton
-				
-				else
-					maps[i][pos.getX()][pos.getY()] = createObject('K',pos,i);		//skeleton
-				
-			} else
-				maps[i][pos.getX()][pos.getY()] = createObject('G',pos,i);
-		}
 	}
 	
 	private void setTrap(int i) {

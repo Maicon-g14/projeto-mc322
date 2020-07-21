@@ -8,6 +8,7 @@ package br.unicamp.mc322.lab10.projeto;
 import java.util.Arrays;
 import java.util.Random;
 
+import br.unicamp.mc322.lab10.projeto.mapConstructor.EquipmentLoad;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.CpuHero;
@@ -24,6 +25,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Goblin;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.MageSkeleton;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.classes.Skeleton;
+import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.StartEquipment;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.forniture.fornitureTypes.Chest;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.forniture.fornitureTypes.Trap;
@@ -45,7 +47,7 @@ public class Map {
 	private static final int TRAP_DAMAGE_HARD_MODE = 2;
 	protected HeroController[] heroes;
 	protected CpuMonster[][] monsters;
-	private Chest[] chests;
+	protected EquipmentLoad findableEquipment;
 	
 	public Map() {
 		heroes = new HeroController[4];
@@ -79,10 +81,10 @@ public class Map {
 		return true;
 	}
 	
-	public boolean isEmptyPosition(Coordinate position, GameTypeObjects type) {
+	public boolean isEmptyPosition(Coordinate position, Character character) {
 		/* Checa se personagem pode se mover para a posicao dada.
 		 * Monstros nao se movem para cima de armadilhas */
-		if(isValid(position) && (getPosition(position) == null || (getPosition(position).getId() == GameTypeObjects.TRAP && type == GameTypeObjects.HERO)))
+		if(isValid(position) && (getPosition(position) == null || (getPosition(position).getId() == GameTypeObjects.TRAP && character instanceof Hero)))
 			return true;
 		return false;
 	}
@@ -100,11 +102,7 @@ public class Map {
 		/* Busca nos arredores da posicao dada se tem oponente pra atacar */
 		return null;
 	}
-	
-	public Chest[] getChests() {
-		return chests;
-	}
-	
+		
 	public void setPosition(GameObject item, Coordinate position) {
 		/* Dado um objeto e uma nova posicao para ele(ja verificada),
 		 * move esse objeto para a nova posicao */
@@ -122,21 +120,216 @@ public class Map {
 		maps[currentMap][x][y].setPosition(position);
 	}
 		
-	public void climbStair(Stair stair) {		//vazia
+	private boolean isFindableItem(Coordinate position) {
+		/* Testa se item na posicao dada é um item que pode ser encontrado(como armadilha ou porta secreta) */
+		GameObject item = getPosition(position);
 		
+		if(item != null && (item instanceof Trap || item instanceof HiddenDoor))
+			return true;
+		return false;
 	}
 	
-	public void openChest() {		//vazia
+	private GameObject[] getFindable(Coordinate center) {
+		/* Se pos do player for igual a de algum objeto CanCarry no chao, pega ele pra por no inventario */
+		GameObject[] surroundings = new GameObject[4];
+		Coordinate side = center;
 		
+		side.setX(center.getX()+1);
+		
+		if(isValid(side) && isFindableItem(side))
+			surroundings[0] = getPosition(side);
+		
+		side.setX(center.getX()-1);
+		
+		if(isValid(side) && isFindableItem(side))
+			surroundings[1] = getPosition(side);
+		
+		side.setX(center.getX());
+		side.setY(center.getY()+1);
+		
+		if(isValid(side) && isFindableItem(side))
+			surroundings[2] = getPosition(side);
+		
+		side.setY(center.getY()-1);
+		
+		if(isValid(side) && isFindableItem(side))
+			surroundings[3] = getPosition(side);
+		
+		return surroundings;
 	}
 	
-	public void searchTrap() {		//vazia
+	public void search(Character hero) {
+		/* busca hidden door ou trap nos arredores, caso nao tenha nenhum dos dois tem 
+		 * uma pequena chance de encontrar um item e uma grande chance de encontrar um monstro */
+		Coordinate heroPos = hero.getPosition();
+		GameObject[] surroundings = getFindable(heroPos);
+		boolean findSomething = false;
 		
-	}
-	
-	public void searchItem() {		//vazia
-		/* Se pos do player for igual a de algum objeto CanCarry no chao, pega ele pra por no inventario */	
+		for (int i = 0; i < surroundings.length; i++) {
+			if (surroundings[i] != null && surroundings[i] instanceof Trap) {
+				Trap trap = (Trap) surroundings[i];
+				
+				trap.disarmTrap();
+				remove(trap.getPosition());
+				
+				findSomething = true;
+			} else if (surroundings[i] != null && surroundings[i] instanceof HiddenDoor) {
+				HiddenDoor hiddenDoor = (HiddenDoor) surroundings[i];
+				
+				hiddenDoor.discoverDoor();
+				
+				findSomething = true;
+			}
+		}
+		
+		if(!findSomething) {		//encontra item, monstro ou nada
+			if (randomlyChoice()) {		//encontra monstro
+				
+				System.out.println("Voce encontrou um monstro!");
+				setMonsters(currentMap);
+				
+			} else if (randomlyChoice()){		//encontra algo
+				
+				if (randomlyChoice()) {		//encontra dinheiro
+					
+					hero.addRandomMoney();
+					
+				} else {		//encontra item
+					
+					CanCarry item = findableEquipment.getRandomLoot();
+					System.out.println("Voce encontrou: " + item.getName());
+					hero.addToInventory(item);
+				
+				}
+				
+			} else {		//nao encontra nada
+				
+				System.out.println("Nada encontrado!");
 			
+			}
+		}
+	}
+	
+	protected Coordinate getEmptyPosition(int i) {
+		/* Retorna um tipo coordenada com uma posicao vazia do mapa escolhida aleatoriamente */
+		Random randomize = new Random();
+		int x,y;
+		
+		do {
+			x = randomize.nextInt(mapsHeight-1);
+			y = randomize.nextInt(mapsWidth-1);
+		
+		} while(maps[i][x][y] != null);
+		
+		return new Coordinate(x,y);
+	}
+	
+	protected void setMonsters(int i) {
+		/* Chama a inicializacao dos monstros do mapa na posicao escolhida aleatoriamente */
+		Coordinate pos;
+		Random randomize = new Random();
+		
+		int monstersAmount = randomize.nextInt(3)+3;
+		
+		for(int b = 0; b < monstersAmount; b++) {
+			pos = getEmptyPosition(i);
+			
+			if(randomlyChoice()) {		//escolhe esqueleto como monstro
+				
+				if(randomlyChoice())
+					maps[i][pos.getX()][pos.getY()] = createObject('M',pos,i);		//mage skeleton
+				
+				else
+					maps[i][pos.getX()][pos.getY()] = createObject('K',pos,i);		//skeleton
+				
+			} else
+				maps[i][pos.getX()][pos.getY()] = createObject('G',pos,i);
+		}
+	}
+	
+	private boolean isUsableItem(Coordinate position) {
+		/* Testa se item na posicao dada é um item que pode ser usado(bau, escada ou porta) */
+		GameObject item = getPosition(position);
+		
+		if(item != null && (item instanceof Door || item instanceof Chest || item instanceof Stair))
+			return true;
+		return false;
+	}
+	
+	private GameObject[] getUsable(Coordinate center) {
+		/* Devolve os itens ao redor da posicao dada na mapa */
+		GameObject[] surroundings = new GameObject[4];
+		Coordinate side = center;
+		
+		side.setX(center.getX()+1);
+		
+		if(isValid(side) && isUsableItem(side))
+			surroundings[0] = getPosition(side);
+		
+		side.setX(center.getX()-1);
+		
+		if(isValid(side) && isUsableItem(side))
+			surroundings[1] = getPosition(side);
+		
+		side.setX(center.getX());
+		side.setY(center.getY()+1);
+		
+		if(isValid(side) && isUsableItem(side))
+			surroundings[2] = getPosition(side);
+		
+		side.setY(center.getY()-1);
+		
+		if(isValid(side) && isUsableItem(side))
+			surroundings[3] = getPosition(side);
+		
+		return surroundings;
+	}
+	
+	private void remove(Coordinate position) {
+		/* Dada uma coordenada valida do mapa, remove o item dela */
+		maps[currentMap][position.getX()][position.getY()] = null;
+	}
+	
+	private boolean stillHaveMonstersOnThisFloor() {
+		/* Checa se ainda existem monstros no andar atual */
+		for (int i = 0; i < monsters[currentMap].length; i++)
+			if (monsters[currentMap][i] != null)
+				return true;
+		return false;
+	}
+	
+	public void use(Character hero, boolean turn) {
+		/* Usado para abrir baus, portas ou subir escadas(so pode subir apos derrotar todos os monstros do andar) 
+		 * ao redor do player, caso nao haja nenhum destes, pergunta se quer usar health potion(se houver no inventario) */
+		Coordinate heroPos = hero.getPosition();
+		GameObject[] surroundings = getUsable(heroPos);
+		
+		for (int i = 0; i < surroundings.length; i++) {
+			if (surroundings[i] != null && surroundings[i] instanceof Chest) {
+				Chest chest = (Chest) surroundings[i];
+				
+				hero.addToInventory(chest.getItems());
+				remove(chest.getPosition());
+				
+				return;
+			} else if (surroundings[i] != null && surroundings[i] instanceof Door) {
+				Door door = (Door) surroundings[i];
+				
+				remove(door.getPosition());
+				
+				return;
+			} else if (surroundings[i] != null && surroundings[i] instanceof Stair) {
+				if (stillHaveMonstersOnThisFloor()) {
+					System.out.println("Parece que ainda tem monstros nesse andar!");
+					return;
+				}
+				turn = false;
+				
+				return;
+			}
+		}
+		
+		hero.askPotion();
 	}
 	
 	public void printScene() {
@@ -281,15 +474,12 @@ public class Map {
 		return maps[currentMap][x][y];
 	}
 	
-	private GameObject createChest(Coordinate position) {
-		if(chests == null)
-			chests = new Chest[1];
-		else
-			chests = Arrays.copyOf(chests, chests.length+1);
+	private Chest createChest(Coordinate position) {
 		
-		chests[chests.length-1] = new Chest(position);
+		Chest chest = new Chest(position);
+		chest.setContent(findableEquipment.getRandomLoot());
 		
-		return chests[chests.length-1];
+		return chest;
 	}
 	
 	private void resetHeroesPosition() {

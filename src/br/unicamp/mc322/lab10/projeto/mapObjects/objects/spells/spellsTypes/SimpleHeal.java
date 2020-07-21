@@ -21,7 +21,7 @@ public class SimpleHeal extends Spell{
 		super(NAME, new Sprite(), ID, DICES, ELEMENT);
 	}
 	
-	public void use() {
+	public void cast() {
 		
 	}
 }

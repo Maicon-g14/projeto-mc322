@@ -11,7 +11,6 @@ import br.unicamp.mc322.lab10.projeto.mapConstructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.heroes.HeroController;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
-import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.forniture.fornitureTypes.Chest;
 
 public class HeroQuest {
 	private Map map;
@@ -22,18 +21,16 @@ public class HeroQuest {
 	
 	public HeroQuest(GameMode gameMode, MapMode mapMode,PlayableClasses choosenClass, String playerName) {
 	/* Inicializa as classes principais e carrega o mapa do jogo com os componentes de cada cena */
-		if (mapMode == MapMode.PREDEFINED)
-			map = new PresetMap(gameMode, choosenClass, playerName);
-		else if (mapMode == MapMode.RANDOM)
-			map = new RandomMap(gameMode, choosenClass, playerName);
-		
-		heroesController = map.getHeroes();
-						
 		EquipmentLoad findableEquipment = new EquipmentLoad();
 		
-		market = new Market(findableEquipment.getMarketItems());
+		if (mapMode == MapMode.PREDEFINED)
+			map = new PresetMap(gameMode, choosenClass, playerName, findableEquipment);
+		else if (mapMode == MapMode.RANDOM)
+			map = new RandomMap(gameMode, choosenClass, playerName, findableEquipment);
 		
-		loadChests(findableEquipment);
+		heroesController = map.getHeroes();
+		
+		market = new Market(findableEquipment.getMarketItems());
 	}
 	
 	public void startGame() {
@@ -51,7 +48,7 @@ public class HeroQuest {
 			monstersController = map.getMonsters();
 			
 			while(running && turn) {
-				heroesTurn();
+				heroesTurn(turn);
 				monstersTurn();
 				
 				map.printScene();
@@ -71,17 +68,10 @@ public class HeroQuest {
 		market.doShopping(player);
 	}
 	
-	private void loadChests(EquipmentLoad findableEquipment) {
-		Chest[] chests = map.getChests();
-		
-		for(int i = 0; i < chests.length; i++)
-			chests[i].setContent(findableEquipment.getRandomLoot());
-	}
-	
-	private void heroesTurn() {
+	private void heroesTurn(boolean turn) {
 		/* Executa o turno dos herois */
 		for(int i = 0; i < heroesController.length; i++)			//heroesController.length
-			heroesController[i].playTurn(map);
+			heroesController[i].playTurn(map, turn);
 	}
 	
 	private void monstersTurn() {
@@ -98,12 +88,12 @@ public class HeroQuest {
 		Hero player = heroesController[0].getCharacter();
 		
 		if(map.allMonstersDefeated()) {
-			System.out.println("----------------\n- Voce ganhou!- \n----------------");
+			System.out.println("----------------\n-  Game Over!  -\n\n- Voce ganhou!- \n----------------");
 			running = false;
 		}
 		
 		if(player.isDead()) {
-			System.out.println("----------------\n- Voce perdeu!- \n----------------");
+			System.out.println("----------------\n-  Game Over!  -\n\n- Voce perdeu! -\n----------------");
 			running = false;
 		}
 	}

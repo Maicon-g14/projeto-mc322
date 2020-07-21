@@ -4,7 +4,6 @@ import java.util.Random;
 
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.CanCarry;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.consumable.comsumableItems.HealthPotion;
-import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.Equipment;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.attackItems.BetterDagger;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.attackItems.BetterLongSword;
 import br.unicamp.mc322.lab10.projeto.mapObjects.objects.inventoryItems.equipment.attack.attackItems.BetterShortSword;
@@ -28,6 +27,18 @@ public class EquipmentLoad {
 		createEquipment();
 	}
 	
+	public CanCarry getRandomLoot() {
+		/* Retorna um item aleatorio do jogo */
+		Random randomize = new Random();
+		int choosen = randomize.nextInt(MARKET_SIZE);
+		
+		return marketEquipment[choosen];
+	}
+	
+	public CanCarry[] getMarketItems() {
+		return marketEquipment;
+	}
+
 	private void createEquipment() {
 		/* Inicializa todos os equipamentos do jogo */
 		marketEquipment[0] = new HealthPotion();
@@ -43,17 +54,5 @@ public class EquipmentLoad {
 		marketEquipment[10] = new Shield2();
 		marketEquipment[11] = new BetterLightArmor();
 		marketEquipment[12] = new BetterHeavyArmor();
-	}
-	
-	public CanCarry getRandomLoot() {
-		/* Retorna um item aleatorio do jogo */
-		Random randomize = new Random();
-		int choosen = randomize.nextInt(MARKET_SIZE);
-		
-		return marketEquipment[choosen];
-	}
-	
-	public CanCarry[] getMarketItems() {
-		return marketEquipment;
 	}
 }
