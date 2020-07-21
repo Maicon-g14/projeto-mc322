@@ -14,9 +14,8 @@ public class Goblin extends Monster {
 	private static final int DEFENSE_DICES = 2;
 	private static final int HP = 6;
 	private static final int MP = 1;
-	private static final MonsterClasses MONSTER_CLASS = MonsterClasses.GOBLIN;
 
 	public Goblin(Coordinate position) {
-		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,MONSTER_CLASS,position);
+		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,position);
 	}
 }

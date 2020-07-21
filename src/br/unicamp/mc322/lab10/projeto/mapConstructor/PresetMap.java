@@ -25,14 +25,14 @@ public class PresetMap extends Map{
 	private static final String path = "./src\\\\br\\\\unicamp\\\\mc322\\\\lab10\\\\projeto\\\\mapConstructor\\\\";
 	private static final String fileName = "map.txt";
 	
-	public PresetMap(GameMode gameMode, PlayableClasses choosenClass, String playerName) {
+	public PresetMap(GameMode gameMode, PlayableClasses choosenClass, String playerName, EquipmentLoad findableEquipment) {
 		/* Le do HD o arquivo de mapas com nome filename em path */	
 		try {
 			FileInputStream fileInputStream = new FileInputStream(path+fileName);
 			InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);		//no windows usar notepad++ e salvar com encode "utf-8" (variantes geram lixo na saida)
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);		
 			
-			setMapsConfig(bufferedReader,gameMode);
+			setMapsConfig(bufferedReader,gameMode,findableEquipment);
 			
 			bufferedReader.readLine();
 			
@@ -50,7 +50,7 @@ public class PresetMap extends Map{
 		}
 	}
 	
-	private void setMapsConfig(BufferedReader bufferedReader, GameMode gameMode) throws IOException {
+	private void setMapsConfig(BufferedReader bufferedReader, GameMode gameMode, EquipmentLoad findableEquipment) throws IOException {
 		/* Le e armazena as configurações do mapa carregado */
 		String line;
 		String[] aux;
@@ -70,6 +70,7 @@ public class PresetMap extends Map{
 		mapsHeight = Integer.parseInt(aux[1]);
 		
 		monsters = new CpuMonster[mapsAmount][];		//aloca so uma dimensao do array 2d
+		this.findableEquipment = findableEquipment;
 	}
 	
 	private void makeMatrix(BufferedReader bufferedReader) throws IOException {

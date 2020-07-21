@@ -14,9 +14,8 @@ public class Skeleton extends Monster{
 	private static final int DEFENSE_DICES = 1;
 	private static final int HP = 4;
 	private static final int MP = 2;
-	private static final MonsterClasses MONSTER_CLASS = MonsterClasses.SKELETON;
 	
 	public Skeleton(Coordinate position) {
-		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,MONSTER_CLASS,position);
+		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,position);
 	}
 }

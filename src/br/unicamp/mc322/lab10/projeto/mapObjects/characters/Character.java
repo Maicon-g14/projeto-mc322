@@ -1,5 +1,7 @@
 package br.unicamp.mc322.lab10.projeto.mapObjects.characters;
 
+import java.util.Scanner;
+
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.Map;
 import br.unicamp.mc322.lab10.projeto.mapObjects.Command;
@@ -32,53 +34,176 @@ public abstract class Character extends GameObject{
 	private Boolean dead = false;
 	private Money money = new Money();
 	
-	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, GameTypeObjects type) {
-		super(name,sprite,id,type);
+	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue) {
+		super(name,sprite,id);
 		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
 	}
 	
-	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, GameTypeObjects type, CanCarry[] initialEquipment) {
-		super(name,sprite,id,type);
-		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
-		addToInventory(initialEquipment);
-	}
-	
-	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, Coordinate position, GameTypeObjects type) {
-		super(name,sprite,id,position,type);
-		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
-	}
-	
-	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, Coordinate position, GameTypeObjects type, CanCarry[] initialEquipment) {
-		super(name,sprite,id,position,type);
+	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, CanCarry[] initialEquipment) {
+		super(name,sprite,id);
 		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
 		addToInventory(initialEquipment);
 	}
 	
-	private void setCharacterStandarts(int hp, int intellect, int ATKValue, int DEFValue) {
-		this.HP = hp;
-		this.intellect = intellect;
-		maxHP = hp;
-		this.ATKValue = ATKValue;
-		this.DEFValue = DEFValue;
-		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
+	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, Coordinate position) {
+		super(name,sprite,id,position);
+		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
 	}
 	
+	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int ATKValue, int DEFValue, Coordinate position, CanCarry[] initialEquipment) {
+		super(name,sprite,id,position);
+		setCharacterStandarts(hp,intellect,ATKValue,DEFValue);
+		addToInventory(initialEquipment);
+	}
+
+	public boolean move(Command direction, Map map) {
+		/* Dada uma direcao, realiza um passo */
+		int destinoX = getPosition().getX();
+		int destinoY = getPosition().getY();
+		Coordinate newPosition = new Coordinate(destinoX, destinoY);
+		
+		switch(direction) {
+			case MOVE_UP: 
+				newPosition.setX(--destinoX);
+				if(!map.isEmptyPosition(newPosition,this))
+					return false;
+				break;
+			case MOVE_DOWN: 
+				newPosition.setX(++destinoX);
+				if(!map.isEmptyPosition(newPosition,this))
+					return false;
+				break;
+			case MOVE_RIGHT: 
+				newPosition.setY(++destinoY);
+				if(!map.isEmptyPosition(newPosition,this))
+					return false;
+				break;
+			case MOVE_LEFT:
+				newPosition.setY(--destinoY);
+				if(!map.isEmptyPosition(newPosition,this))
+					return false;
+				break;
+			default : break;
+		}
+		
+		map.setPosition(this,newPosition);
+		
+		return true;
+	}
+
+	public boolean isDead() {
+		return dead;
+	}
+	
+	public boolean buy(CanCarry item) {
+		/* Se houver saldo, desconta e adiciona o item ao inventario */
+		int price = item.getPrice();
+		
+		if (inventoryLoad < INVENTORY_MAX_AMOUNT && money.removeMoney(price)) {
+			inventory[inventoryLoad++] = item;
+			return true;
+		} else if (inventoryLoad < INVENTORY_MAX_AMOUNT)
+			System.out.println("Saldo insuficiente!");
+		else
+			System.out.println("Inventario cheio!");		//trocar esses por throws
+		
+		return false;
+	}
+
+	public int getIntelligence() {
+		/* Retorna inteligencia do personagem, usado pra lancar magias */
+		return intellect;
+	}
+
 	public int getHp() {
 		return HP;
 	}
 	
-	public void usePotion() {
-		/* Procura por potion no inventario, usa e apaga item */
-		for (int i = 0; i < inventoryLoad; i++)
-			if (inventory[i].getId() == GameTypeObjects.HEALTH_POTION) {
-				HealthPotion potion = (HealthPotion) inventory[i];
-				recoverHp(potion.usePotion());
-				inventory[i] = inventory[inventoryLoad-1];
-				inventory[inventoryLoad-1] = null;
-				inventoryLoad--;
-			}
+	public int getAttackDices() {
+		return finalAttack;
 	}
 	
+	public int getDefenseDices() {
+		return finalDefense;
+	}
+
+	public int showMoney() {
+		return money.getMoney();
+	}
+	
+	public int getInventoryLoad() {
+		/* Retorna quantos itens tem no inventario */
+		return inventoryLoad;
+	}
+	
+	public CanCarry[] getInventory() {
+		/* Retorna uma copia de todos os itens do inventario */
+		return inventory;
+	}
+
+	public void addToInventory(CanCarry item) {
+		/* Adiciona item ao inventario e caso seja um equipamento e melhor que o equipado,
+		 * euipa ele e poe o anterior no inventario */
+		if(inventoryLoad < INVENTORY_MAX_AMOUNT) {
+			if (item instanceof Attack && isBestWeapon((Attack) item)) {
+				equipAttack((Attack) item);
+			} else if (item instanceof Defense && isBestArmor((Defense) item)) {
+				equipDefense((Defense) item);
+			} else
+				inventory[inventoryLoad++] = item;
+			
+		} else
+			System.out.println("Inventario cheio!");
+	}
+	
+	public void addToInventory(CanCarry[] item) {
+		/* Adiciona lista de items ao inventario */
+		for (int i = 0; i < item.length; i++)
+			addToInventory(item[i]);
+	}
+
+	public void removeFromInventory(int id) {
+		/* Dado a posicao do item no inventario, remove ele */
+		inventory[id] = inventory[--inventoryLoad];
+		inventory[inventoryLoad] = null;
+	}
+	
+	public void sell(int id) {
+		/* Funcao auxiliar na venda de itens */
+		int price = inventory[id].getPrice();
+		money.addMoney(price);
+		removeFromInventory(id);
+	}
+
+	public void askPotion() {
+		/* Pergunta se quer tomar pocao */
+		@SuppressWarnings("resource")
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("Deseja utilizar uma pocao de vida? (s/n)");
+		String entrada = scanner.nextLine();
+		
+		switch(entrada.toUpperCase()) {
+		case "S" :
+			if (!usePotion())
+				System.out.println("Voce nao tem pocoes em seu inventario!");
+			break;
+		}
+	}
+
+	public void takeDamage(int damage) {
+		/* Desconta do HP atual a quantidade dada, se morrer, ativa o dead */
+		loseHp(damage);
+	}
+	
+	public void attack(Character target, int damage) {
+		target.takeDamage(damage);
+	}
+	
+	public void addRandomMoney() {
+		money.addRandomMoney();
+	}
+
 	protected void recoverHp(int amount) {
 		if(HP + amount < maxHP)
 			HP += amount;
@@ -94,31 +219,6 @@ public abstract class Character extends GameObject{
 			HP = 0;
 			dead = true;
 		}
-	}
-	
-	public int getAttackDices() {
-		return finalAttack;
-	}
-	
-	public int getDefenseDices() {
-		return finalDefense;
-	}
-	
-	public void takeDamage(int damage) {
-		/* Desconta do HP atual a quantidade dada, se morrer, ativa o dead */
-		loseHp(damage);
-	}
-	
-	public void attack(Character target, int damage) {
-		target.takeDamage(damage);
-	}
-	
-	public Boolean isDead() {
-		return dead;
-	}
-	
-	public int showMoney() {
-		return money.getMoney();
 	}
 	
 	private boolean isBestWeapon(Attack item) {
@@ -138,7 +238,30 @@ public abstract class Character extends GameObject{
 		
 		return false;
 	}
-	
+
+	private boolean usePotion() {
+		/* Procura por potion no inventario, usa e apaga item */
+		for (int i = 0; i < inventoryLoad; i++)
+			if (inventory[i].getId() == GameTypeObjects.HEALTH_POTION) {
+				HealthPotion potion = (HealthPotion) inventory[i];
+				recoverHp(potion.usePotion());
+				inventory[i] = inventory[inventoryLoad-1];
+				inventory[inventoryLoad-1] = null;
+				inventoryLoad--;
+				return true;
+			}
+		
+		return false;
+	}
+
+	private Equipment unequip(Equipment equipment) {
+		/* Se houver, move item pro inventario e retorna null */
+		if (equipment != null)
+			inventory[inventoryLoad++] = equipment;
+		
+		return null;
+	}
+
 	private void equipAttack(Attack item) {
 		/* Substitui item dado pelo item mais fraco equipado ou os dois pelo item dado
 		 * caso seja 2handed */
@@ -176,14 +299,6 @@ public abstract class Character extends GameObject{
 		refreshStatus();
 	}
 	
-	private Equipment unequip(Equipment equipment) {
-		/* Se houver, move item pro inventario e retorna null */
-		if (equipment != null)
-			inventory[inventoryLoad++] = equipment;
-		
-		return null;
-	}
-	
 	private void refreshStatus() {
 		/* Atualiza status do heroi adicionando o bonus dado pelo equipamento equipado */
 		finalAttack = ATKValue;
@@ -201,103 +316,13 @@ public abstract class Character extends GameObject{
 			finalAttack += defenseEquipment[1].getBonusDefense();
 	}
 	
-	public void addToInventory(CanCarry item) {
-		/* Adiciona item ao inventario e caso seja um equipamento e melhor que o equipado,
-		 * euipa ele e poe o anterior no inventario */
-		if(inventoryLoad < INVENTORY_MAX_AMOUNT) {
-			if (item instanceof Attack && isBestWeapon((Attack) item)) {
-				equipAttack((Attack) item);
-			} else if (item instanceof Defense && isBestArmor((Defense) item)) {
-				equipDefense((Defense) item);
-			} else
-				inventory[inventoryLoad++] = item;
-			
-		} else
-			System.out.println("Inventario cheio!");
-	}
-	
-	public void addToInventory(CanCarry[] item) {
-		/* Adiciona lista de items ao inventario */
-		for (int i = 0; i < item.length; i++)
-			addToInventory(item[i]);
-	}
-
-	public void removeFromInventory(int id) {
-		/* Dado a posicao do item no inventario, remove ele */
-		inventory[id] = inventory[--inventoryLoad];
-		inventory[inventoryLoad] = null;
-	}
-	
-	public void sell(int id) {
-		/* Funcao auxiliar na venda de itens */
-		int price = inventory[id].getPrice();
-		money.addMoney(price);
-		removeFromInventory(id);
-	}
-	
-	public Boolean buy(CanCarry item) {
-		/* Se houver saldo, desconta e adiciona o item ao inventario */
-		int price = item.getPrice();
-		
-		if (inventoryLoad < INVENTORY_MAX_AMOUNT && money.removeMoney(price)) {
-			inventory[inventoryLoad++] = item;
-			return true;
-		} else if (inventoryLoad < INVENTORY_MAX_AMOUNT)
-			System.out.println("Saldo insuficiente!");
-		else
-			System.out.println("Inventario cheio!");		//trocar esses por throws
-		
-		return false;
-	}
-	
-	public int getInventoryLoad() {
-		/* Retorna quantos itens tem no inventario */
-		return inventoryLoad;
-	}
-	
-	public CanCarry[] getInventory() {
-		/* Retorna uma copia de todos os itens do inventario */
-		return inventory;
-	}
-	
-	public int getIntelligence() {
-		/* Retorna inteligencia do personagem, usado pra lancar magias */
-		return intellect;
-	}
-	
-	public boolean move(Command direction, Map map) {
-		/* Dada uma direcao, realiza um passo */
-		int destinoX = getPosition().getX();
-		int destinoY = getPosition().getY();
-		Coordinate newPosition = new Coordinate(destinoX, destinoY);
-		
-		switch(direction) {
-			case MOVE_UP: 
-				newPosition.setX(--destinoX);
-				if(!map.isEmptyPosition(newPosition,type))
-					return false;
-				break;
-			case MOVE_DOWN: 
-				newPosition.setX(++destinoX);
-				if(!map.isEmptyPosition(newPosition,type))
-					return false;
-				break;
-			case MOVE_RIGHT: 
-				newPosition.setY(++destinoY);
-				if(!map.isEmptyPosition(newPosition,type))
-					return false;
-				break;
-			case MOVE_LEFT:
-				newPosition.setY(--destinoY);
-				if(!map.isEmptyPosition(newPosition,type))
-					return false;
-				break;
-			default : break;
-		}
-		
-		map.setPosition(this,newPosition);
-		
-		return true;
+	private void setCharacterStandarts(int hp, int intellect, int ATKValue, int DEFValue) {
+		this.HP = hp;
+		this.intellect = intellect;
+		maxHP = hp;
+		this.ATKValue = ATKValue;
+		this.DEFValue = DEFValue;
+		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
 	}
 
 }
