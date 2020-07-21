@@ -103,7 +103,7 @@ public class HeroQuest {
 		}
 		
 		if(player.isDead()) {
-			System.out.println("----------------\n- Voce perdeu!- \\n----------------");
+			System.out.println("----------------\n- Voce perdeu!- \n----------------");
 			running = false;
 		}
 	}
