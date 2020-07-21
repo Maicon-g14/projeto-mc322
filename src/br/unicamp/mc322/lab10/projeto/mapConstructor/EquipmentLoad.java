@@ -25,13 +25,11 @@ public class EquipmentLoad {
 	
 	public EquipmentLoad(){
 		marketEquipment = new CanCarry[MARKET_SIZE];
-		
 		createEquipment();
-		
-		additionalContent();
 	}
 	
 	private void createEquipment() {
+		/* Inicializa todos os equipamentos do jogo */
 		marketEquipment[0] = new HealthPotion();
 		marketEquipment[1] = new Shield1();
 		marketEquipment[2] = new Dagger();
@@ -48,6 +46,7 @@ public class EquipmentLoad {
 	}
 	
 	public CanCarry getRandomLoot() {
+		/* Retorna um item aleatorio do jogo */
 		Random randomize = new Random();
 		int choosen = randomize.nextInt(MARKET_SIZE);
 		
@@ -56,9 +55,5 @@ public class EquipmentLoad {
 	
 	public CanCarry[] getMarketItems() {
 		return marketEquipment;
-	}
-	
-	protected void additionalContent() {
-		/* Passar para funcao abstrata, deve ser sobrescrita caso queira adicionar mais conteudo ao jogo */
 	}
 }

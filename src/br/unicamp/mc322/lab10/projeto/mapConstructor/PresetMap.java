@@ -14,17 +14,18 @@ import java.nio.charset.StandardCharsets;
 
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.GameMode;
-import br.unicamp.mc322.lab10.projeto.QuestBase;
+import br.unicamp.mc322.lab10.projeto.Map;
+import br.unicamp.mc322.lab10.projeto.PlayableClasses;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 
-public class PresetMap extends MapLoad{
+public class PresetMap extends Map{
 	/* le do HD os mapas e os armazena em um vetor, cria um mapa de strings
 	 * retornando o primeiro mapa e marcando a posicao atual. */
 	private static final String path = "./src\\\\br\\\\unicamp\\\\mc322\\\\lab10\\\\projeto\\\\mapConstructor\\\\";
 	private static final String fileName = "map.txt";
 	
-	public PresetMap(GameMode gameMode) {
+	public PresetMap(GameMode gameMode, PlayableClasses choosenClass, String playerName) {
 		/* Le do HD o arquivo de mapas com nome filename em path */	
 		try {
 			FileInputStream fileInputStream = new FileInputStream(path+fileName);
@@ -38,6 +39,8 @@ public class PresetMap extends MapLoad{
 			makeMatrix(bufferedReader);
 			
 			bufferedReader.close();
+			
+			setHeroes(choosenClass, playerName);
 		
 		} catch (FileNotFoundException error) {
 			System.out.println("Arquivo base do mapa nao encontrado!");
@@ -85,7 +88,6 @@ public class PresetMap extends MapLoad{
 					
 				line = bufferedReader.readLine();		//avança para proxima linha
 				y++;
-			
 			}
 			
 			if(line != null && line.isEmpty())
@@ -93,7 +95,5 @@ public class PresetMap extends MapLoad{
 			
 			y=0;
 		}
-
 	}
-	
 }
