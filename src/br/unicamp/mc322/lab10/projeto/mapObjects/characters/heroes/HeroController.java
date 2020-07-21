@@ -60,20 +60,27 @@ public abstract class HeroController implements Controller {
 		getCharacter().askPotion();
 	}
 	
-	public void playTurn(Map map, boolean turn){
+	public boolean playTurn(Map map){
 		/* Turno do jogador */
+		boolean turn;
 		Scanner scanner = new Scanner(System.in);
 		
 		if(!moving) {
-			action(map,scanner,turn);
+			turn = action(map,scanner);
+			
+			if(!turn)
+				return turn;
+			
 			newDirection(map,scanner);
 		} else {
 			callMove(map);
-			action(map,scanner,turn);
+			turn = action(map,scanner);
 		}
 		
 		if(--remainingSteps <= 0)
 			moving = false;
+		
+		return turn;
 	}
 	
 	protected void callMove(Map map) {
@@ -111,5 +118,5 @@ public abstract class HeroController implements Controller {
 
 	protected abstract void newDirection(Map map, Scanner scanner);		//possibilidade de controlar todos os demais herois
 	
-	protected abstract void action(Map map, Scanner scanner, boolean turn);
+	protected abstract boolean action(Map map, Scanner scanner);
 }

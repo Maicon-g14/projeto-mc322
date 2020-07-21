@@ -38,7 +38,7 @@ public class Player extends HeroController {
 		}
 	}
 	
-	protected void action(Map map, Scanner scanner, boolean turn) {
+	protected boolean action(Map map, Scanner scanner) {
 		/* Pergunta ao player se quer fazer outra acao alem de andar */
 		System.out.println("Acao nesse turno: (P = procurar, M = magia, A = atacar, U = usar item)");
 		String entrada = scanner.nextLine();
@@ -50,9 +50,10 @@ public class Player extends HeroController {
 		break;
 		case "A" : ;
 		break;
-		case "U" : map.use(getCharacter(), turn);
-		break;
+		case "U" : return map.use(getCharacter());
 		}
+		
+		return true;
 	}
 	
 	protected void newDirection(Map map, Scanner scanner) {

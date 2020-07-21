@@ -40,15 +40,15 @@ public class HeroQuest {
 		running = true;
 
 		System.out.println("Game started!");
-		map.printScene();
 		
 		do {
 			
 			turn = true;
 			monstersController = map.getMonsters();
+			map.printScene();
 			
 			while(running && turn) {
-				heroesTurn(turn);
+				turn = heroesTurn();
 				monstersTurn();
 				
 				map.printScene();
@@ -68,10 +68,17 @@ public class HeroQuest {
 		market.doShopping(player);
 	}
 	
-	private void heroesTurn(boolean turn) {
+	private boolean heroesTurn() {
 		/* Executa o turno dos herois */
-		for(int i = 0; i < heroesController.length; i++)			//heroesController.length
-			heroesController[i].playTurn(map, turn);
+		boolean turn = true;
+		
+		for(int i = 0; i < heroesController.length; i++) {			//heroesController.length
+			turn = heroesController[i].playTurn(map);
+			if(!turn)
+				return turn;
+		}
+		
+		return turn;
 	}
 	
 	private void monstersTurn() {
@@ -88,12 +95,12 @@ public class HeroQuest {
 		Hero player = heroesController[0].getCharacter();
 		
 		if(map.allMonstersDefeated()) {
-			System.out.println("----------------\n-  Game Over!  -\n\n- Voce ganhou!- \n----------------");
+			System.out.println("----------------\n-  Game Over!  -\n- Voce ganhou!- \n----------------");
 			running = false;
 		}
 		
 		if(player.isDead()) {
-			System.out.println("----------------\n-  Game Over!  -\n\n- Voce perdeu! -\n----------------");
+			System.out.println("----------------\n-  Game Over!  -\n- Voce perdeu! -\n----------------");
 			running = false;
 		}
 	}

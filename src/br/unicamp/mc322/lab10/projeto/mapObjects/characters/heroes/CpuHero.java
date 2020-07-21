@@ -26,10 +26,8 @@ public class CpuHero extends HeroController {
 		callMove(map);
 	}
 
-	@Override
-	protected void action(Map map, Scanner scanner, boolean turn) {
-		// TODO Auto-generated method stub
-		
+	protected boolean action(Map map, Scanner scanner) {
+		return true;		//sinal usado para subir escada e trocar mapa
 	}
 	
 	private void chooseMovementDirection() {

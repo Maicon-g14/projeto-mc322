@@ -117,7 +117,9 @@ public class Map {
 		
 		maps[currentMap][x][y] = maps[currentMap][w][z];
 		maps[currentMap][w][z] = null;
-		maps[currentMap][x][y].setPosition(position);
+		
+		if (maps[currentMap][x][y] != null)
+			maps[currentMap][x][y].setPosition(position);
 	}
 		
 	private boolean isFindableItem(Coordinate position) {
@@ -132,11 +134,11 @@ public class Map {
 	private GameObject[] getFindable(Coordinate center) {
 		/* Se pos do player for igual a de algum objeto CanCarry no chao, pega ele pra por no inventario */
 		GameObject[] surroundings = new GameObject[4];
-		Coordinate side = center;
+		Coordinate side = new Coordinate(center.getX(),center.getY());
 		
 		side.setX(center.getX()+1);
 		
-		if(isValid(side) && isFindableItem(side))
+		if(isValid(side) && isFindableItem(side))		//em baixo
 			surroundings[0] = getPosition(side);
 		
 		side.setX(center.getX()-1);
@@ -166,14 +168,14 @@ public class Map {
 		boolean findSomething = false;
 		
 		for (int i = 0; i < surroundings.length; i++) {
-			if (surroundings[i] != null && surroundings[i] instanceof Trap) {
+			if (surroundings[i] != null && surroundings[i] instanceof Trap) {		//procura por armadilha
 				Trap trap = (Trap) surroundings[i];
 				
 				trap.disarmTrap();
 				remove(trap.getPosition());
 				
 				findSomething = true;
-			} else if (surroundings[i] != null && surroundings[i] instanceof HiddenDoor) {
+			} else if (surroundings[i] != null && surroundings[i] instanceof HiddenDoor) {		//procura por porta oculta
 				HiddenDoor hiddenDoor = (HiddenDoor) surroundings[i];
 				
 				hiddenDoor.discoverDoor();
@@ -259,7 +261,7 @@ public class Map {
 	private GameObject[] getUsable(Coordinate center) {
 		/* Devolve os itens ao redor da posicao dada na mapa */
 		GameObject[] surroundings = new GameObject[4];
-		Coordinate side = center;
+		Coordinate side = new Coordinate(center.getX(),center.getY());
 		
 		side.setX(center.getX()+1);
 		
@@ -292,13 +294,14 @@ public class Map {
 	
 	private boolean stillHaveMonstersOnThisFloor() {
 		/* Checa se ainda existem monstros no andar atual */
-		for (int i = 0; i < monsters[currentMap].length; i++)
-			if (monsters[currentMap][i] != null)
-				return true;
+		if (monsters[currentMap] != null)
+			for (int i = 0; i < monsters[currentMap].length; i++)
+				if (monsters[currentMap][i] != null)
+					return true;
 		return false;
 	}
 	
-	public void use(Character hero, boolean turn) {
+	public boolean use(Character hero) {
 		/* Usado para abrir baus, portas ou subir escadas(so pode subir apos derrotar todos os monstros do andar) 
 		 * ao redor do player, caso nao haja nenhum destes, pergunta se quer usar health potion(se houver no inventario) */
 		Coordinate heroPos = hero.getPosition();
@@ -307,29 +310,31 @@ public class Map {
 		for (int i = 0; i < surroundings.length; i++) {
 			if (surroundings[i] != null && surroundings[i] instanceof Chest) {
 				Chest chest = (Chest) surroundings[i];
+				CanCarry loot = chest.getItems();
 				
-				hero.addToInventory(chest.getItems());
+				System.out.println(loot.getName() + " adquirido!");
+				hero.addToInventory(loot);
 				remove(chest.getPosition());
 				
-				return;
+				return true;
 			} else if (surroundings[i] != null && surroundings[i] instanceof Door) {
 				Door door = (Door) surroundings[i];
 				
 				remove(door.getPosition());
 				
-				return;
+				return true;
 			} else if (surroundings[i] != null && surroundings[i] instanceof Stair) {
 				if (stillHaveMonstersOnThisFloor()) {
 					System.out.println("Parece que ainda tem monstros nesse andar!");
-					return;
+					return true;
 				}
-				turn = false;
 				
-				return;
+				return false;		//sinal para trocar de mapa
 			}
 		}
 		
 		hero.askPotion();
+		return true;
 	}
 	
 	public void printScene() {
@@ -489,12 +494,15 @@ public class Map {
 		
 		maps[currentMap][j+1][k] = heroes[0].getCharacter();
 		maps[currentMap][j+1][k].setPosition(new Coordinate(j+1, k));
+		
 		maps[currentMap][j][k+1] = heroes[1].getCharacter();
-		maps[currentMap][j][k+1].setPosition(new Coordinate(j+1, k));
+		maps[currentMap][j][k+1].setPosition(new Coordinate(j, k+1));
+		
 		maps[currentMap][j-1][k] = heroes[2].getCharacter();
-		maps[currentMap][j-1][k].setPosition(new Coordinate(j+1, k));
+		maps[currentMap][j-1][k].setPosition(new Coordinate(j-1, k));
+		
 		maps[currentMap][j][k-1] = heroes[3].getCharacter();
-		maps[currentMap][j][k-1].setPosition(new Coordinate(j+1, k));
+		maps[currentMap][j][k-1].setPosition(new Coordinate(j, k-1));
 	}
 	
 	private void trap(Hero hero, Coordinate position) {
