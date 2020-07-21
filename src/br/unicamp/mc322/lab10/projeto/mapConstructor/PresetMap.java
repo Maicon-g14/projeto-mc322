@@ -14,30 +14,33 @@ import java.nio.charset.StandardCharsets;
 
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 import br.unicamp.mc322.lab10.projeto.GameMode;
-import br.unicamp.mc322.lab10.projeto.QuestBase;
+import br.unicamp.mc322.lab10.projeto.Map;
+import br.unicamp.mc322.lab10.projeto.PlayableClasses;
 import br.unicamp.mc322.lab10.projeto.mapObjects.GameObject;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.monsters.CpuMonster;
 
-public class PresetMap extends MapLoad{
+public class PresetMap extends Map{
 	/* le do HD os mapas e os armazena em um vetor, cria um mapa de strings
 	 * retornando o primeiro mapa e marcando a posicao atual. */
 	private static final String path = "./src\\\\br\\\\unicamp\\\\mc322\\\\lab10\\\\projeto\\\\mapConstructor\\\\";
 	private static final String fileName = "map.txt";
 	
-	public PresetMap(GameMode gameMode) {
+	public PresetMap(GameMode gameMode, PlayableClasses choosenClass, String playerName, EquipmentLoad findableEquipment) {
 		/* Le do HD o arquivo de mapas com nome filename em path */	
 		try {
 			FileInputStream fileInputStream = new FileInputStream(path+fileName);
 			InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);		//no windows usar notepad++ e salvar com encode "utf-8" (variantes geram lixo na saida)
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);		
 			
-			setMapsConfig(bufferedReader,gameMode);
+			setMapsConfig(bufferedReader,gameMode,findableEquipment);
 			
 			bufferedReader.readLine();
 			
 			makeMatrix(bufferedReader);
 			
 			bufferedReader.close();
+			
+			setHeroes(choosenClass, playerName);
 		
 		} catch (FileNotFoundException error) {
 			System.out.println("Arquivo base do mapa nao encontrado!");
@@ -47,7 +50,7 @@ public class PresetMap extends MapLoad{
 		}
 	}
 	
-	private void setMapsConfig(BufferedReader bufferedReader, GameMode gameMode) throws IOException {
+	private void setMapsConfig(BufferedReader bufferedReader, GameMode gameMode, EquipmentLoad findableEquipment) throws IOException {
 		/* Le e armazena as configurações do mapa carregado */
 		String line;
 		String[] aux;
@@ -67,6 +70,7 @@ public class PresetMap extends MapLoad{
 		mapsHeight = Integer.parseInt(aux[1]);
 		
 		monsters = new CpuMonster[mapsAmount][];		//aloca so uma dimensao do array 2d
+		this.findableEquipment = findableEquipment;
 	}
 	
 	private void makeMatrix(BufferedReader bufferedReader) throws IOException {
@@ -85,7 +89,6 @@ public class PresetMap extends MapLoad{
 					
 				line = bufferedReader.readLine();		//avança para proxima linha
 				y++;
-			
 			}
 			
 			if(line != null && line.isEmpty())
@@ -93,7 +96,5 @@ public class PresetMap extends MapLoad{
 			
 			y=0;
 		}
-
 	}
-	
 }

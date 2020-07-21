@@ -20,22 +20,6 @@ public class CpuHeroHunter extends CpuMonster{
 		callMove(map);
 	}
 	
-	private void findNearest(HeroController[] heroes) {
-		/* Escolhe o lado que o mosntro deve se mover para chegar no heroi mais proximo */
-		int[] range = new int[heroes.length];
-		Coordinate position = getCharacter().getPosition();
-		Coordinate heroPosition;
-		
-		for(int i = 0; i < heroes.length; i++) {
-			heroPosition = heroes[i].getCharacter().getPosition();
-			range[i] = position.measureDistance(heroPosition);
-		}
-		
-		int choosenHero = smallestEllement(range);
-		
-		setNearest(position,heroes[choosenHero].getCharacter().getPosition());
-	}
-	
 	private int smallestEllement(int[] array) {
 		int smallestPosition = 0;
 		
@@ -73,6 +57,22 @@ public class CpuHeroHunter extends CpuMonster{
 			else
 				direction = Command.MOVE_RIGHT;
 		}
+	}
+
+	private void findNearest(HeroController[] heroes) {
+		/* Escolhe o lado que o mosntro deve se mover para chegar no heroi mais proximo */
+		int[] range = new int[heroes.length];
+		Coordinate position = getCharacter().getPosition();
+		Coordinate heroPosition;
+		
+		for(int i = 0; i < heroes.length; i++) {
+			heroPosition = heroes[i].getCharacter().getPosition();
+			range[i] = position.measureDistance(heroPosition);
+		}
+		
+		int choosenHero = smallestEllement(range);
+		
+		setNearest(position,heroes[choosenHero].getCharacter().getPosition());
 	}
 
 }

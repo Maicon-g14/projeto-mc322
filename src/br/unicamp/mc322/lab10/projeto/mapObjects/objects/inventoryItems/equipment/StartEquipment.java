@@ -17,6 +17,22 @@ public class StartEquipment {
 		createWizard();
 	}
 	
+	public Equipment[] getBarbarian() {
+		return barbarianEquip;
+	}
+	
+	public Equipment[] getDwarf() {
+		return dwarfEquip;
+	}
+	
+	public Equipment[] getElf() {
+		return elfEquip;
+	}
+	
+	public Equipment[] getWizard() {
+		return wizardEquip;
+	}
+
 	private void createBarbarian() {
 		barbarianEquip = new Equipment[1];
 		barbarianEquip[0] = new LongSword();
@@ -38,21 +54,5 @@ public class StartEquipment {
 		wizardEquip[1] = new Dagger();
 		wizardEquip[2] = new Dagger();
 	}
-	
-	public Equipment[] getBarbarian() {
-		return barbarianEquip;
-	}
-	
-	public Equipment[] getDwarf() {
-		return dwarfEquip;
-	}
-	
-	public Equipment[] getElf() {
-		return elfEquip;
-	}
-	
-	public Equipment[] getWizard() {
-		return wizardEquip;
-	}
-	
+
 }

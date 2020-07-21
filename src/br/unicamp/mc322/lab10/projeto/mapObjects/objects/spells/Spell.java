@@ -11,7 +11,7 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.Sprite;
 import br.unicamp.mc322.lab10.projeto.mapObjects.characters.Controller;
 
 public abstract class Spell extends GameObject{	
-	private int dices; //Não entendi o propósito desse atributo
+	private int dices;
 	private SpellElements spellElement;
 	private SpellTypes spellType;
 	
@@ -35,5 +35,4 @@ public abstract class Spell extends GameObject{
 	}
 	
 	public abstract void use(Controller target);
-	
 }

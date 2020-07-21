@@ -23,26 +23,34 @@ public class Fireball extends Spell{
 		super(NAME, new Sprite(), ID, DICES, ELEMENT, TYPE);
 	}
 	
-	
 	public void use(Controller target) {
 		int damage = 6;
 		int shields = target.rollDefenseDices();
-		if(damage - shields > 0)
+
+		if (damage - shields > 0) {
 			target.getCharacter().takeDamage(damage - shields);
+		}
 	}
-	
+
 	public void use(Controller mainTarget, Controller[] adjacentTargets) {
 		int damage = 6;
 		int shields = mainTarget.rollDefenseDices();
-		if(damage - shields > 0)
+
+		if (damage - shields > 0) {
 			mainTarget.getCharacter().takeDamage(damage - shields);
-		if(adjacentTargets != null) {
+		}
+
+		if (adjacentTargets != null) {
 			damage = 3;
-			for(int i = 0; i < adjacentTargets.length; i++) {
+
+			for (int i = 0; i < adjacentTargets.length; i++) {
 				shields = adjacentTargets[i].rollDefenseDices();
-				if(damage - shields > 0)
+
+				if (damage - shields > 0) {
 					adjacentTargets[i].getCharacter().takeDamage(damage - shields);
+				}
 			}
+
 		}
 	}
 }

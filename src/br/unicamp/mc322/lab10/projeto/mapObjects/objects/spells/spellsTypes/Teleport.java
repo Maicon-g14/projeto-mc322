@@ -24,10 +24,10 @@ public class Teleport extends Spell{
 	}
 	
 	public void use() {
-		
+
 	}
-	
+
 	public void use(Controller target) {
-		
+
 	}
 }

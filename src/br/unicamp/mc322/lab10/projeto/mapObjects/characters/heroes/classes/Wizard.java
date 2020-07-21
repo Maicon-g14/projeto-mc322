@@ -22,11 +22,11 @@ public class Wizard extends SpellCaster {
 	public Wizard(Spell[] initialSpells) {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES, initialSpells);
 	}
-	
+
 	public Wizard(CanCarry[] initialEquipment) {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,initialEquipment);
 	}
-	
+
 	public Wizard(CanCarry[] initialEquipment, Spell[] initialSpells) {
 		super(NAME,ID,HP,MP,new Sprite(SPRITE),ATTACK_DICES,DEFENSE_DICES,initialEquipment, initialSpells);
 	}

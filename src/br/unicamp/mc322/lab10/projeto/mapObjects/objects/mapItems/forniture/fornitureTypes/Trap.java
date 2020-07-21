@@ -12,16 +12,14 @@ import br.unicamp.mc322.lab10.projeto.mapObjects.objects.mapItems.forniture.Forn
 import br.unicamp.mc322.lab10.projeto.Coordinate;
 
 public class Trap extends Forniture{
-	private static final char HIDDEN_SPRITE = ' ';
-	private static final char SPRITE = 'T';
+	private static final char SPRITE = ' ';
 	private static final GameTypeObjects ID = GameTypeObjects.TRAP;
 	private static final String NAME = "Trap";
 	private int damageValue;
 	
 	public Trap(int damage,Coordinate position) {
-		super(NAME,new Sprite(SPRITE,HIDDEN_SPRITE),ID,position);
+		super(NAME,new Sprite(SPRITE),ID,position);
 		damageValue = damage;
-		turnOffVisibility();
 	}
 	
 	public void doDamage(Hero hero) {
@@ -30,10 +28,7 @@ public class Trap extends Forniture{
 	}
 	
 	public void disarmTrap() {
-		damageValue = 0;
+		System.out.println("Armadilha com " + damageValue + " de dano foi disarmada!");
 	}
 	
-	public void discoverTrap() {
-		turnOnVisibility();
-	}
 }

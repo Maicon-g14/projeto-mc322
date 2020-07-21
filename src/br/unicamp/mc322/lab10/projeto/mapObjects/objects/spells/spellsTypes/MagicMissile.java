@@ -27,10 +27,12 @@ public class MagicMissile extends Spell{
 		int shields = target.rollDefenseDices();
 		int damage;
 		//ciclo de 3 vezes pois são lançados 3 misseis, com o alvo podendo tentar defender cada um
-		for(int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			damage = 2 - shields;
-			if (damage > 0)
+
+			if (damage > 0) {
 				target.getCharacter().takeDamage(damage);
+			}
 		}
 	}
 }

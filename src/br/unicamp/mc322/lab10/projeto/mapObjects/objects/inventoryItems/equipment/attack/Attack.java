@@ -36,7 +36,7 @@ public class Attack extends Equipment{
 		this.twoHands = twoHands;
 		this.breakable = breakable;
 		this.weaponClasses = weaponClasses;
-		this.lifeBonus = lifeBonus;		//bonus eh bonnus de HP ou MP
+		this.lifeBonus = lifeBonus;
 	}
 	
 	public boolean removeAfterUse() {
