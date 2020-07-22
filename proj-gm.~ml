@@ -8152,7 +8152,7 @@
 <XPD:REF name="TypedParameters[2]">f6Mih/mmi0OLTeliGXsHPgAA</XPD:REF>
 <XPD:ATTR name="#Literals" type="integer">2</XPD:ATTR>
 <XPD:OBJ name="Literals[0]" type="UMLEnumerationLiteral" guid="GAe7zoXHgE23/8IJtwhoHAAA">
-<XPD:ATTR name="Name" type="string">STANDART</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">STANDARD</XPD:ATTR>
 <XPD:REF name="Enumeration">ZtkDJPmAUEKmcAXt2+kgHwAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="Literals[1]" type="UMLEnumerationLiteral" guid="TGH02t8ltkyas+lEa14OJgAA">
