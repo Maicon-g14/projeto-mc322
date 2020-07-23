@@ -18,7 +18,7 @@ import java.nio.charset.StandardCharsets;
 public class PresetMap extends Map {
 	/* le do HD os mapas e os armazena em um vetor, cria um mapa de strings
 	 * retornando o primeiro mapa e marcando a posicao atual. */
-	private static final String PATH = "./src\\\\br\\\\unicamp\\\\mc322\\\\lab10\\\\projeto\\\\mapConstructor\\\\";
+	private static final String PATH = "./src\\br\\unicamp\\mc322\\lab10\\projeto\\map\\constructor\\";
 	private static final String FILENAME = "map.txt";
 
 	public PresetMap(GameMode gameMode, PlayableClasses chosenClass, String playerName, EquipmentLoad findableEquipment) {
@@ -40,14 +40,16 @@ public class PresetMap extends Map {
 
 		} catch (FileNotFoundException error) {
 			System.out.println("Arquivo base do mapa nao encontrado!");
+			loaded = false;
 
 		} catch (IOException | NumberFormatException error) {
 			System.out.println("Arquivo base do mapa nao pode ser carregado!");
+			loaded = false;
 		}
 	}
 
 	private void setMapsConfig(BufferedReader bufferedReader, GameMode gameMode, EquipmentLoad findableEquipment) throws IOException {
-		/* Le e armazena as configura��es do mapa carregado */
+		/* Le e armazena as configuraçoes do mapa carregado */
 		String line;
 		String[] aux;
 

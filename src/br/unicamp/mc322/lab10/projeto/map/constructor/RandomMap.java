@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class RandomMap extends Map {
 
-	private static final String PATH = "./src\\\\br\\\\unicamp\\\\mc322\\\\lab10\\\\projeto\\\\mapConstructor\\\\";
+	private static final String PATH = "./src\\br\\unicamp\\mc322\\lab10\\projeto\\map\\constructor\\";
 	private static final String FILENAME = "standartWalls.txt";
 	private static final int MAPS_WIDTH = 36;        //valores padrao pra mapa aleatorio
 	private static final int MAPS_HEIGHT = 27;
@@ -30,7 +30,7 @@ public class RandomMap extends Map {
 	private static final int HIDDEN_DOORS_MAX_AMOUNT_HARD_MODE = 10;
 
 	public RandomMap(GameMode gameMode, PlayableClasses chosenClass, String playerName, EquipmentLoad findableEquipment) {
-		/* A partir de um mapa prï¿½-definido de paredes e possives posicoes de portas
+		/* A partir de um mapa pré-definido de paredes e possives posicoes de portas
 		 * lido do HD, gera aleatoriamente um mapa com monstros, armadilhas e portas
 		 * ocultas */
 		mapsAmount = MAPS_AMOUNT;
@@ -101,7 +101,7 @@ public class RandomMap extends Map {
 		return null;
 	}
 
-	private void createFixedContent(BufferedReader bufferedReader) throws IOException {
+	private void createFixedContent(BufferedReader bufferedReader) throws IOException, NumberFormatException {
 		/* Percorre os mapas carregados transformando em matriz de objetos */
 		String line = bufferedReader.readLine();
 		char aux;
@@ -139,9 +139,11 @@ public class RandomMap extends Map {
 
 		} catch (FileNotFoundException error) {
 			System.out.println("Arquivo base das paredes do mapa nao encontrado!");
+			loaded = false;
 
 		} catch (IOException | NumberFormatException error) {
 			System.out.println("O arquivo base das paredes do mapa nao pode ser carregado!");
+			loaded = false;
 		}
 	}
 

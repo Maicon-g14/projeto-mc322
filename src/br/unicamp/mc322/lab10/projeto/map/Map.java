@@ -50,6 +50,7 @@ public class Map {
 	protected HeroController[] heroes;
 	protected CpuMonster[][] monsters;
 	protected EquipmentLoad findableEquipment;
+	protected boolean loaded = true;
 
 	private static final int TRAP_DAMAGE_STANDARD_MODE = 1;
 	private static final int TRAP_DAMAGE_HARD_MODE = 2;
@@ -78,6 +79,10 @@ public class Map {
 		resetHeroesPosition();
 		return true;
 	}
+	
+	public boolean isSuccessfullyLoaded() {
+		return loaded;
+	}
 
 	public boolean allMonstersDefeated() {
 		/* Retorna true em caso de fim de jogo por derrotar todos os monstros */
@@ -102,7 +107,10 @@ public class Map {
 
 	public CpuMonster[] getMonsters() {
 		/* Retorna monstros do mapa atual */
-		return monsters[currentMap];
+		if(monsters != null)
+			return monsters[currentMap];
+		
+		return null;
 	}
 
 	public Controller findTarget(Controller person) {        //vazia
@@ -132,7 +140,7 @@ public class Map {
 	}
 
 	private boolean isFindableItem(Coordinate position) {
-		/* Testa se item na posicao dada ï¿½ um item que pode ser encontrado(como armadilha ou porta secreta) */
+		/* Testa se item na posicao dada eh um item que pode ser encontrado(como armadilha ou porta secreta) */
 		GameObject item = getPosition(position);
 
 		return (item instanceof Trap || item instanceof HiddenDoor);
@@ -256,7 +264,7 @@ public class Map {
 	}
 
 	private boolean isUsableItem(Coordinate position) {
-		/* Testa se item na posicao dada ï¿½ um item que pode ser usado(bau, escada ou porta) */
+		/* Testa se item na posicao dada eh um item que pode ser usado(bau, escada ou porta) */
 		GameObject item = getPosition(position);
 
 		return (item instanceof Door || item instanceof Chest || item instanceof Stair);
@@ -375,7 +383,7 @@ public class Map {
 	}
 
 	protected Monster increaseMonster(Monster monster, int mapNumber) {
-		/* Aloca espaï¿½o no vetor de monstros, cria e insere um monstro em seu controlador no vetor */
+		/* Aloca espaço no vetor de monstros, cria e insere um monstro em seu controlador no vetor */
 		if (monsters[mapNumber] == null) {
 			monsters[mapNumber] = new CpuMonster[1];
 		} else {
@@ -419,8 +427,10 @@ public class Map {
 				}
 
 				break;
+			case ' ':
+				return null;
 			default:
-				System.out.println("Objeto do tipo " + type + " nï¿½o pode ser criado!");
+				System.out.println("Objeto do tipo " + type + " nao pode ser criado!");
 		}
 
 		return null;

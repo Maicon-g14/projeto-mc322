@@ -5,6 +5,8 @@
 
 package br.unicamp.mc322.lab10.projeto;
 
+import java.io.IOException;
+
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.MapMode;
 import br.unicamp.mc322.lab10.projeto.map.constructor.EquipmentLoad;
@@ -40,29 +42,31 @@ public class HeroQuest {
 	public void startGame() {
 		/* Loop principal do jogo, chama os turnos, print do estado atual do jogo
 		 * e verifica a sua finalizacao */
-		boolean turn;
-		running = true;
-
-		System.out.println("Game started!");
-
-		do {
-			turn = true;
-			monstersController = map.getMonsters();
-			map.printScene();
-
-			while (running && turn) {
-				turn = heroesTurn();
-				monstersTurn();
-
+		if(map.isSuccessfullyLoaded()) {
+			boolean turn;
+			running = true;
+	
+			System.out.println("Game started!");
+	
+			do {
+				turn = true;
+				monstersController = map.getMonsters();
 				map.printScene();
-				checkGameOver();
-			}
-
-			market();
-
-		} while (running && map.nextMap());
-
-		System.out.println("Game terminated. Bye!");
+	
+				while (running && turn) {
+					turn = heroesTurn();
+					monstersTurn();
+	
+					map.printScene();
+					checkGameOver();
+				}
+	
+				market();
+	
+			} while (running && map.nextMap());
+	
+			System.out.println("Game terminated. Bye!");
+		}
 	}
 
 	public void market() {
