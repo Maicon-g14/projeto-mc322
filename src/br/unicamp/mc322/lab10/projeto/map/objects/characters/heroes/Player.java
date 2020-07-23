@@ -31,13 +31,13 @@ public class Player extends HeroController {
 		/* Pergunta ao player lado para se mover */
 		char in;
 
-		do {
-			System.out.println("Lado para se mover(WASD): ");
-			in = scanner.next().toUpperCase().charAt(0);
+		System.out.println("Lado para se mover(WASD): ");
+		in = scanner.next().toUpperCase().charAt(0);
 
-		} while (in != 'W' && in != 'A' && in != 'S' && in != 'D');
+		if (in != 'W' && in != 'A' && in != 'S' && in != 'D') {
+			in = ' ';
+		}
 
-		System.out.println("lado: " + in);
 		switch (in) {
 			case 'W':
 				direction = Command.MOVE_UP;
@@ -51,6 +51,8 @@ public class Player extends HeroController {
 			case 'A':
 				direction = Command.MOVE_LEFT;
 				break;
+			case ' ':
+				direction = Command.STOP;
 			default:
 				break;
 		}
@@ -94,11 +96,13 @@ public class Player extends HeroController {
 		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */
 		readMovementDirection(scanner);
 
-		int steps = rollRedDices(MOVE_DICES);        //rola dados de movimento
-		remainingSteps = getFinalSteps(scanner, steps);
-
-		moving = true;
-		callMove(map);
+		if(direction != Command.STOP) {
+			int steps = rollRedDices(MOVE_DICES);        //rola dados de movimento
+			remainingSteps = getFinalSteps(scanner, steps);
+		
+			moving = true;
+			callMove(map);
+		}
 	}
 
 	private int getFinalSteps(Scanner scanner, int maxSteps) {

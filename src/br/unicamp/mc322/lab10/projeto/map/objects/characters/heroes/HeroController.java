@@ -26,7 +26,8 @@ public abstract class HeroController implements Controller {
 	}
 
 	public boolean playTurn(Map map) {
-		/* Turno do jogador */
+		/* Turno de um personagem, caso ja nao esteja em movimento,
+		 * consiste em uma acao e a possibilidade de se movimentar */
 		boolean turn = true;
 		Scanner scanner = new Scanner(System.in);
 
@@ -38,8 +39,8 @@ public abstract class HeroController implements Controller {
 			}
 
 			newDirection(map, scanner);
-		} else {
-			callMove(map);
+		} else if (!callMove(map)) {
+			moving = false;
 		}
 
 		if (--remainingSteps <= 0) {
@@ -135,12 +136,15 @@ public abstract class HeroController implements Controller {
 
 	}
 
-	protected void callMove(Map map) {
+	protected boolean callMove(Map map) {
 		/* Chama movimentacao do player, se encontrar com obstaculo, desativa sinal
-		 * de que esta se movimentando */
+		 * de que esta se movimentando e para a movimentacao*/
 		if (!getCharacter().move(direction, map)) {
 			moving = false;
+			return false;
 		}
+		
+		return true;
 	}
 
 	private int rollWhiteDices(int qtde, WhiteDiceSides lookingFor) {
