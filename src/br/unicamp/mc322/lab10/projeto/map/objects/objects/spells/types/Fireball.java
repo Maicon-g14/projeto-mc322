@@ -26,7 +26,7 @@ public class Fireball extends Spell {
 
 	public void use(Controller target) {
 		int damage = 6;
-		int shields = target.rollDefenseDices();
+		int shields = target.rollMagicDefenseDices();
 
 		if (damage - shields > 0) {
 			target.getCharacter().takeDamage(damage - shields);
