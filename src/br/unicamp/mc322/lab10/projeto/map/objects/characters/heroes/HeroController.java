@@ -113,15 +113,13 @@ public abstract class HeroController implements Controller {
 	}
 
 
-	public void useMagic(Map map, int index) {
-		int n = 0;//precisa ser lido do teclado o indice da magia na lista de magias do personagem
+	public void useMagic(Map map) {
 		SpellCaster caster;
 		Spell spell;
 		Controller target;
-		Controller[] adjacentTargets;
 		int dice;
 
-		if (personagem.getId() == GameTypeObjects.ELF || personagem.getId() == GameTypeObjects.WIZARD) {
+		if (isMagicUser()) {
 			caster = (SpellCaster) personagem;
 			spell = chooseSpell(caster.getSpells());
 			dice = rollRedDices(1); //rolagem do dado que define se a magia foi sucesso ou não
@@ -139,7 +137,14 @@ public abstract class HeroController implements Controller {
 	}
 
 	public void displaySpells() {
-
+		Spell[] spellList;
+		if(isMagicUser()) {
+			SpellCaster caster = (SpellCaster)personagem;
+			spellList = caster.getSpells();
+			for(int i = 0; i < caster.getQtdSpells(); i++) {
+				System.out.println(i + "- " + spellList[i].getName());
+			}
+		}
 	}
 
 	protected boolean callMove(Map map) {
@@ -175,8 +180,19 @@ public abstract class HeroController implements Controller {
 
 		return sum;
 	}
+	
+	private boolean isMagicUser() {
+		if(personagem.getId() == GameTypeObjects.ELF || personagem.getId() == GameTypeObjects.WIZARD)
+			return true;
+		return false;
+	}
 
 	public abstract Spell chooseSpell(Spell[] spells);
+	
+	public int rollMagicDefenseDices() {
+		/*Rola dados brancos de acordo com a inteligencia do personagem e retorna o numero de escudos obtidos*/
+		return rollWhiteDices(personagem.getIntelligence(), WhiteDiceSides.HERO_DEFENSE);
+	}
 
 	protected abstract void newDirection(Map map, Scanner scanner);        //possibilidade de controlar todos os demais herois
 

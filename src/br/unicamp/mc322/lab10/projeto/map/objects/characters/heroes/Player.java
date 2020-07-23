@@ -2,6 +2,7 @@ package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes;
 
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
+import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes.SpellCaster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 
 import java.util.Scanner;
@@ -16,10 +17,13 @@ public class Player extends HeroController {
 	public Spell chooseSpell(Spell[] spells) {
 		int n;
 		Spell chosenSpell;
+		SpellCaster caster = (SpellCaster)getCharacter();
+		
 		displaySpells();
+		System.out.println("Selecione o numero da magia: ");
 		n = numberFromKeyboard();
-
-		if (n < spells.length) {
+		
+		if (n < caster.getQtdSpells()) {
 			chosenSpell = spells[n];
 			return chosenSpell;
 		}
@@ -58,15 +62,6 @@ public class Player extends HeroController {
 		}
 	}
 
-	private void castSpell(Map map) {        //vou fazer semelhante porem aleatorio pra mageSkeleton e outros heroes
-		/* Chamada inicial pra lan�ar um feiti�o */        //nao verificado e nem testado
-		displaySpells();
-
-		System.out.println("Selecione o numero da magia: ");
-		int spellNumber = numberFromKeyboard();
-
-		useMagic(map, spellNumber);
-	}
 
 	protected boolean action(Map map, Scanner scanner) {
 		/* Pergunta ao player se quer fazer outra acao alem de andar */
@@ -78,7 +73,7 @@ public class Player extends HeroController {
 				map.search(getCharacter());
 				break;
 			case "M":
-				castSpell(map);
+				useMagic(map);
 				break;
 			case "A":
 				;

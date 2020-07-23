@@ -2,6 +2,7 @@ package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes;
 
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
+import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes.SpellCaster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 
 import java.util.Random;
@@ -37,8 +38,10 @@ public class CpuHero extends HeroController {
 
 	@Override
 	public Spell chooseSpell(Spell[] spells) {
-		// TODO Auto-generated method stub
-		return null;
+		Random gerador = new Random();
+		SpellCaster caster = (SpellCaster)getCharacter();
+		int index = gerador.nextInt(caster.getQtdSpells());
+		return spells[index];
 	}
 
 }

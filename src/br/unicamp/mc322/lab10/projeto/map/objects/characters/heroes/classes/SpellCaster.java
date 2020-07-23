@@ -53,22 +53,38 @@ public class SpellCaster extends Hero {
 			auxSpells[qtdSpells++] = newSpell;
 			spells = auxSpells;
 		}
+		qtdSpells++;
 	}
 
 	public void removeSpell(int n) {
 		for (int i = n - 1; i < qtdSpells - 1; i++) {
 			spells[i] = spells[i + 1];
 		}
+		qtdSpells--;
+	}
+	
+	public void removeSpell(Spell spell) {
+		for (int i = 0; i < qtdSpells - 1; i++) {
+			if(spells[i] == spell) {
+				removeSpell(i);
+				break;
+			}
+		}
 	}
 
 	public void castSpell(Controller target, Spell spell, int dice) {
 		if (dice < getIntelligence()) {
 			spell.use(target);
+			removeSpell(spell);
 		}
 	}
 
 	public Spell getSpell(int n) {
 		return spells[n];
+	}
+	
+	public int getQtdSpells() {
+		return qtdSpells;
 	}
 
 
