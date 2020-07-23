@@ -28,7 +28,6 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.classes.Go
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.classes.MageSkeleton;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.classes.Skeleton;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
-import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.Equipment;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.StartEquipment;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.forniture.types.Chest;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.forniture.types.Trap;
