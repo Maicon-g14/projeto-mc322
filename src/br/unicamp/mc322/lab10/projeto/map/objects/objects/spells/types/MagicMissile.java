@@ -25,7 +25,7 @@ public class MagicMissile extends Spell {
 	}
 
 	public void use(Controller target) {
-		int shields = target.rollDefenseDices();
+		int shields = target.rollMagicDefenseDices();
 		int damage;
 		//ciclo de 3 vezes pois são lançados 3 misseis, com o alvo podendo tentar defender cada um
 		for (int i = 0; i < 3; i++) {
