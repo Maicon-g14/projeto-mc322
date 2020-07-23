@@ -11,6 +11,7 @@ import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameObject;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.CpuMonster;
+import com.sun.jdi.InvalidTypeException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -39,11 +40,14 @@ public class PresetMap extends Map {
 			setHeroes(chosenClass, playerName);
 
 		} catch (FileNotFoundException error) {
-			System.out.println("Arquivo base do mapa nao encontrado!");
+			System.err.println("Arquivo base do mapa nao encontrado!");
 			loaded = false;
 
 		} catch (IOException | NumberFormatException error) {
-			System.out.println("Arquivo base do mapa nao pode ser carregado!");
+			System.err.println("Arquivo base do mapa nao pode ser carregado!");
+			loaded = false;
+		} catch (NullPointerException e) {
+			System.err.println(e.getMessage());
 			loaded = false;
 		}
 	}
@@ -73,26 +77,30 @@ public class PresetMap extends Map {
 
 	private void makeMatrix(BufferedReader bufferedReader) throws IOException {
 		/* Percorre os mapas carregados transformando em matrzix de objetos */
-		String line = bufferedReader.readLine();
+		try {
+			String line = bufferedReader.readLine();
 
-		maps = new GameObject[mapsAmount][mapsHeight][mapsWidth];
-		int y = 0;
+			maps = new GameObject[mapsAmount][mapsHeight][mapsWidth];
+			int y = 0;
 
-		for (int x = 0; x < mapsAmount; x++) {        //enquanto nao chega no fim do arquivo
-			while (line != null && !line.isEmpty() && y < mapsHeight) {        //enquanto a linha nao for vazia
-				for (int z = 0; z < mapsWidth; z++) {
-					maps[x][y][z] = createObject(line.charAt(z), new Coordinate(y, z), x);        //le cada caractere da linha
+			for (int x = 0; x < mapsAmount; x++) {        //enquanto nao chega no fim do arquivo
+				while (line != null && !line.isEmpty() && y < mapsHeight) {        //enquanto a linha nao for vazia
+					for (int z = 0; z < mapsWidth; z++) {
+						maps[x][y][z] = createObject(line.charAt(z), new Coordinate(y, z), x);        //le cada caractere da linha
+					}
+
+					line = bufferedReader.readLine();        //avan�a para proxima linha
+					y++;
 				}
 
-				line = bufferedReader.readLine();        //avan�a para proxima linha
-				y++;
-			}
+				if (line != null && line.isEmpty()) {
+					line = bufferedReader.readLine();
+				}
 
-			if (line != null && line.isEmpty()) {
-				line = bufferedReader.readLine();
+				y = 0;
 			}
-
-			y = 0;
+		} catch (InvalidTypeException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 }
