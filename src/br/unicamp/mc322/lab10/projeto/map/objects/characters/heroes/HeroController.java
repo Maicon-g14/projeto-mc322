@@ -182,6 +182,11 @@ public abstract class HeroController implements Controller {
 	}
 
 	public abstract Spell chooseSpell(Spell[] spells);
+	
+	public int rollMagicDefenseDices() {
+		/*Rola dados brancos de acordo com a inteligencia do personagem e retorna o numero de escudos obtidos*/
+		return rollWhiteDices(personagem.getIntelligence(), WhiteDiceSides.HERO_DEFENSE);
+	}
 
 	protected abstract void newDirection(Map map, Scanner scanner);        //possibilidade de controlar todos os demais herois
 
