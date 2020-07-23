@@ -27,7 +27,7 @@ public abstract class HeroController implements Controller {
 
 	public boolean playTurn(Map map) {
 		/* Turno do jogador */
-		boolean turn;
+		boolean turn = true;
 		Scanner scanner = new Scanner(System.in);
 
 		if (!moving) {
@@ -40,7 +40,6 @@ public abstract class HeroController implements Controller {
 			newDirection(map, scanner);
 		} else {
 			callMove(map);
-			turn = action(map, scanner);
 		}
 
 		if (--remainingSteps <= 0) {

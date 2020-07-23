@@ -67,9 +67,9 @@ public class CpuMonster implements Controller {
 	private void action(Map map) {
 		/* Acao do monstro alem de andar(por padrao eh atacar tudo que estiver no alcance) */
 		Coordinate position = getCharacter().getPosition();
-		Character target = null;
+		Controller target = null;
 
-		if ((target = map.findTarget(position)) != null) {
+		if ((target = map.findTarget(this)) != null) {
 			//chama ataque corpo a corpo aqui
 		}
 	}

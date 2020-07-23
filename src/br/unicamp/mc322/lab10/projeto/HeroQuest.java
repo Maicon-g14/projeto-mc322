@@ -5,8 +5,6 @@
 
 package br.unicamp.mc322.lab10.projeto;
 
-import java.io.IOException;
-
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.MapMode;
 import br.unicamp.mc322.lab10.projeto.map.constructor.EquipmentLoad;

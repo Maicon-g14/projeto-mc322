@@ -2,6 +2,7 @@ package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes;
 
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -32,6 +33,12 @@ public class CpuHero extends HeroController {
 
 	private void chooseMovementDirection() {
 		direction = Command.getRandomDirection();
+	}
+
+	@Override
+	public Spell chooseSpell(Spell[] spells) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
