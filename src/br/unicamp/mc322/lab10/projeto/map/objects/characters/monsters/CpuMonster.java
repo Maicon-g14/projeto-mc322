@@ -1,10 +1,13 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters;
 
+import java.util.Random;
+
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Character;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
+import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.WhiteDiceSides;
 
 public class CpuMonster implements Controller {
 	protected Command direction;
@@ -14,6 +17,29 @@ public class CpuMonster implements Controller {
 		this.monster = monster;
 	}
 
+	private int rollWhiteDices(int qtde, WhiteDiceSides lookingFor) {
+		/* rola n d6 com 1 lado parar monster defense, 2 lados para hero defense e 3 para ataque.
+		 * Sendo especificado o que o invocador busca, faz a soma das n ocorrencias aleat�rias
+		 * e a retorna.
+		 * Ex: funcao eh chamada buscando o ataque do jogador com 6 dados,
+		 * logo sao rolados 6 dados e eh somado a quantidade de vezes que cada dado obteve a face
+		 * ataque. */
+		int sum = 0, number;
+		Random dice = new Random();
+
+		for (int i = 0; i < qtde; i++) {
+			number = dice.nextInt(6) + 1;
+
+			if (((number == 1 && lookingFor == WhiteDiceSides.MONSTER_DEFENSE) ||
+					((number == 2 || number == 3) && lookingFor == WhiteDiceSides.HERO_DEFENSE)) ||
+					(lookingFor == WhiteDiceSides.ATTACK)) {
+				sum += 1;
+			}
+		}
+
+		return sum;
+	}
+	
 	@Override
 	public int rollAttackDices() {
 		// TODO Auto-generated method stub
@@ -24,6 +50,11 @@ public class CpuMonster implements Controller {
 	public int rollDefenseDices() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public int rollMagicDefenseDices() {
+		return rollWhiteDices(monster.getIntelligence(), WhiteDiceSides.MONSTER_DEFENSE);
 	}
 
 	@Override
