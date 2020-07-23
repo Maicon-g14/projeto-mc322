@@ -1,5 +1,7 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters;
 
+import java.util.Random;
+
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
@@ -7,8 +9,11 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.Character;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
 
 public class CpuMonster implements Controller {
+	protected static final int MOVE_DICES = 2;
 	protected Command direction;
 	protected Monster monster;
+	protected int remainingSteps;
+	protected boolean moving = false;
 
 	public CpuMonster(Monster monster) {
 		this.monster = monster;
@@ -28,8 +33,14 @@ public class CpuMonster implements Controller {
 
 	@Override
 	public int rollRedDices(int n) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		Random gerador = new Random();
+
+		for (int i = 0; i < n; i++) {
+			result += 1 + gerador.nextInt(6);
+		}
+
+		return result;
 	}
 
 	@Override
@@ -39,8 +50,17 @@ public class CpuMonster implements Controller {
 
 	public void playTurn(Map map) {
 		/* Acao padrao dos monstros */
-		newDirection(map);
-		action(map);
+		if (!moving) {
+			newDirection(map);
+			action(map);
+			
+		} else if (!callMove(map)) {
+			moving = false;
+		}
+
+		if (--remainingSteps <= 0) {
+			moving = false;
+		}
 	}
 
 	@Override
@@ -51,13 +71,25 @@ public class CpuMonster implements Controller {
 
 	protected void newDirection(Map map) {
 		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */
+		Random randomize = new Random();
+		
 		chooseMovementDirection();
+
+		int steps = rollRedDices(MOVE_DICES);        //rola dados de movimento
+		remainingSteps = randomize.nextInt(steps) + 1;
+
+		moving = true;
 		callMove(map);
 	}
 
-	protected void callMove(Map map) {
+	protected boolean callMove(Map map) {
 		/* Chama movimentacao do monstro */
-		getCharacter().move(direction, map);
+		if (!getCharacter().move(direction, map)) {
+			moving = false;
+			return false;
+		}
+		
+		return true;
 	}
 
 	private void chooseMovementDirection() {
