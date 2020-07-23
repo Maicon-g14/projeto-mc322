@@ -25,8 +25,8 @@ public class Trap extends Forniture {
 	}
 
 	public void doDamage(Hero hero) {
-		System.out.println(hero.getName() + " tomou " + damageValue + " de dano em uma armadilha oculta!\nBody Points restantes: " + hero.getHp());
 		hero.takeDamage(damageValue);
+		System.out.println(hero.getName() + " tomou " + damageValue + " de dano em uma armadilha oculta!\nBody Points restantes: " + hero.getHp());
 	}
 
 	public void disarmTrap() {

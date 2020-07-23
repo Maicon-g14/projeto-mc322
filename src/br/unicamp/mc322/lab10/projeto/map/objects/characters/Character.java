@@ -117,7 +117,7 @@ public abstract class Character extends GameObject {
 		int price = item.getPrice();
 
 		if (inventoryLoad < INVENTORY_MAX_AMOUNT && money.removeMoney(price)) {
-			inventory[inventoryLoad++] = item;
+			addToInventory(item);
 			return true;
 		} else if (inventoryLoad < INVENTORY_MAX_AMOUNT) {
 			System.out.println("Saldo insuficiente!");
@@ -257,13 +257,13 @@ public abstract class Character extends GameObject {
 
 	private boolean isBestWeapon(Attack item) {
 		/* Caso o item passado tenha status melhor que o equipado, retorna true */
-		return attackEquipment[0] == null || item.getBonusAttack() > attackEquipment[0].getBonusAttack() && (attackEquipment[1] == null || item.getBonusAttack() > attackEquipment[0].getBonusAttack() + attackEquipment[1].getBonusAttack());
+		return attackEquipment[0] == null || (attackEquipment[1] == null && !attackEquipment[0].isTwoHanded()) || item.getBonusAttack() > attackEquipment[0].getBonusAttack() || (attackEquipment[1] != null && item.getBonusAttack() > attackEquipment[1].getBonusAttack()) || (attackEquipment[1] != null && item.getBonusAttack() > attackEquipment[0].getBonusAttack() + attackEquipment[1].getBonusAttack());
 	}
 
 	private boolean isBestArmor(Defense item) {
 		/* Caso o item passado tenha status melhor que o equipado, retorna true */
-		return (item instanceof Shield && (defenseEquipment[1] == null || item.getBonusDefense() > defenseEquipment[1].getBonusDefense())) ||
-				(item instanceof Armor && (defenseEquipment[0] == null || item.getBonusDefense() > defenseEquipment[0].getBonusDefense()));
+		return (item instanceof Shield && ((attackEquipment[0] == null || (attackEquipment[0] != null && !attackEquipment[0].isTwoHanded() && attackEquipment[1] == null)) && (defenseEquipment[1] == null || item.getBonusDefense() > defenseEquipment[1].getBonusDefense())) ||
+				(item instanceof Armor && (defenseEquipment[0] == null || item.getBonusDefense() > defenseEquipment[0].getBonusDefense())));
 	}
 
 	private boolean usePotion() {
@@ -299,21 +299,27 @@ public abstract class Character extends GameObject {
 		if (item.isTwoHanded()) {
 			attackEquipment[1] = (Attack) unequip(attackEquipment[1]);        //desequipa a segunda arma
 			defenseEquipment[1] = (Defense) unequip(defenseEquipment[1]);        //desequipa o escudo
+			unequip(attackEquipment[0]);
 			attackEquipment[0] = item;        //equipa a arma de duas maos
 
-		} else if (attackEquipment[0] != null && attackEquipment[1] != null) {
-			if (item.getBonusAttack() > attackEquipment[0].getBonusAttack()) {       //se duas armas equipadas, substitui a mais fraca
-				attackEquipment[0] = item;
-			} else {
-				attackEquipment[1] = item;
-			}
-
 		} else if (attackEquipment[0] == null || attackEquipment[0].isTwoHanded()) {
+			unequip(attackEquipment[0]);
 			attackEquipment[0] = item;
 
-		} else if (!attackEquipment[0].isTwoHanded()) {
+		} else if (attackEquipment[1] == null) {
 			defenseEquipment[1] = (Defense) unequip(defenseEquipment[1]);        //desequipa possivel escudo
-			attackEquipment[1] = item;        //equipa como segunda arma
+			attackEquipment[1] = item;
+			
+		} else if (attackEquipment[0] != null && attackEquipment[1] != null) {
+			
+			if (item.getBonusAttack() > attackEquipment[0].getBonusAttack()) {       //se duas armas equipadas, substitui a mais fraca
+				unequip(attackEquipment[0]);
+				attackEquipment[0] = item;
+			} else {
+				unequip(attackEquipment[1]);
+				attackEquipment[1] = item;
+			}
+		
 		}
 
 		refreshStatus();
@@ -365,6 +371,7 @@ public abstract class Character extends GameObject {
 
 		maxHP = hp;
 		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
+		addRandomMoney();
 	}
 
 }

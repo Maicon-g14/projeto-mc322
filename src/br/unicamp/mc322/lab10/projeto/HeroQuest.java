@@ -45,7 +45,7 @@ public class HeroQuest {
 			running = true;
 	
 			System.out.println("Game started!");
-			debug();
+			
 			do {
 				turn = true;
 				monstersController = map.getMonsters();
@@ -65,10 +65,6 @@ public class HeroQuest {
 	
 			System.out.println("Game terminated. Bye!");
 		}
-	}
-	
-	private void debug() {
-		market();
 	}
 
 	public void market() {
