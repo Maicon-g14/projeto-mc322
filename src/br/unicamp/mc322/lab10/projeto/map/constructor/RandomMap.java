@@ -14,6 +14,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.CpuMonster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.Door;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.Wall;
+import com.sun.jdi.InvalidTypeException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -30,7 +31,7 @@ public class RandomMap extends Map {
 	private static final int HIDDEN_DOORS_MAX_AMOUNT_HARD_MODE = 10;
 
 	public RandomMap(GameMode gameMode, PlayableClasses chosenClass, String playerName, EquipmentLoad findableEquipment) {
-		/* A partir de um mapa pré-definido de paredes e possives posicoes de portas
+		/* A partir de um mapa prï¿½-definido de paredes e possives posicoes de portas
 		 * lido do HD, gera aleatoriamente um mapa com monstros, armadilhas e portas
 		 * ocultas */
 		mapsAmount = MAPS_AMOUNT;
@@ -138,62 +139,79 @@ public class RandomMap extends Map {
 			bufferedReader.close();
 
 		} catch (FileNotFoundException error) {
-			System.out.println("Arquivo base das paredes do mapa nao encontrado!");
+			System.err.println("Arquivo base das paredes do mapa nao encontrado!");
 			loaded = false;
 
 		} catch (IOException | NumberFormatException error) {
-			System.out.println("O arquivo base das paredes do mapa nao pode ser carregado!");
+			System.err.println("O arquivo base das paredes do mapa nao pode ser carregado!");
 			loaded = false;
 		}
 	}
 
 	private void setStair(int i) {
 		/* Define a escada do mapa(ate o penultimo andar) como sendo o centro do mapa atual */
-		int j = MAPS_HEIGHT / 2;
-		int k = MAPS_WIDTH / 2;
+		try {
+			int j = MAPS_HEIGHT / 2;
+			int k = MAPS_WIDTH / 2;
 
-		maps[i][j][k] = createObject('S', new Coordinate(j, k), i);
+			maps[i][j][k] = createObject('S', new Coordinate(j, k), i);
+		} catch (InvalidTypeException e) {
+			System.err.println(e.getMessage());
+		}
+
 	}
 
 	private void setChest(int i) {
 		/* Cria bau no centro do mapa(no lugar da escada no ultimo andar) */
-		int j = MAPS_HEIGHT / 2;
-		int k = MAPS_WIDTH / 2;
+		try {
+			int j = MAPS_HEIGHT / 2;
+			int k = MAPS_WIDTH / 2;
 
-		maps[i][j][k] = createObject('C', new Coordinate(j, k), i);
+			maps[i][j][k] = createObject('C', new Coordinate(j, k), i);
+		} catch (InvalidTypeException e) {
+			System.err.println(e.getMessage());
+		}
 	}
 
 	private void setTrap(int i) {
 		/* Caso existam, chama a inicializacao de armadilhas em posicoes aleatorias */
-		Coordinate pos;
-		Random randomize = new Random();
+		try {
+			Coordinate pos;
+			Random randomize = new Random();
 
-		int trapsAmount = randomize.nextInt(4);
+			int trapsAmount = randomize.nextInt(4);
 
-		for (int b = 0; b < trapsAmount; b++) {
-			pos = getEmptyPosition(i);
+			for (int b = 0; b < trapsAmount; b++) {
+				pos = getEmptyPosition(i);
 
-			maps[i][pos.getX()][pos.getY()] = createObject('T', pos, i);
+				maps[i][pos.getX()][pos.getY()] = createObject('T', pos, i);
+			}
+		} catch (InvalidTypeException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 
 	private void setHiddenDoor(int i) {
 		/* Aleatoriamente chama a inicializacao de portas ocultas segundo a dificuldade de jogo
 		 * escolhida */
-		Coordinate pos;
-		Random randomize = new Random();
-		int hiddenDoorsAmount = 0;
+		try {
+			Coordinate pos;
+			Random randomize = new Random();
+			int hiddenDoorsAmount = 0;
 
-		if (gameMode == GameMode.STANDARD) {
-			hiddenDoorsAmount = randomize.nextInt(HIDDEN_DOORS_MAX_AMOUNT_STANDARD_MODE) + 1;
-		} else if (gameMode == GameMode.HARD) {
-			hiddenDoorsAmount = randomize.nextInt(HIDDEN_DOORS_MAX_AMOUNT_HARD_MODE) + 1;
-		}
+			if (gameMode == GameMode.STANDARD) {
+				hiddenDoorsAmount = randomize.nextInt(HIDDEN_DOORS_MAX_AMOUNT_STANDARD_MODE) + 1;
+			} else if (gameMode == GameMode.HARD) {
+				hiddenDoorsAmount = randomize.nextInt(HIDDEN_DOORS_MAX_AMOUNT_HARD_MODE) + 1;
+			}
 
-		for (int b = 0; b < hiddenDoorsAmount; b++) {
-			pos = getWallPosition(i);
+			for (int b = 0; b < hiddenDoorsAmount; b++) {
+				pos = getWallPosition(i);
 
-			maps[i][pos.getX()][pos.getY()] = createObject('H', pos, i);
+				maps[i][pos.getX()][pos.getY()] = createObject('H', pos, i);
+			}
+		} catch (InvalidTypeException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 

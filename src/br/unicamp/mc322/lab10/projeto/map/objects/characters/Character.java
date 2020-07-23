@@ -1,5 +1,7 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters;
 
+import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
+import br.unicamp.mc322.lab10.projeto.exceptions.InsufficientFundsException;
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
@@ -120,12 +122,10 @@ public abstract class Character extends GameObject {
 			addToInventory(item);
 			return true;
 		} else if (inventoryLoad < INVENTORY_MAX_AMOUNT) {
-			System.out.println("Saldo insuficiente!");
+			throw new InsufficientFundsException("Saldo insuficiente!");
 		} else {
-			System.out.println("Inventario cheio!");        //trocar esses por throws
+			throw new FullInventoryException("Inventario cheio!");
 		}
-
-		return false;
 	}
 
 	public int getIntelligence() {
@@ -172,15 +172,20 @@ public abstract class Character extends GameObject {
 			}
 
 		} else {
-			System.out.println("Inventario cheio!");
+			throw new FullInventoryException("Inventario cheio!");
 		}
 	}
 
 	public void addToInventory(CanCarry[] item) {
 		/* Adiciona lista de items ao inventario */
-		for (int i = 0; i < item.length; i++) {
-			addToInventory(item[i]);
+		try {
+			for (CanCarry canCarry : item) {
+				addToInventory(canCarry);
+			}
+		} catch (FullInventoryException e) {
+			System.err.println(e.getMessage());
 		}
+
 	}
 
 	public void removeFromInventory(int id) {

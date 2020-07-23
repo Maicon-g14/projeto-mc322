@@ -5,6 +5,8 @@
 
 package br.unicamp.mc322.lab10.projeto;
 
+import br.unicamp.mc322.lab10.projeto.exceptions.InsufficientFundsException;
+import br.unicamp.mc322.lab10.projeto.exceptions.InvalidOperationException;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.money.Money;
@@ -19,7 +21,7 @@ public class Market {
 	private static final int BUY = 1;
 	private static final int SELL = 2;
 	private static final int INVALID_VALUE = -22312;
-	private static final String INVALID_OPERATION_VALUE = "Numero da operacao invalido!";
+	private static final String INVALID_OPERATION_NUMBER = "Numero da operacao invalido!";
 
 	CanCarry[] marketItems;
 	Money money = new Money();
@@ -71,11 +73,11 @@ public class Market {
 					} while (itemNumber != OUT);
 
 				} else if (operation != OUT) {
-					throw new InputMismatchException();
+					throw new InputMismatchException(INVALID_OPERATION_NUMBER);
 				}
 
-			} catch (InputMismatchException e) {
-				System.out.println(INVALID_OPERATION_VALUE);
+			} catch (Exception e) {
+				throw new InvalidOperationException(e.getMessage());
 			}
 
 		} while (operation != OUT);
@@ -94,7 +96,7 @@ public class Market {
 			}
 
 		} else if (item < 0 || item > marketItems.length) {
-			System.out.println(INVALID_OPERATION_VALUE);
+			throw new InvalidOperationException(INVALID_OPERATION_NUMBER);
 		}
 	}
 
@@ -111,11 +113,11 @@ public class Market {
 				hero.sell(item - 1);
 				System.out.println(inventoryItem.getName() + " vendido por " + price + "PO");
 			} else {
-				System.out.println("Nao tenho fundos para aceitar tal oferta!");
+				throw new InsufficientFundsException("Nao tenho fundos para aceitar tal oferta!");
 			}
 
 		} else if (item < 0 || item > hero.getInventoryLoad()) {
-			System.out.println(INVALID_OPERATION_VALUE);
+			throw new InvalidOperationException(INVALID_OPERATION_NUMBER);
 		}
 
 	}

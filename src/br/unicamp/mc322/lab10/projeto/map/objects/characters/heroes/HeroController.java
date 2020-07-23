@@ -1,5 +1,6 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes;
 
+import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
@@ -99,7 +100,12 @@ public abstract class HeroController implements Controller {
 	public void addToInventory(CanCarry item) {
 		/* Adiciona um item qualquer(carregavel) ao inventario, se for equipamento e melhor que o atual,
 		 * equipa automaticamente */
-		getCharacter().addToInventory(item);
+		try {
+			getCharacter().addToInventory(item);
+		} catch (FullInventoryException e) {
+			System.err.println(e.getMessage());
+		}
+
 	}
 
 	public void askPotion() {

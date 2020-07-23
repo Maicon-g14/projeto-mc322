@@ -7,6 +7,7 @@ package br.unicamp.mc322.lab10.projeto.map;
 
 import br.unicamp.mc322.lab10.projeto.GameMode;
 import br.unicamp.mc322.lab10.projeto.PlayableClasses;
+import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
 import br.unicamp.mc322.lab10.projeto.map.constructor.EquipmentLoad;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameObject;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
@@ -34,6 +35,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.ty
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.HiddenDoor;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.Stair;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.Wall;
+import com.sun.jdi.InvalidTypeException;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -79,7 +81,7 @@ public class Map {
 		resetHeroesPosition();
 		return true;
 	}
-	
+
 	public boolean isSuccessfullyLoaded() {
 		return loaded;
 	}
@@ -107,9 +109,9 @@ public class Map {
 
 	public CpuMonster[] getMonsters() {
 		/* Retorna monstros do mapa atual */
-		if(monsters != null)
+		if (monsters != null)
 			return monsters[currentMap];
-		
+
 		return null;
 	}
 
@@ -243,23 +245,27 @@ public class Map {
 
 	protected void setMonsters(int i) {
 		/* Chama a inicializacao dos monstros do mapa na posicao escolhida aleatoriamente */
-		Coordinate pos;
-		Random randomize = new Random();
+		try {
+			Coordinate pos;
+			Random randomize = new Random();
 
-		int monstersAmount = randomize.nextInt(3) + 3;
+			int monstersAmount = randomize.nextInt(3) + 3;
 
-		for (int b = 0; b < monstersAmount; b++) {
-			pos = getEmptyPosition(i);
-			if (randomChoice()) {        //escolhe esqueleto como monstro
-				if (randomChoice()) {
-					maps[i][pos.getX()][pos.getY()] = createObject('M', pos, i);        //mage skeleton
+			for (int b = 0; b < monstersAmount; b++) {
+				pos = getEmptyPosition(i);
+				if (randomChoice()) {        //escolhe esqueleto como monstro
+					if (randomChoice()) {
+						maps[i][pos.getX()][pos.getY()] = createObject('M', pos, i);        //mage skeleton
+					} else {
+						maps[i][pos.getX()][pos.getY()] = createObject('K', pos, i);        //skeleton
+					}
+
 				} else {
-					maps[i][pos.getX()][pos.getY()] = createObject('K', pos, i);        //skeleton
+					maps[i][pos.getX()][pos.getY()] = createObject('G', pos, i);
 				}
-
-			} else {
-				maps[i][pos.getX()][pos.getY()] = createObject('G', pos, i);
 			}
+		} catch (InvalidTypeException e) {
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -324,39 +330,45 @@ public class Map {
 	public boolean use(Character hero) {
 		/* Usado para abrir baus, portas ou subir escadas(so pode subir apos derrotar todos os monstros do andar)
 		 * ao redor do player, caso nao haja nenhum destes, pergunta se quer usar health potion(se houver no inventario) */
-		Coordinate heroPos = hero.getPosition();
-		GameObject[] surroundings = getUsable(heroPos);
+		try {
+			Coordinate heroPos = hero.getPosition();
+			GameObject[] surroundings = getUsable(heroPos);
 
-		for (GameObject surrounding : surroundings) {
-			if (surrounding != null) {
-				if (surrounding instanceof Chest) {
-					Chest chest = (Chest) surrounding;
-					CanCarry loot = chest.getItems();
+			for (GameObject surrounding : surroundings) {
+				if (surrounding != null) {
+					if (surrounding instanceof Chest) {
+						Chest chest = (Chest) surrounding;
+						CanCarry loot = chest.getItems();
 
-					System.out.println(loot.getName() + " adquirido!");
-					hero.addToInventory(loot);
-					remove(chest.getPosition());
+						System.out.println(loot.getName() + " adquirido!");
+						hero.addToInventory(loot);
+						remove(chest.getPosition());
 
-					return true;
-				} else if (surrounding instanceof Door) {
-					Door door = (Door) surrounding;
-
-					remove(door.getPosition());
-
-					return true;
-				} else if (surrounding instanceof Stair) {
-					if (stillHaveMonstersOnThisFloor()) {
-						System.out.println("Parece que ainda tem monstros nesse andar!");
 						return true;
-					}
+					} else if (surrounding instanceof Door) {
+						Door door = (Door) surrounding;
 
-					return false;        //sinal para trocar de mapa
+						remove(door.getPosition());
+
+						return true;
+					} else if (surrounding instanceof Stair) {
+						if (stillHaveMonstersOnThisFloor()) {
+							System.out.println("Parece que ainda tem monstros nesse andar!");
+							return true;
+						}
+
+						return false;        //sinal para trocar de mapa
+					}
 				}
 			}
+
+			hero.askPotion();
+			return true;
+		} catch (FullInventoryException e) {
+			System.err.println(e.getMessage());
+			return false;
 		}
 
-		hero.askPotion();
-		return true;
 	}
 
 	public void printScene() {
@@ -383,7 +395,7 @@ public class Map {
 	}
 
 	protected Monster increaseMonster(Monster monster, int mapNumber) {
-		/* Aloca espaço no vetor de monstros, cria e insere um monstro em seu controlador no vetor */
+		/* Aloca espaï¿½o no vetor de monstros, cria e insere um monstro em seu controlador no vetor */
 		if (monsters[mapNumber] == null) {
 			monsters[mapNumber] = new CpuMonster[1];
 		} else {
@@ -399,7 +411,7 @@ public class Map {
 		return monster;
 	}
 
-	protected GameObject createObject(char type, Coordinate position, int mapNumber) {
+	protected GameObject createObject(char type, Coordinate position, int mapNumber) throws InvalidTypeException {
 		/* Dado o caractere correspondente ao objeto, cria e retorna o
 		 * objeto criado */
 		switch (type) {
@@ -430,7 +442,7 @@ public class Map {
 			case ' ':
 				return null;
 			default:
-				System.out.println("Objeto do tipo " + type + " nao pode ser criado!");
+				throw new InvalidTypeException("Objeto do tipo " + type + " nao pode ser criado!");
 		}
 
 		return null;
