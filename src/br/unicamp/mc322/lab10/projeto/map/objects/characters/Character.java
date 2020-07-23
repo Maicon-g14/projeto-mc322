@@ -11,6 +11,8 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.money.
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.consumable.items.HealthPotion;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.Equipment;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.attack.Attack;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.attack.WeaponsTypes;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.ArmorClasses;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.Defense;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.Armor;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.Shield;
@@ -161,9 +163,9 @@ public abstract class Character extends GameObject {
 		/* Adiciona item ao inventario e caso seja um equipamento e melhor que o equipado,
 		 * euipa ele e poe o anterior no inventario */
 		if (inventoryLoad < INVENTORY_MAX_AMOUNT) {
-			if (item instanceof Attack && isBestWeapon((Attack) item)) {
+			if (item instanceof Attack && isEquipable((Attack) item) && isBestWeapon((Attack) item)) {
 				equipAttack((Attack) item);
-			} else if (item instanceof Defense && isBestArmor((Defense) item)) {
+			} else if (item instanceof Defense && isEquipable((Defense) item) && isBestArmor((Defense) item)) {
 				equipDefense((Defense) item);
 			} else {
 				inventory[inventoryLoad++] = item;
@@ -237,6 +239,20 @@ public abstract class Character extends GameObject {
 			hp = 0;
 			dead = true;
 		}
+	}
+	
+	private boolean isEquipable(Attack item) {
+		/* Chama verificacao para saber se uma arma eh equipavel pela classe do personagem */
+		WeaponsTypes itemClass = item.getWeaponClass();
+		GameTypeObjects characterId = getId();
+		return WeaponsTypes.isEquipable(characterId, itemClass);
+	}
+	
+	private boolean isEquipable(Defense item) {
+		/* Chama verificacao para saber se um item de defesa eh equipavel pela classe do personagem */
+		ArmorClasses itemClass = item.getArmorClass();
+		GameTypeObjects characterId = getId();
+		return ArmorClasses.isEquipable(characterId, itemClass);
 	}
 
 	private boolean isBestWeapon(Attack item) {
@@ -331,12 +347,14 @@ public abstract class Character extends GameObject {
 		finalDefense = defValue;
 
 		if (defenseEquipment[0] != null) {
-			finalAttack += defenseEquipment[0].getBonusDefense();
+			finalDefense += defenseEquipment[0].getBonusDefense();
 		}
 
 		if (defenseEquipment[1] != null) {
-			finalAttack += defenseEquipment[1].getBonusDefense();
+			finalDefense += defenseEquipment[1].getBonusDefense();
 		}
+		
+		System.out.println(getName() + " - Status atuais: \nATK: " + finalAttack + "\nDEF: " + finalDefense);
 	}
 
 	private void setCharacterStandarts(int hp, int intellect, int atkValue, int defValue) {
