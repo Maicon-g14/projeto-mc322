@@ -9,6 +9,8 @@ public interface Controller {
 	int rollAttackDices();
 
 	int rollDefenseDices();
+	
+	int rollMagicDefenseDices();
 
 	void attack(Controller target);
 }
