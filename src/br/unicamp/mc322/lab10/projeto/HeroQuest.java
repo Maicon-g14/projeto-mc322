@@ -5,6 +5,7 @@
 
 package br.unicamp.mc322.lab10.projeto;
 
+import br.unicamp.mc322.lab10.projeto.exceptions.InvalidOperationException;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.MapMode;
 import br.unicamp.mc322.lab10.projeto.map.constructor.EquipmentLoad;
@@ -69,8 +70,13 @@ public class HeroQuest {
 
 	public void market() {
 		/* Chama loja como outra forma de adquirir os itens do jogo */
-		Hero player = heroesController[0].getCharacter();
-		market.doShopping(player);
+		try {
+			Hero player = heroesController[0].getCharacter();
+			market.doShopping(player);
+		} catch (InvalidOperationException e) {
+			System.err.println(e.getMessage());
+		}
+
 	}
 
 	private boolean heroesTurn() {
