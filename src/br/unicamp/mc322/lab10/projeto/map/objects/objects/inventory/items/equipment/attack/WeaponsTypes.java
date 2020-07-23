@@ -10,11 +10,11 @@ public enum WeaponsTypes {
 		 * mago - so equipa adaga
 		 * elfo/dwarf - adagas ou espadas curtas
 		 * barbaro - pode equipar qualquer arma */
-		if (person == GameTypeObjects.WIZARD && itemClass == DAGGER) {
+		if ((person == GameTypeObjects.WIZARD || person == GameTypeObjects.GOBLIN) && itemClass == DAGGER) {
 			return true;
 		} else if ((person == GameTypeObjects.ELF || person == GameTypeObjects.DWARF) && (itemClass == DAGGER || itemClass == SHORT_SWORD)) {
 			return true;
-		} else if (person == GameTypeObjects.BARBARIAN) {
+		} else if (person == GameTypeObjects.BARBARIAN || person == GameTypeObjects.SKELETON) {
 			return true;
 		}
 		return false;

@@ -4,6 +4,7 @@ import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.Monster;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
 
 public class MageSkeleton extends Monster {
 
@@ -17,5 +18,9 @@ public class MageSkeleton extends Monster {
 
 	public MageSkeleton(Coordinate position) {
 		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
+	}
+	
+	public MageSkeleton(Coordinate position, CanCarry[] initialEquipment) {
+		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
 	}
 }

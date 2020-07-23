@@ -27,6 +27,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.classes.Go
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.classes.MageSkeleton;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.classes.Skeleton;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.Equipment;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.StartEquipment;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.forniture.types.Chest;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.forniture.types.Trap;
@@ -416,9 +417,9 @@ public class Map {
 			case 'M':
 				return increaseMonster(new MageSkeleton(position), mapNumber);
 			case 'G':
-				return increaseMonster(new Goblin(position), mapNumber);
+				return increaseMonster(new Goblin(position, findableEquipment.getGoblinEquipment()), mapNumber);
 			case 'K':
-				return increaseMonster(new Skeleton(position), mapNumber);
+				return increaseMonster(new Skeleton(position, findableEquipment.getRandomEquipment()), mapNumber);
 			case 'T':
 				if (gameMode == GameMode.STANDARD) {
 					return new Trap(TRAP_DAMAGE_STANDARD_MODE, position);
