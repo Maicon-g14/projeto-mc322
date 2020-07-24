@@ -188,6 +188,8 @@ public class Map {
 		return null;
 	}
 	
+	
+	
 	public void callAttack(Controller person) {
 		/* Chama verificacao de oponente na area de ataque do atacante, caso exista,
 		 * chama funcao de ataque do atacante para com o oponente */
@@ -677,5 +679,61 @@ public class Map {
 			Trap trap = (Trap) maps[currentMap][x][y];
 			trap.doDamage(hero);
 		}
+	}
+	
+	public Controller findSpellTarget(Coordinate position, boolean isMonsterHunting) {
+		/* Busca nos arredores da posicao dada se tem oponente pra atacar */
+		int x = position.getX();
+		int y = position.getY();
+		int distance = 10;
+		Character target;
+		System.out.println("player "+position);
+			
+		for (int i = -distance; i < distance; i++) {
+			for (int j = distance; j > -distance; j--) {
+				if (!(i == 0 && j == 0)) {
+					if(isMonsterHunting) 
+						target = checkHeroOnPosition(x+i,y+j);
+					else
+						target = checkMonsterOnPosition(x+i, y+i);
+					
+					if(target != null) {
+						System.out.println("pos "+(x+i) +" "+(y+j) + " "+target.getName());
+						return getController(target);
+					}
+				}
+			}
+		}
+			
+		return null;
+	}
+	
+	public Controller[] findAdjacentTargets(Coordinate position, int distance) {
+		int x = position.getX();
+		int y = position.getY();
+		int k = 0;
+		Character target;
+		Controller[] alvosAdjacentes = new Controller[8];
+		for (int i = -distance; i < distance; i++) {
+			for (int j = distance; j > -distance; j--) {
+				if (!(i == 0 && j == 0)) {
+					target = checkHeroOnPosition(x+i,y+j);
+					if(target != null) {
+						alvosAdjacentes[k] = getController(target);
+						k++;
+						if(k == 8)
+							return alvosAdjacentes;
+					}else {
+						target = checkMonsterOnPosition(x+i, y+i);
+						if(target != null) {
+							alvosAdjacentes[k] = getController(target);
+							if(k == 8)
+								return alvosAdjacentes;
+						}
+					}
+				}
+			}
+		}
+		return alvosAdjacentes;
 	}
 }
