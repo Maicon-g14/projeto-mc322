@@ -8,11 +8,12 @@ package br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellElements;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
 
-public class Fireball extends Spell {
+public class Fireball extends AreaSpell {
 
 	private static final String NAME = "Fireball";
 	private static final int DICES = 6;
