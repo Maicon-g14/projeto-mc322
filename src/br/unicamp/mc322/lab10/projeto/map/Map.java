@@ -114,10 +114,83 @@ public class Map {
 
 		return null;
 	}
-
-	public Controller findTarget(Controller person) {        //vazia
-		/* Busca nos arredores da posicao dada se tem oponente pra atacar */
+	
+	private Character checkHeroOnPosition(int x, int y) {
+		Coordinate attackFrom = new Coordinate(x,y);
+		
+		if (isValid(attackFrom) && maps[currentMap][x][y] instanceof Hero) {
+			return (Character) maps[currentMap][x][y];
+		}
 		return null;
+	}
+	
+	private Character checkMonsterOnPosition(int x, int y) {
+		Coordinate attackFrom = new Coordinate(x,y);
+		
+		if (isValid(attackFrom) && maps[currentMap][x][y] instanceof Monster) {
+			return (Character) maps[currentMap][x][y];
+		}
+		return null;
+	}
+
+	private Character findTarget(Coordinate position, int distance, boolean isMonsterHunting) {
+		/* Busca nos arredores da posicao dada se tem oponente pra atacar */
+		int x = position.getX();
+		int y = position.getY();
+		Character target;
+		
+		if (isMonsterHunting) {
+			
+			for (int i = -distance; i < distance; i++) {
+				for (int j = distance; j > -distance; j--) {
+					if (i != j) {
+						target = checkHeroOnPosition(x+i,y+j);
+						if(target != null) {
+							return target;
+						}
+					}
+				}
+			}
+			
+		} else {
+			for (int i = -distance; i < distance; i++) {
+				for (int j = distance; j > -distance; j--) {
+					if (i != j) {
+						target = checkMonsterOnPosition(x+i,y+j);
+						if(target != null) {
+							return target;
+						}
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public void callAttack(Controller person) {
+		/* Chama verificacao de oponente na area de ataque do atacante, caso exista,
+		 * chama funcao de ataque do atacante para com o oponente */
+		Character hunter = person.getCharacter();
+		Coordinate hunterPosition = hunter.getPosition();
+		int weaponReach = hunter.getWeaponsReach();
+		Character target = null;
+		boolean isMonsterHunting = true;
+		
+		if (hunter instanceof Hero)
+			isMonsterHunting = false;
+		
+		for (int i = 0; i < weaponReach; i++) {		//no raio de ataque da arma, da prioridade a que estiver mais proximo
+			target = findTarget(hunterPosition, i, isMonsterHunting);
+			if (target != null) {
+				person.attack(target);
+				break;		//se tirar essa linha vira ataque em area
+			}
+		}
+		
+		if(target != null) {
+			person.attack(target);
+		}
 	}
 
 	public void setPosition(GameObject item, Coordinate position) {

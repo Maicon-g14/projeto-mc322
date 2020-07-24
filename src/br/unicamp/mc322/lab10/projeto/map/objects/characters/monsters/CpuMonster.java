@@ -93,7 +93,7 @@ public class CpuMonster implements Controller {
 	}
 
 	@Override
-	public void attack(Controller target) {
+	public void attack(Character target) {
 		// TODO Auto-generated method stub
 
 	}
@@ -130,9 +130,9 @@ public class CpuMonster implements Controller {
 		Coordinate position = getCharacter().getPosition();
 		Controller target = null;
 
-		if ((target = map.findTarget(this)) != null) {
+		//if ((target = map.findTarget(this)) != null) {
 			//chama ataque corpo a corpo aqui
-		}
+		//}
 	}
 
 }

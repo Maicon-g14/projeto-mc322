@@ -9,6 +9,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes.Spel
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
+import br.unicamp.mc322.lab10.projeto.map.objects.characters.Character;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -86,14 +87,14 @@ public abstract class HeroController implements Controller {
 	public Hero getCharacter() {
 		return personagem;
 	}
-
-	public void attack(Controller target) {
-		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a função de ataque do personagem
+	
+	public void attack(Character target) {
+		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a fun�ao de ataque do personagem
 		int skulls = rollAttackDices();
 		int shields = rollDefenseDices();
 
 		if (skulls > shields) {
-			personagem.attack(target.getCharacter(), skulls - shields);
+			personagem.attack(target, skulls - shields);
 		}
 	}
 
@@ -128,8 +129,8 @@ public abstract class HeroController implements Controller {
 				caster.castSpell(this, spell, dice);//magias de support são sempre utilizadas no próprio usuario
 
 			} else if (spell.getSpellType() == SpellTypes.ATTACK) {
-				target = map.findTarget(this);//chamar funcao que escolhe o alvo
-				caster.castSpell(target, spell, dice);
+				//target = map.callAttack(this);//chamar funcao que escolhe o alvo
+				//caster.castSpell(target, spell, dice);
 
 			}
 		}

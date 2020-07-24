@@ -76,7 +76,7 @@ public class Player extends HeroController {
 				useMagic(map);
 				break;
 			case "A":
-				;
+				map.callAttack(this);
 				break;
 			case "U":
 				return map.use(getCharacter());

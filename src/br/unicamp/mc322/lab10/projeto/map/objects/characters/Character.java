@@ -218,6 +218,20 @@ public abstract class Character extends GameObject {
 		/* Desconta do HP atual a quantidade dada, se morrer, ativa o dead */
 		loseHp(damage);
 	}
+	
+	public int getWeaponsReach() {
+		/* Retorna o alcance da arma com maior alcance equipada */
+		int maxReach = 1;		//alcance padrao dos punhos
+		
+		if(attackEquipment[0] != null && attackEquipment[0].getReach() > maxReach) {
+			maxReach = attackEquipment[0].getReach();
+		}
+		if(attackEquipment[1] != null && attackEquipment[1].getReach() > maxReach) {
+			maxReach = attackEquipment[1].getReach();
+		}
+		
+		return maxReach;
+	}
 
 	public void attack(Character target, int damage) {
 		target.takeDamage(damage);
