@@ -13,6 +13,32 @@ public class Player extends HeroController {
 		super(personagem);
 		personagem.setPlayerName(name, personagem.getId());
 	}
+	
+	@Override
+	public boolean playTurn(Map map) {
+		/* Turno de um personagem, caso ja nao esteja em movimento,
+		 * consiste em uma acao e a possibilidade de se movimentar */
+		boolean turn = true;
+		Scanner scanner = new Scanner(System.in);
+
+		if (!moving) {
+			turn = action(map, scanner);
+
+			if (!turn) {
+				return turn;
+			}
+
+			newDirection(map, scanner);
+		} else if (!callMove(map)) {
+			moving = false;
+		}
+
+		if (--remainingSteps <= 0) {
+			moving = false;
+		}
+
+		return turn;
+	}
 
 	public Spell chooseSpell(Spell[] spells) {
 		int n;
@@ -62,8 +88,7 @@ public class Player extends HeroController {
 		}
 	}
 
-
-	protected boolean action(Map map, Scanner scanner) {
+	private boolean action(Map map, Scanner scanner) {
 		/* Pergunta ao player se quer fazer outra acao alem de andar */
 		System.out.println("Acao nesse turno: (P = procurar, M = magia, A = atacar, U = usar item)");
 		String entrada = scanner.nextLine();
@@ -87,7 +112,7 @@ public class Player extends HeroController {
 		return true;
 	}
 
-	protected void newDirection(Map map, Scanner scanner) {
+	private void newDirection(Map map, Scanner scanner) {
 		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */
 		readMovementDirection(scanner);
 

@@ -89,7 +89,7 @@ public class Map {
 	public boolean allMonstersDefeated() {
 		/* Retorna true em caso de fim de jogo por derrotar todos os monstros */
 		for (int i = 0; i < mapsAmount; i++) {
-			if (monsters[i] != null) {
+			if (monsters != null && monsters[i].length > 0) {
 				return false;
 			}
 		}
@@ -132,8 +132,26 @@ public class Map {
 		}
 		return null;
 	}
+	
+	private Controller getController(Character target) {
+		/* Caca e retorna o controlador do personagem */
+		if(target instanceof Hero) {
+			for (HeroController hero:heroes) {
+				if (hero.getCharacter() == target) {
+					return hero;
+				}
+			}
+		} else {
+			for (CpuMonster monster:monsters[currentMap]) {
+				if (monster.getCharacter() == target) {
+					return monster;
+				}
+			}
+		}
+		return null;
+	}
 
-	private Character findTarget(Coordinate position, int distance, boolean isMonsterHunting) {
+	private Controller findTarget(Coordinate position, int distance, boolean isMonsterHunting) {
 		/* Busca nos arredores da posicao dada se tem oponente pra atacar */
 		int x = position.getX();
 		int y = position.getY();
@@ -147,7 +165,7 @@ public class Map {
 						target = checkHeroOnPosition(x+i,y+j);
 						if(target != null) {
 							System.out.println("pos "+(x+i) +" "+(y+j) + " "+target.getName());
-							return target;
+							return getController(target);
 						}
 					}
 				}
@@ -160,7 +178,7 @@ public class Map {
 						target = checkMonsterOnPosition(x+i,y+j);
 						if(target != null) {
 							System.out.println("pos "+(x+i) +" "+(y+j) + " "+target.getName());
-							return target;
+							return getController(target);
 						}
 					}
 				}
@@ -176,7 +194,7 @@ public class Map {
 		Character hunter = person.getCharacter();
 		Coordinate hunterPosition = hunter.getPosition();
 		int weaponReach = hunter.getWeaponsReach();
-		Character target = null;
+		Controller target = null;
 		boolean isMonsterHunting = true;		//monstro ataca heroi
 		
 		if (hunter instanceof Hero)
@@ -186,10 +204,10 @@ public class Map {
 			target = findTarget(hunterPosition, i, isMonsterHunting);
 			
 			if (target != null) {
-				System.out.println(hunter.getName() + " ataca " + target.getName());
+				System.out.println(hunter.getName() + " ataca " + target.getCharacter().getName());
 				person.attack(target);
 				
-				if (target.isDead()) {
+				if (target.getCharacter().isDead()) {
 					remove(target);
 				}
 				break;
@@ -197,24 +215,25 @@ public class Map {
 		}
 	}
 
-	private void remove(Character target) {
+	private void remove(Controller target) {		//possivelmente aqui nao ta removendo do vetor de monstros
+		/* Remove um heroi ou monstro do mapa e vetor de herois/monstros */
 		if(target instanceof Monster) {
 			for(int i = 0; i < monsters[currentMap].length; i++) {
-				if (monsters[currentMap][i].getCharacter() == target) {
+				if (monsters[currentMap][i] == target) {
 					monsters[currentMap][i] = monsters[currentMap][monsters[currentMap].length-1];
 					monsters[currentMap] = Arrays.copyOf(monsters[currentMap], monsters[currentMap].length - 1);		//diminui vetor de monstros
 				}
 			}
 		} else if (target instanceof Hero) {
 			for(int i = 0; i < heroes.length; i++) {
-				if (heroes != null && heroes[i].getCharacter() == target) {
+				if (heroes != null && heroes[i] == target) {
 					heroes[i] = heroes[heroes.length-1];
 					heroes[heroes.length-1] = null;
 				}
 			}
 		}
 		
-		Coordinate position = target.getPosition();
+		Coordinate position = target.getCharacter().getPosition();
 		maps[currentMap][position.getX()][position.getY()] = null;
 	}
 	

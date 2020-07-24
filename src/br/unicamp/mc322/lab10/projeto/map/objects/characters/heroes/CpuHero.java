@@ -15,7 +15,7 @@ public class CpuHero extends HeroController {
 	}
 
 	@Override
-	protected void newDirection(Map map, Scanner scanner) {
+	protected void newDirection(Map map) {
 		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */
 		Random randomize = new Random();
 

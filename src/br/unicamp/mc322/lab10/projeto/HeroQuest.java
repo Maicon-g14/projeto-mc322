@@ -110,7 +110,7 @@ public class HeroQuest {
 		Hero player = heroesController[0].getCharacter();
 
 		if (map.allMonstersDefeated()) {
-			System.out.println("----------------\n-  Game Over!  -\n- Voce ganhou!- \n----------------");
+			System.out.println("----------------\n-  Game Over!  -\n- Voce ganhou! -\n----------------");
 			running = false;
 		}
 
