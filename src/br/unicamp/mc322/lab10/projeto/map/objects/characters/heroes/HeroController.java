@@ -74,6 +74,7 @@ public abstract class HeroController extends CommonControllers {
 		SpellCaster caster;
 		Spell spell;
 		Controller target;
+		Controller[] additionalTargets;
 		int dice;
 
 		if (isMagicUser()) {
@@ -87,6 +88,10 @@ public abstract class HeroController extends CommonControllers {
 			} else if (spell.getSpellType() == SpellTypes.ATTACK) {
 				target = map.findSpellTarget(personagem.getPosition(), false);//chamar funcao que escolhe o alvo
 				caster.castSpell(target, spell, dice);
+			} else if (spell.getSpellType() == SpellTypes.AREA_ATTACK) {
+				target = map.findSpellTarget(personagem.getPosition(), false);
+				additionalTargets = map.findAdjacentTargets(personagem.getPosition(), 1);
+				caster.castSpell(target, additionalTargets, spell, dice);
 			}
 		}
 
