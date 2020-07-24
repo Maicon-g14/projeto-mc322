@@ -46,7 +46,7 @@ public abstract class HeroController extends CommonControllers {
 	}
 	
 	public void attack(Controller target) {
-		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a fun�ao de ataque do personagem
+		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a fun�ao de ataque do personagem
 		int skulls = rollAttackDices();
 		int shields = target.rollDefenseDices();
 
@@ -85,9 +85,8 @@ public abstract class HeroController extends CommonControllers {
 				caster.castSpell(this, spell, dice);//magias de support são sempre utilizadas no próprio usuario
 
 			} else if (spell.getSpellType() == SpellTypes.ATTACK) {
-				//target = map.callAttack(this);//chamar funcao que escolhe o alvo
-				//caster.castSpell(target, spell, dice);
-
+				target = map.findSpellTarget(personagem.getPosition(), false);//chamar funcao que escolhe o alvo
+				caster.castSpell(target, spell, dice);
 			}
 		}
 
@@ -115,6 +114,10 @@ public abstract class HeroController extends CommonControllers {
 	public int rollMagicDefenseDices() {
 		/*Rola dados brancos de acordo com a inteligencia do personagem e retorna o numero de escudos obtidos*/
 		return rollWhiteDices(personagem.getIntelligence(), WhiteDiceSides.HERO_DEFENSE);
+	}
+	
+	public Controller[] getAdjacentCharacters(Map map) {
+		return map.findAdjacentTargets(personagem.getPosition(), 1);
 	}
 
 }
