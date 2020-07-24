@@ -5,6 +5,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 
 public class SpellCaster extends Hero {
@@ -75,6 +76,14 @@ public class SpellCaster extends Hero {
 	public void castSpell(Controller target, Spell spell, int dice) {
 		if (dice < getIntelligence()) {
 			spell.use(target);
+			removeSpell(spell);
+		}
+	}
+	
+	public void castSpell(Controller target, Controller[] additionalTargets, Spell spell, int dice) {
+		AreaSpell areaSpell = (AreaSpell)spell;
+		if (dice < getIntelligence()) {
+			areaSpell.use(target, additionalTargets);
 			removeSpell(spell);
 		}
 	}
