@@ -8,11 +8,12 @@ package br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellElements;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
 
-public class Fireball extends Spell {
+public class Fireball extends AreaSpell {
 
 	private static final String NAME = "Fireball";
 	private static final int DICES = 6;
@@ -27,10 +28,11 @@ public class Fireball extends Spell {
 	public void use(Controller target) {
 		int damage = 6;
 		int shields = target.rollMagicDefenseDices();
-
 		if (damage - shields > 0) {
 			target.getCharacter().takeDamage(damage - shields);
 		}
+		
+		
 	}
 
 	public void use(Controller mainTarget, Controller[] adjacentTargets) {
@@ -45,10 +47,12 @@ public class Fireball extends Spell {
 			damage = 3;
 
 			for (Controller adjacentTarget : adjacentTargets) {
-				shields = adjacentTarget.rollDefenseDices();
+				if(adjacentTarget != null) {
+					shields = adjacentTarget.rollDefenseDices();
 
-				if (damage - shields > 0) {
-					adjacentTarget.getCharacter().takeDamage(damage - shields);
+					if (damage - shields > 0) {
+						adjacentTarget.getCharacter().takeDamage(damage - shields);
+					}
 				}
 			}
 
