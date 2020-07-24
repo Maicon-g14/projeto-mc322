@@ -138,14 +138,15 @@ public class Map {
 		int x = position.getX();
 		int y = position.getY();
 		Character target;
-		
+		System.out.println("player "+position);
 		if (isMonsterHunting) {
 			
 			for (int i = -distance; i < distance; i++) {
 				for (int j = distance; j > -distance; j--) {
-					if (i != j) {
+					if (!(i == 0 && j == 0)) {
 						target = checkHeroOnPosition(x+i,y+j);
 						if(target != null) {
+							System.out.println("pos "+(x+i) +" "+(y+j) + " "+target.getName());
 							return target;
 						}
 					}
@@ -153,11 +154,12 @@ public class Map {
 			}
 			
 		} else {
-			for (int i = -distance; i < distance; i++) {
-				for (int j = distance; j > -distance; j--) {
-					if (i != j) {
+			for (int i = -distance; i <= distance; i++) {
+				for (int j = distance; j >= -distance; j--) {
+					if (!(i == 0 && j == 0)) {		//desconsiidera a posicao central(onde esta o atacante)
 						target = checkMonsterOnPosition(x+i,y+j);
 						if(target != null) {
+							System.out.println("pos "+(x+i) +" "+(y+j) + " "+target.getName());
 							return target;
 						}
 					}
@@ -175,24 +177,47 @@ public class Map {
 		Coordinate hunterPosition = hunter.getPosition();
 		int weaponReach = hunter.getWeaponsReach();
 		Character target = null;
-		boolean isMonsterHunting = true;
+		boolean isMonsterHunting = true;		//monstro ataca heroi
 		
 		if (hunter instanceof Hero)
-			isMonsterHunting = false;
+			isMonsterHunting = false;		//heroi ataca monstro
 		
-		for (int i = 0; i < weaponReach; i++) {		//no raio de ataque da arma, da prioridade a que estiver mais proximo
+		for (int i = 1; i <= weaponReach; i++) {		//no raio de ataque da arma, da prioridade a que estiver mais proximo
 			target = findTarget(hunterPosition, i, isMonsterHunting);
+			
 			if (target != null) {
+				System.out.println(hunter.getName() + " ataca " + target.getName());
 				person.attack(target);
-				break;		//se tirar essa linha vira ataque em area
+				
+				if (target.isDead()) {
+					remove(target);
+				}
+				break;
 			}
-		}
-		
-		if(target != null) {
-			person.attack(target);
 		}
 	}
 
+	private void remove(Character target) {
+		if(target instanceof Monster) {
+			for(int i = 0; i < monsters[currentMap].length; i++) {
+				if (monsters[currentMap][i].getCharacter() == target) {
+					monsters[currentMap][i] = monsters[currentMap][monsters[currentMap].length-1];
+					monsters[currentMap] = Arrays.copyOf(monsters[currentMap], monsters[currentMap].length - 1);		//diminui vetor de monstros
+				}
+			}
+		} else if (target instanceof Hero) {
+			for(int i = 0; i < heroes.length; i++) {
+				if (heroes != null && heroes[i].getCharacter() == target) {
+					heroes[i] = heroes[heroes.length-1];
+					heroes[heroes.length-1] = null;
+				}
+			}
+		}
+		
+		Coordinate position = target.getPosition();
+		maps[currentMap][position.getX()][position.getY()] = null;
+	}
+	
 	public void setPosition(GameObject item, Coordinate position) {
 		/* Dado um objeto e uma nova posicao para ele(ja verificada),
 		 * move esse objeto para a nova posicao */
@@ -282,20 +307,21 @@ public class Map {
 
 		if (!findSomething) {        //encontra item, monstro ou nada
 			if (randomChoice()) {        //encontra monstro
-				System.out.println("Voce encontrou um monstro!");
+				System.out.println("Voce escuta passos!");
 				setMonsters(currentMap);
 
 			} else if (randomChoice()) {        //encontra algo
 				if (randomChoice()) {        //encontra dinheiro
+					System.out.println("Voce pisa em alguma coisa!");
 					hero.addRandomMoney();
 				} else {        //encontra item
 					CanCarry item = findableEquipment.getRandomLoot();
-					System.out.println("Voce encontrou: " + item.getName());
+					System.out.println("Olhando atentamente voce encontra " + item.getName() + " jogado em um canto da sala!");
 					hero.addToInventory(item);
 				}
 
 			} else {        //nao encontra nada
-				System.out.println("Nada encontrado!");
+				System.out.println("Parece que nao ha nada por aqui!");
 
 			}
 		}
@@ -468,7 +494,7 @@ public class Map {
 	}
 
 	protected Monster increaseMonster(Monster monster, int mapNumber) {
-		/* Aloca espa�o no vetor de monstros, cria e insere um monstro em seu controlador no vetor */
+		/* Aloca espaco no vetor de monstros, cria e insere um monstro em seu controlador no vetor */
 		if (monsters[mapNumber] == null) {
 			monsters[mapNumber] = new CpuMonster[1];
 		} else {

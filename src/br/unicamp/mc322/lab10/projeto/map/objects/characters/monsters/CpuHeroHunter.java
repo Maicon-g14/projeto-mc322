@@ -32,7 +32,7 @@ public class CpuHeroHunter extends CpuMonster {
 		int smallestPosition = 0;
 
 		for (int i = 1; i < array.length; i++)
-			if (array[i] < array[smallestPosition])
+			if (array[i] > 0 && array[i] < array[smallestPosition])
 				smallestPosition = i;
 
 		return smallestPosition;
@@ -74,8 +74,10 @@ public class CpuHeroHunter extends CpuMonster {
 		Coordinate heroPosition;
 
 		for (int i = 0; i < heroes.length; i++) {
-			heroPosition = heroes[i].getCharacter().getPosition();
-			range[i] = position.measureDistance(heroPosition);
+			if (heroes[i] != null) {
+				heroPosition = heroes[i].getCharacter().getPosition();
+				range[i] = position.measureDistance(heroPosition);
+			}
 		}
 
 		int chosenHero = smallestEllement(range);

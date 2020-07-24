@@ -33,8 +33,6 @@ public class HeroQuest {
 			map = new RandomMap(gameMode, chosenClass, playerName, findableEquipment);
 		}
 
-		heroesController = map.getHeroes();
-
 		market = new Market(findableEquipment.getMarketItems());
 	}
 
@@ -49,10 +47,12 @@ public class HeroQuest {
 			
 			do {
 				turn = true;
-				monstersController = map.getMonsters();
 				map.printScene();
 	
 				while (running && turn) {
+					heroesController = map.getHeroes();
+					monstersController = map.getMonsters();
+					
 					turn = heroesTurn();
 					monstersTurn();
 	

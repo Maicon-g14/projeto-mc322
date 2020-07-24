@@ -238,6 +238,7 @@ public abstract class Character extends GameObject {
 	}
 
 	public void addRandomMoney() {
+		System.out.print(getName()+" tem ");
 		money.addRandomMoney();
 	}
 
@@ -258,6 +259,7 @@ public abstract class Character extends GameObject {
 			hp = 0;
 			dead = true;
 		}
+		System.out.println(getName()+" tomou "+amount+" de dano e ficou com "+hp+" pontos de vida!");
 	}
 	
 	private boolean isEquipable(Attack item) {
@@ -390,7 +392,6 @@ public abstract class Character extends GameObject {
 
 		maxHP = hp;
 		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];
-		addRandomMoney();
 	}
 
 }

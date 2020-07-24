@@ -42,15 +42,15 @@ public class Coordinate {
 		int positionX = getX() - position.getX();
 		int positionY = getY() - position.getY();
 		
-		x = positivize(positionX);
-		y = positivize(positionY);
+		positionX = positivize(positionX);
+		positionY = positivize(positionY);
 		
-		return (x + y)/2;
+		return (positionX + positionY)/2;
 	}
 
 	public String toString() {
 		if (!onMap) {
-			return "Objeto n�o esta no mapa";
+			return "Objeto nao esta no mapa";
 		}
 
 		return "(" + x + "," + y + ")";

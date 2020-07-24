@@ -29,6 +29,7 @@ public class CpuHero extends HeroController {
 	}
 
 	protected boolean action(Map map, Scanner scanner) {
+		map.callAttack(this);
 		return true;        //sinal usado para subir escada e trocar mapa
 	}
 
