@@ -43,4 +43,5 @@ public class CpuMonster extends CommonControllers {
 			monster.attack(target.getCharacter(), skulls - shields);
 		}
 	}
+	
 }

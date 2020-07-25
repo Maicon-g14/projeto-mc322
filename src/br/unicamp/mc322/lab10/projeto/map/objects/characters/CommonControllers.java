@@ -59,6 +59,10 @@ public abstract class CommonControllers implements Controller {
 		return true;
 	}
 	
+	public int rollMagicAttack(int dices) {
+		return rollWhiteDices(dices, WhiteDiceSides.ATTACK);
+	}
+	
 	@Override
 	public int rollRedDices(int n) {
 		int result = 0;

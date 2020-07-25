@@ -5,6 +5,8 @@ import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes.SpellCaster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SelfSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.CommonControllers;
@@ -14,6 +16,7 @@ import java.util.Scanner;
 
 public abstract class HeroController extends CommonControllers {
 
+	private static final boolean IS_MONSTER_HUNTING = false;
 	private Hero personagem;
 
 	public HeroController(Hero personagem) {
@@ -23,6 +26,11 @@ public abstract class HeroController extends CommonControllers {
 	public int rollAttackDices() {
 		//rola todos os dados de ataque do personagem e retorna o numero de caveiras obtidas
 		return rollWhiteDices(personagem.getAttackDices(), WhiteDiceSides.ATTACK);
+	}
+		
+	public int rollMagicDefenseDices() {
+		/*Rola dados brancos de acordo com a inteligencia do personagem e retorna o numero de escudos obtidos*/
+		return rollWhiteDices(personagem.getIntelligence(), WhiteDiceSides.HERO_DEFENSE);
 	}
 
 	public int rollDefenseDices() {
@@ -45,8 +53,9 @@ public abstract class HeroController extends CommonControllers {
 		return personagem;
 	}
 	
+	@Override
 	public void attack(Controller target) {
-		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a fun�ao de ataque do personagem
+		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a funcao de ataque do personagem
 		int skulls = rollAttackDices();
 		int shields = target.rollDefenseDices();
 
@@ -73,35 +82,58 @@ public abstract class HeroController extends CommonControllers {
 	}
 
 	public void useMagic(Map map) {
-		SpellCaster caster;
-		Spell spell;
-		Controller target;
-		Controller[] additionalTargets;
-		int dice;
 
-		if (isMagicUser()) {
-			caster = (SpellCaster) personagem;
-			spell = chooseSpell(caster.getSpells());
-			dice = rollRedDices(1); //rolagem do dado que define se a magia foi sucesso ou não
+		if (GameTypeObjects.isMagicUser(personagem)) {		//se atacante for do tipo que usa magias
+			
+			SpellCaster caster = (SpellCaster) personagem;
+			Spell spell = chooseSpell(caster.getSpells());
+			
+			if (spell == null) {
+				return;
+			}
+			
+			int dice = rollRedDices(1);		//rolagem do dado que define se a magia foi sucesso ou nao
 
 			if (spell.getSpellType() == SpellTypes.SUPPORT) {
-				caster.castSpell(this, spell, dice);//magias de support são sempre utilizadas no próprio usuario
+				System.out.println(personagem.getName() + " usa o feitico " + spell.getName() + " em si mesmo!");
+				caster.castSpell(this, (SelfSpell) spell, dice);		//magias de support sao sempre utilizadas no proprio usuario
 
 			} else if (spell.getSpellType() == SpellTypes.ATTACK) {
-				target = map.findSpellTarget(personagem.getPosition(), false);//chamar funcao que escolhe o alvo
-				caster.castSpell(target, spell, dice);
+				castAttack(map,spell,dice,caster);
+			
 			} else if (spell.getSpellType() == SpellTypes.AREA_ATTACK) {
-				target = map.findSpellTarget(personagem.getPosition(), false);
-				additionalTargets = map.findAdjacentTargets(personagem.getPosition(), 1);
-				caster.castSpell(target, additionalTargets, spell, dice);
+				castAreaAttack(map,(AreaSpell) spell,dice,caster);
 			}
 		}
 
 	}
+	
+	private void castAttack(Map map, Spell spell, int dice, SpellCaster caster) {
+		/* Lanca ataque magico no oponente se estiver no raio de ataque */
+		Controller target = map.findSpellTarget(personagem.getPosition(), spell.getReach(), IS_MONSTER_HUNTING);
+		
+		if (target != null) {		//cancela ataque caso nao tenha alvo
+			System.out.println(personagem.getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + "!");
+			caster.castSpell(this, target, spell, dice);
+		}
+	}
+	
+	private void castAreaAttack(Map map, AreaSpell spell, int dice, SpellCaster caster) {
+		/* Procura por alvo mais proximo dentro do raio dado, se encontrar,
+		 * ataca ele e os possiveis alvos adjacentes a ele com o feitico */
+		Controller target = map.findSpellTarget(personagem.getPosition(), spell.getReach(), IS_MONSTER_HUNTING);		//busca por alvo principal
+		
+		if (target != null) {		//cancela ataque caso nao tenha alvo
+			System.out.println(personagem.getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + " e em todos ao seu redor!");
+			Controller[] additionalTargets = map.getAdjacentTargetsInDelimitedArea(personagem.getPosition(), spell.getAdjacentReach(), IS_MONSTER_HUNTING);		//busca por alvos secundarios em torno do principal na distancia especificada
+			
+			caster.castSpell(this, target, additionalTargets, spell, dice);
+		}
+	}
 
 	public void displaySpells() {
 		Spell[] spellList;
-		if(isMagicUser()) {
+		if(GameTypeObjects.isMagicUser(personagem)) {
 			SpellCaster caster = (SpellCaster)personagem;
 			spellList = caster.getSpells();
 			for(int i = 0; i < caster.getQtdSpells(); i++) {
@@ -109,22 +141,7 @@ public abstract class HeroController extends CommonControllers {
 			}
 		}
 	}
-	
-	private boolean isMagicUser() {
-		if(personagem.getId() == GameTypeObjects.ELF || personagem.getId() == GameTypeObjects.WIZARD)
-			return true;
-		return false;
-	}
 
 	public abstract Spell chooseSpell(Spell[] spells);
 	
-	public int rollMagicDefenseDices() {
-		/*Rola dados brancos de acordo com a inteligencia do personagem e retorna o numero de escudos obtidos*/
-		return rollWhiteDices(personagem.getIntelligence(), WhiteDiceSides.HERO_DEFENSE);
-	}
-	
-	public Controller[] getAdjacentCharacters(Map map) {
-		return map.findAdjacentTargets(personagem.getPosition(), 1);
-	}
-
 }

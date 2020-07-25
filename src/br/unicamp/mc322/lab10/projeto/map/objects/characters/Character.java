@@ -19,7 +19,6 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipm
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.Armor;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.Shield;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public abstract class Character extends GameObject {
@@ -270,14 +269,15 @@ public abstract class Character extends GameObject {
 		money.addRandomMoney();
 	}
 
-	protected void recoverHp(int amount) {
+	public void recoverHp(int amount) {
+		System.out.print("Body points restaurados!		HP: " + hp + "->");
 		if (hp + amount < maxHP) {
 			hp += amount;
 		} else {
 			hp = maxHP;
 		}
 
-		System.out.println("Body points restaurados!	HP:" + hp);
+		System.out.println(hp + "/" + maxHP);
 	}
 
 	protected void loseHp(int amount) {

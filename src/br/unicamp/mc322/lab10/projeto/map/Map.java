@@ -156,28 +156,18 @@ public class Map {
 		int x = position.getX();
 		int y = position.getY();
 		Character target;
-		
-		if (isMonsterHunting) {
 			
-			for (int i = -distance; i < distance; i++) {
-				for (int j = distance; j > -distance; j--) {
-					if (!(i == 0 && j == 0)) {
+		for (int i = -distance; i <= distance; i++) {
+			for (int j = distance; j >= -distance; j--) {
+				if (!(i == 0 && j == 0)) {
+					if (isMonsterHunting) {
 						target = checkHeroOnPosition(x+i,y+j);
-						if(target != null) {
-							return getController(target);
-						}
-					}
-				}
-			}
-			
-		} else {
-			for (int i = -distance; i <= distance; i++) {
-				for (int j = distance; j >= -distance; j--) {
-					if (!(i == 0 && j == 0)) {		//desconsiidera a posicao central(onde esta o atacante)
+					} else {
 						target = checkMonsterOnPosition(x+i,y+j);
-						if(target != null) {
-							return getController(target);
-						}
+					}
+					
+					if(target != null) {
+						return getController(target);
 					}
 				}
 			}
@@ -679,59 +669,91 @@ public class Map {
 		}
 	}
 	
-	public Controller findSpellTarget(Coordinate position, boolean isMonsterHunting) {
-		/* Busca nos arredores da posicao dada se tem oponente pra atacar */
-		int x = position.getX();
-		int y = position.getY();
-		int distance = 10;
-		Character target;
-		System.out.println("player "+position);
-			
-		for (int i = -distance; i < distance; i++) {
-			for (int j = distance; j > -distance; j--) {
-				if (!(i == 0 && j == 0)) {
-					if(isMonsterHunting) 
-						target = checkHeroOnPosition(x+i,y+j);
-					else
-						target = checkMonsterOnPosition(x+i, y+i);
-					
-					if(target != null) {
-						System.out.println("pos "+(x+i) +" "+(y+j) + " "+target.getName());
-						return getController(target);
-					}
-				}
-			}
+	private Controller[] increaseController(Controller[] controller) {
+		/* Dado um tipo Controller, inicializa o vetor com 1 posicao ou aumenta
+		 * o vetor em 1 posicao */
+		if (controller == null) {
+			controller = new Controller[1];
+		} else {
+			controller = Arrays.copyOf(controller, controller.length + 1);
 		}
-			
-		return null;
+		
+		return controller;
 	}
 	
-	public Controller[] findAdjacentTargets(Coordinate position, int distance) {
+	private Controller[] addControllers(Controller[] c1, Controller[] c2) {
+		if (c1 == null) {
+			return Arrays.copyOf(c2, c2.length);
+		} else if (c2 != null) {
+			for (int i = 0; i < c2.length; i++) {
+				c1 = increaseController(c1);
+				c1[c1.length-1] = c2[i];
+			}
+		}
+		
+		return c1;
+	}
+	
+	public Controller[] getAdjacentTargetsInDelimitedArea(Coordinate position, int distance, boolean isMonsterHunting) {
+		/* Delimita a area de ataque e retorna todos os alvos encontrados 
+		 * nessa area */
+		Controller[] allTargets = null;
+		Controller[] targets;
+		for (int i = 1; i <= distance; i++) {
+			targets = findAreaTargets(position, i, isMonsterHunting);
+			
+			if (targets != null)
+				allTargets = addControllers(allTargets,targets);
+		}
+		
+		return allTargets;
+	}
+	
+	private Controller[] findAreaTargets(Coordinate position, int distance, boolean isMonsterHunting) {
+		/* Busca nos arredores da posicao dada se tem oponentes pra atacar, se hover, devolve vetor
+		 * com todos os oponentes no raio */
 		int x = position.getX();
 		int y = position.getY();
-		int k = 0;
 		Character target;
-		Controller[] alvosAdjacentes = new Controller[8];
-		for (int i = -distance; i < distance; i++) {
-			for (int j = distance; j > -distance; j--) {
+		Controller[] targets = null;
+			
+		for (int i = -distance; i <= distance; i++) {
+			for (int j = distance; j >= -distance; j--) {
 				if (!(i == 0 && j == 0)) {
-					target = checkHeroOnPosition(x+i,y+j);
+					if (isMonsterHunting) {
+						target = checkHeroOnPosition(x+i,y+j);
+					} else {
+						target = checkMonsterOnPosition(x+i,y+j);
+					}
+					
 					if(target != null) {
-						alvosAdjacentes[k] = getController(target);
-						k++;
-						if(k == 8)
-							return alvosAdjacentes;
-					}else {
-						target = checkMonsterOnPosition(x+i, y+i);
-						if(target != null) {
-							alvosAdjacentes[k] = getController(target);
-							if(k == 8)
-								return alvosAdjacentes;
-						}
+						targets = increaseController(targets);
+						targets[targets.length-1] = getController(target);
 					}
 				}
 			}
 		}
-		return alvosAdjacentes;
+		if (targets == null) {
+			System.out.println("Nenhum alvo encontrado! (Sua area de ataque eh " + distance + " casas ao redor do alvo).");
+		} else {
+			System.out.println(targets.length + " alvos adjacentes encontrados!");
+		}
+		return targets;
+	}
+	
+	public Controller findSpellTarget(Coordinate position, int distance, boolean isMonsterHunting) {
+		/* Dado o raio de alcance do Caster, em torno dele, da regiao mais proxima a regiao mais logiqua
+		 * onde consegue atacar, chama a busca por um alvo e retorna o primeiro encontrado (mais proximo
+		 * a ele) */
+		Controller target;
+		
+		for (int i = 1; i <= distance; i++) {
+			target = findTarget(position, i, isMonsterHunting);
+			
+			if (target != null)
+				return target;
+		}
+		
+		return null;
 	}
 }

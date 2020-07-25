@@ -1,5 +1,7 @@
 package br.unicamp.mc322.lab10.projeto.map.objects;
 
+import br.unicamp.mc322.lab10.projeto.map.objects.characters.Character;
+
 public enum GameTypeObjects {
 	DOOR, HIDDEN_DOOR, WALL, STAIR,
 	MONEY, CHEST, TRAP, HEALTH_POTION,
@@ -14,5 +16,11 @@ public enum GameTypeObjects {
 	ELF, BARBARIAN, DWARF, WIZARD,
 	GOBLIN, MAGE_SKELETON, SKELETON,
 	TELEPORT, FIREBALL, MAGIC_MISSILE, SIMPLE_HEAL,
-	MONSTER, HERO, GAME_OBJECT
+	MONSTER, HERO, GAME_OBJECT;
+	
+	public static boolean isMagicUser(Character person) {
+		if(person.getId() == GameTypeObjects.ELF || person.getId() == GameTypeObjects.WIZARD || person.getId() == GameTypeObjects.MAGE_SKELETON)
+			return true;
+		return false;
+	}
 }

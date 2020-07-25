@@ -12,19 +12,26 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
 
 public abstract class Spell extends GameObject {
 
-	private int dices;
+	private int range;
 	private SpellElements spellElement;
 	private SpellTypes spellType;
 
-	public Spell(String name, Sprite sprite, GameTypeObjects id, int dices, SpellElements spellElement, SpellTypes spellType) {
+	public Spell(String name, Sprite sprite, GameTypeObjects id, SpellElements spellElement, SpellTypes spellType) {
 		super(name, sprite, id);
-		this.dices = dices;
 		this.spellElement = spellElement;
 		this.spellType = spellType;
+		this.range = 0;		//feitico eh aplicado no proprio caster
 	}
-
-	public int getDices() {
-		return dices;
+	
+	public Spell(String name, Sprite sprite, GameTypeObjects id, SpellElements spellElement, SpellTypes spellType, int range) {
+		super(name, sprite, id);
+		this.spellElement = spellElement;
+		this.spellType = spellType;
+		this.range = range;
+	}
+	
+	public int getReach() {
+		return range;
 	}
 
 	public SpellElements getElement() {
@@ -35,5 +42,5 @@ public abstract class Spell extends GameObject {
 		return spellType;
 	}
 
-	public abstract void use(Controller target);
+	public abstract void use(Controller caster, Controller target);
 }

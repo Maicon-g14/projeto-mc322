@@ -19,20 +19,27 @@ public class MagicMissile extends Spell {
 	private static final SpellElements ELEMENT = SpellElements.AIR;
 	private static final SpellTypes TYPE = SpellTypes.ATTACK;
 	private static final GameTypeObjects ID = GameTypeObjects.MAGIC_MISSILE;
+	
+	private static final int DAMAGE_MULTIPLIER = 3;
+	private static final int NO_DAMAGE = 0;
 
 	public MagicMissile() {
-		super(NAME, new Sprite(), ID, DICES, ELEMENT, TYPE);
+		super(NAME, new Sprite(), ID, ELEMENT, TYPE);
 	}
 
-	public void use(Controller target) {
+	public void use(Controller caster, Controller target) {
+		/* Lanca 3 flexas magicas cada uma causando 2 danos no alvo */
 		int shields = target.rollMagicDefenseDices();
 		int damage;
-		//ciclo de 3 vezes pois são lançados 3 misseis, com o alvo podendo tentar defender cada um
-		for (int i = 0; i < 3; i++) {
-			damage = 2 - shields;
+		
+		for (int i = 0; i < DAMAGE_MULTIPLIER; i++) {
+			damage = caster.rollMagicAttack(DICES);
+			damage -= shields;		//ciclo de 3 vezes pois sao lancados 3 misseis, com o alvo podendo tentar defender cada um
 
-			if (damage > 0) {
+			if (damage > NO_DAMAGE) {
 				target.getCharacter().takeDamage(damage);
+			} else {
+				System.out.println("Mas " + target.getCharacter().getName() + " se defendeu e nao tomou dano algum!");
 			}
 		}
 	}

@@ -43,6 +43,12 @@ public class Player extends HeroController {
 	public Spell chooseSpell(Spell[] spells) {
 		int n;
 		Spell chosenSpell;
+		
+		if (spells == null) {
+			System.out.println("Voce nao tem feiticos para usar!");
+			return null;
+		}
+		
 		SpellCaster caster = (SpellCaster)getCharacter();
 		
 		displaySpells();
@@ -130,7 +136,7 @@ public class Player extends HeroController {
 		int amount = maxSteps + 1;
 
 		do {
-			System.out.println("Quantidade de passos (max: " + maxSteps + "): ");
+			System.out.print("Quantidade de passos (max: " + maxSteps + "): ");
 
 			if (!scanner.hasNextInt())
 				scanner.next();
@@ -138,8 +144,6 @@ public class Player extends HeroController {
 				amount = scanner.nextInt();
 
 		} while (amount > maxSteps || amount < 0);
-
-		System.out.println("lado: " + amount);
 
 		return amount;
 	}

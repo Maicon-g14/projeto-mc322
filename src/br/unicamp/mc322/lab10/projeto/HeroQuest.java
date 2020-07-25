@@ -55,7 +55,7 @@ public class HeroQuest {
 					
 					System.out.println("Seu turno " + heroesController[0].getCharacter().getName() + ":");
 					turn = heroesTurn();
-					monstersTurn();
+					//monstersTurn();
 	
 					map.printScene();
 					checkGameOver();

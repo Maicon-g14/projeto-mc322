@@ -6,6 +6,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SelfSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 
 public class SpellCaster extends Hero {
@@ -44,20 +45,26 @@ public class SpellCaster extends Hero {
 	public void addSpell(Spell newSpell) {
 		//Adiciona uma nova magia
 		Spell[] auxSpells;
+		
 		if (qtdSpells < spells.length) {
 			spells[qtdSpells] = newSpell;
+		
 		} else {
+		
 			auxSpells = new Spell[2 * spells.length];
+			
 			for (int i = 0; i < qtdSpells; i++) {
 				auxSpells[i] = spells[i];
 			}
+			
 			auxSpells[qtdSpells++] = newSpell;
 			spells = auxSpells;
+		
 		}
 		qtdSpells++;
 	}
 
-	public void removeSpell(int n) {
+	private void removeSpell(int n) {
 		for (int i = n - 1; i < qtdSpells - 1; i++) {
 			spells[i] = spells[i + 1];
 		}
@@ -72,18 +79,26 @@ public class SpellCaster extends Hero {
 			}
 		}
 	}
-
-	public void castSpell(Controller target, Spell spell, int dice) {
+	
+	public void castSpell(Controller target, SelfSpell spell, int dice) {
 		if (dice < getIntelligence()) {
-			spell.use(target);
+			if(spell.use(target)) {
+				removeSpell(spell);
+			}
+		}
+	}
+
+	public void castSpell(Controller caster, Controller target, Spell spell, int dice) {
+		if (dice < getIntelligence()) {
+			spell.use(caster, target);
 			removeSpell(spell);
 		}
 	}
 	
-	public void castSpell(Controller target, Controller[] additionalTargets, Spell spell, int dice) {
+	public void castSpell(Controller caster, Controller target, Controller[] additionalTargets, Spell spell, int dice) {
 		AreaSpell areaSpell = (AreaSpell)spell;
 		if (dice < getIntelligence()) {
-			areaSpell.use(target, additionalTargets);
+			areaSpell.use(caster, target, additionalTargets);
 			removeSpell(spell);
 		}
 	}

@@ -17,8 +17,10 @@ public interface Controller {
 	int rollAttackDices();
 
 	int rollDefenseDices();
+
+	int rollMagicAttack(int dices);
 	
 	int rollMagicDefenseDices();
-
-	void attack(Controller target);
+	
+	public abstract void attack(Controller target);
 }
