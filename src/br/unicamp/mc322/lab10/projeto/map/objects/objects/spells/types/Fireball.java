@@ -19,8 +19,8 @@ public class Fireball extends AreaSpell {
 	private static final SpellElements ELEMENT = SpellElements.FIRE;
 	private static final SpellTypes TYPE = SpellTypes.AREA_ATTACK;
 	private static final GameTypeObjects ID = GameTypeObjects.FIREBALL;
-	private static final int REACH = 3;		//distancia maxima do atacante ate o alvo
-	private static final int ADJACENT_RANGE = 1;		//distancia adjacente ao alvo em que os oponentes podem sofrer dano	
+	private static final int REACH = 3;        //distancia maxima do atacante ate o alvo
+	private static final int ADJACENT_RANGE = 1;        //distancia adjacente ao alvo em que os oponentes podem sofrer dano
 
 	public Fireball() {
 		super(NAME, new Sprite(), ID, ELEMENT, TYPE, REACH, ADJACENT_RANGE);
@@ -38,10 +38,10 @@ public class Fireball extends AreaSpell {
 		}
 
 		if (adjacentTargets != null) {
-			damage = caster.rollMagicAttack(DICES/2);		//metade do dano
+			damage = caster.rollMagicAttack(DICES / 2);        //metade do dano
 
 			for (Controller adjacentTarget : adjacentTargets) {
-				if(adjacentTarget != null) {
+				if (adjacentTarget != null) {
 					shields = adjacentTarget.rollDefenseDices();
 
 					if (damage - shields > 0) {

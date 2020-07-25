@@ -81,10 +81,8 @@ public class SpellCaster extends Hero {
 	}
 	
 	public void castSpell(Controller target, SelfSpell spell, int dice) {
-		if (dice < getIntelligence()) {
-			if(spell.use(target)) {
-				removeSpell(spell);
-			}
+		if (dice < getIntelligence() && spell.use(target)) {
+			removeSpell(spell);
 		}
 	}
 

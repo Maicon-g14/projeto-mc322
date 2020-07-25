@@ -20,16 +20,16 @@ public abstract class Spell extends GameObject {
 		super(name, sprite, id);
 		this.spellElement = spellElement;
 		this.spellType = spellType;
-		this.range = 0;		//feitico eh aplicado no proprio caster
+		this.range = 0;        //feitico eh aplicado no proprio caster
 	}
-	
+
 	public Spell(String name, Sprite sprite, GameTypeObjects id, SpellElements spellElement, SpellTypes spellType, int range) {
 		super(name, sprite, id);
 		this.spellElement = spellElement;
 		this.spellType = spellType;
 		this.range = range;
 	}
-	
+
 	public int getReach() {
 		return range;
 	}

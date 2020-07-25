@@ -55,5 +55,5 @@ public class StartEquipment {
 		wizardEquip[1] = new Dagger();
 		wizardEquip[2] = new Dagger();
 	}
-	
+
 }

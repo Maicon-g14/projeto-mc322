@@ -13,7 +13,7 @@ public abstract class SelfSpell extends Spell {
 	public void use(Controller caster, Controller target) {
 		/* possivel expansao onde um player cura o outro */
 	}
-	
+
 	public abstract boolean use(Controller caster);
 
 }
