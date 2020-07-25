@@ -23,7 +23,7 @@ public class MagicMissile extends Spell {
 	private static final int PRICE = 5;
 	private static final int DAMAGE_MULTIPLIER = 3;
 	private static final int NO_DAMAGE = 0;
-	private static final int REACH = 3;		//distancia maxima do atacante ate o alvo
+	private static final int REACH = 3;        //distancia maxima do atacante ate o alvo
 
 	public MagicMissile() {
 		super(NAME, new Sprite(), ID, ELEMENT, TYPE, REACH, PRICE);
@@ -33,10 +33,10 @@ public class MagicMissile extends Spell {
 		/* Lanca 3 flexas magicas cada uma causando 2 danos no alvo */
 		int shields = target.rollMagicDefenseDices();
 		int damage;
-		
+
 		for (int i = 0; i < DAMAGE_MULTIPLIER; i++) {
 			damage = caster.rollMagicAttack(DICES);
-			damage -= shields;		//ciclo de 3 vezes pois sao lancados 3 misseis, com o alvo podendo tentar defender cada um
+			damage -= shields;        //ciclo de 3 vezes pois sao lancados 3 misseis, com o alvo podendo tentar defender cada um
 
 			if (damage > NO_DAMAGE) {
 				target.getCharacter().takeDamage(damage);

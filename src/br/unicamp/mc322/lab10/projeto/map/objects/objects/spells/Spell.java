@@ -21,16 +21,16 @@ public abstract class Spell extends CanCarry {
 		super(name, sprite, id, price);
 		this.spellElement = spellElement;
 		this.spellType = spellType;
-		this.range = 0;		//feitico eh aplicado no proprio caster
+		this.range = 0;        //feitico eh aplicado no proprio caster
 	}
-	
+
 	public Spell(String name, Sprite sprite, GameTypeObjects id, SpellElements spellElement, SpellTypes spellType, int range, int price) {
 		super(name, sprite, id, price);
 		this.spellElement = spellElement;
 		this.spellType = spellType;
 		this.range = range;
 	}
-	
+
 	public int getReach() {
 		return range;
 	}

@@ -19,7 +19,7 @@ public class MageSkeleton extends Monster {
 	public MageSkeleton(Coordinate position) {
 		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
 	}
-	
+
 	public MageSkeleton(Coordinate position, CanCarry[] initialEquipment) {
 		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
 	}

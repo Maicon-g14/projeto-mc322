@@ -62,6 +62,8 @@ public class Teleport extends SelfSpell {
 				map.setPosition(target.getCharacter(), newPosition);
 				return true;
 			}
+
+			break;
 		case 2:
 			newPosition.setY(y - distance);
 
@@ -69,6 +71,8 @@ public class Teleport extends SelfSpell {
 				map.setPosition(target.getCharacter(), newPosition);
 				return true;
 			}
+
+			break;
 		case 3:
 			newPosition.setX(x - distance);
 
@@ -76,6 +80,8 @@ public class Teleport extends SelfSpell {
 				map.setPosition(target.getCharacter(), newPosition);
 				return true;
 			}
+
+			break;
 		case 4:
 			newPosition.setX(x + distance);
 
@@ -83,6 +89,8 @@ public class Teleport extends SelfSpell {
 				map.setPosition(target.getCharacter(), newPosition);
 				return true;
 			}
+
+			break;
 		default:
 			break;
 		}
