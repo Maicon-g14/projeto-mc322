@@ -102,7 +102,7 @@ public class RandomMap extends Map {
 		return null;
 	}
 
-	private void createFixedContent(BufferedReader bufferedReader) throws IOException {
+	private void createFixedContent(BufferedReader bufferedReader) throws IOException, NumberFormatException {
 		/* Percorre os mapas carregados transformando em matriz de objetos */
 		String line = bufferedReader.readLine();
 		char aux;

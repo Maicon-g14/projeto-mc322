@@ -12,7 +12,7 @@ public abstract class SelfSpell extends Spell {
 	public SelfSpell(String name, Sprite sprite, GameTypeObjects id, SpellElements spellElement, SpellTypes spellType, int price) {
 		super(name, sprite, id, spellElement, spellType, price);
 	}
-
+	
 	public abstract boolean use(Controller caster);
 	
 	public abstract boolean use(Map map, Controller caster);

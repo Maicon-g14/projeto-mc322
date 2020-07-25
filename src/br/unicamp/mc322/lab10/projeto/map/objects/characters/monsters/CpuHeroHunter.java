@@ -1,11 +1,11 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters;
 
+import java.util.Random;
+
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.HeroController;
-
-import java.util.Random;
 
 public class CpuHeroHunter extends CpuMonster {
 
@@ -20,7 +20,7 @@ public class CpuHeroHunter extends CpuMonster {
 		HeroController[] heroes = map.getHeroes();
 
 		findNearest(heroes);
-
+		
 		int steps = rollRedDices(MOVE_DICES);        //rola dados de movimento
 		remainingSteps = randomize.nextInt(steps) + 1;
 

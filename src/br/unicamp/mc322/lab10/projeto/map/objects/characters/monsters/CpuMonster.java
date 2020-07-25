@@ -2,6 +2,7 @@ package br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters;
 
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.CommonControllers;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
+
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.WhiteDiceSides;
 
 public class CpuMonster extends CommonControllers {
@@ -10,7 +11,7 @@ public class CpuMonster extends CommonControllers {
 	public CpuMonster(Monster monster) {
 		this.monster = monster;
 	}
-
+	
 	@Override
 	public int rollAttackDices() {
 		//rola todos os dados de ataque do personagem e retorna o numero de caveiras obtidas
@@ -21,7 +22,7 @@ public class CpuMonster extends CommonControllers {
 	public int rollDefenseDices() {
 		return rollWhiteDices(monster.getDefenseDices(), WhiteDiceSides.MONSTER_DEFENSE);
 	}
-
+	
 	@Override
 	public int rollMagicDefenseDices() {
 		return rollWhiteDices(monster.getIntelligence(), WhiteDiceSides.MONSTER_DEFENSE);
@@ -34,7 +35,7 @@ public class CpuMonster extends CommonControllers {
 
 	@Override
 	public void attack(Controller target) {
-		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a funï¿½ao de ataque do personagem
+		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a funçao de ataque do personagem
 		int skulls = rollAttackDices();
 		int shields = target.rollDefenseDices();
 
@@ -42,5 +43,5 @@ public class CpuMonster extends CommonControllers {
 			monster.attack(target.getCharacter(), skulls - shields);
 		}
 	}
-
+	
 }

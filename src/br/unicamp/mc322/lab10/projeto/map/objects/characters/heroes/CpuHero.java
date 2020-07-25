@@ -40,7 +40,7 @@ public class CpuHero extends HeroController {
 	@Override
 	public Spell chooseSpell(Spell[] spells) {
 		Random gerador = new Random();
-		SpellCaster caster = (SpellCaster) getCharacter();
+		SpellCaster caster = (SpellCaster)getCharacter();
 		int index = gerador.nextInt(caster.getQtdSpells());
 		return spells[index];
 	}

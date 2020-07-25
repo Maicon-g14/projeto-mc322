@@ -5,6 +5,8 @@
 
 package br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types;
 
+import java.util.Scanner;
+
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
@@ -13,8 +15,6 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SelfSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellElements;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
-
-import java.util.Scanner;
 
 public class Teleport extends SelfSpell {
 
@@ -46,7 +46,6 @@ public class Teleport extends SelfSpell {
 		/* Pergunta e teleporta o usuario para uma posicao visivel por ele */
 		int x = target.getCharacter().getPosition().getX();
 		int y = target.getCharacter().getPosition().getY();
-<<<<<<< HEAD
 		Coordinate newPosition = new Coordinate(x,y);
 		
 		System.out.println("Para qual dos lados deseja se teleportar: (1. Direita, 2. Esquerda, 3. Cima, 4. Baixo)");
@@ -86,43 +85,8 @@ public class Teleport extends SelfSpell {
 			}
 		default:
 			break;
-=======
-		Coordinate newPosition = new Coordinate(x, y);
-
-		Scanner leitor = new Scanner(System.in);
-		System.out.println("Para qual dos lados deseja se teleportar: (1. Direita, 2. Esquerda, 3. Cima, 4. Baixo)");
-		int side = leitor.nextInt();
-
-		System.out.print("Quantas casas quer se mover: ");
-		int distance = leitor.nextInt();
-		leitor.close();
-
-		switch (side) {
-			case 1:
-				newPosition.setY(y + distance);
-				//por condicao de so teleportar pra areas visiveis aqui
-				target.getCharacter().setPosition(newPosition);
-				return true;
-			case 2:
-				newPosition.setY(y - distance);
-				//por condicao de so teleportar pra areas visiveis aqui
-				target.getCharacter().setPosition(newPosition);
-				return true;
-			case 3:
-				newPosition.setX(x - distance);
-				//por condicao de so teleportar pra areas visiveis aqui
-				target.getCharacter().setPosition(newPosition);
-				return true;
-			case 4:
-				newPosition.setX(x + distance);
-				//por condicao de so teleportar pra areas visiveis aqui
-				target.getCharacter().setPosition(newPosition);
-				return true;
-			default:
-				break;
->>>>>>> d4280a4ca9f54c3b0b2ec5a2ee9b60b0c0e3c24f
 		}
-
+		
 		return false;
 	}
 

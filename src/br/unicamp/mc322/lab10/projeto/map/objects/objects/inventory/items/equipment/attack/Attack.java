@@ -48,7 +48,7 @@ public class Attack extends Equipment {
 	public boolean isTwoHanded() {
 		return twoHands;
 	}
-
+	
 	public boolean isBreakable() {
 		return breakable;
 	}
