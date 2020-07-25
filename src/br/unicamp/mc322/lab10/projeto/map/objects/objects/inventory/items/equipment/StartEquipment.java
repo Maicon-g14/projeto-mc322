@@ -77,5 +77,5 @@ public class StartEquipment {
 		wizardSpell[1] = new Teleport();
 		wizardSpell[2] = new Fireball();
 	}
-	
+
 }

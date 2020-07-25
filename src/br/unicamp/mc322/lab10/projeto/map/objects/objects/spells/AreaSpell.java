@@ -9,6 +9,7 @@ public abstract class AreaSpell extends Spell {
 	private int adjacentRange;
 
 	public AreaSpell(String name, Sprite sprite, GameTypeObjects id, SpellElements spellElement,
+<<<<<<< HEAD
 			SpellTypes spellType, int range, int adjacentRange, int price) {
 		super(name, sprite, id, spellElement, spellType, range, price);
 		this.adjacentRange = adjacentRange;
@@ -19,5 +20,21 @@ public abstract class AreaSpell extends Spell {
 	}
 	
 	public abstract void use(Map map, Controller caster, Controller target, Controller[] additionalTargets);
+=======
+					 SpellTypes spellType, int range, int adjacentRange) {
+		super(name, sprite, id, spellElement, spellType, range);
+		this.adjacentRange = adjacentRange;
+	}
+
+	public void use(Controller caster, Controller target) {
+
+	}
+
+	public int getAdjacentReach() {
+		return adjacentRange;
+	}
+
+	public abstract void use(Controller caster, Controller target, Controller[] additionalTargets);
+>>>>>>> d4280a4ca9f54c3b0b2ec5a2ee9b60b0c0e3c24f
 
 }

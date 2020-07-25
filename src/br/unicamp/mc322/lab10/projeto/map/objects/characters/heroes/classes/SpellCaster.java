@@ -84,6 +84,7 @@ public class SpellCaster extends Hero {
 	}
 	
 	public void castSpell(Controller target, SelfSpell spell, int dice) {
+<<<<<<< HEAD
 		if (dice < getIntelligence()) {
 			if(spell.use(target)) {
 				//removeSpell(spell);
@@ -110,6 +111,10 @@ public class SpellCaster extends Hero {
 			}
 		} else {
 			System.out.println("Mas erra!");
+=======
+		if (dice < getIntelligence() && spell.use(target)) {
+			removeSpell(spell);
+>>>>>>> d4280a4ca9f54c3b0b2ec5a2ee9b60b0c0e3c24f
 		}
 	}
 

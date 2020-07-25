@@ -9,7 +9,6 @@ import br.unicamp.mc322.lab10.projeto.map.objects.GameObject;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
-import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.money.Money;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.consumable.items.HealthPotion;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.Equipment;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.attack.Attack;
@@ -18,6 +17,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipm
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.Defense;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.Armor;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.Shield;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.money.Money;
 
 import java.util.Scanner;
 
@@ -218,44 +218,44 @@ public abstract class Character extends GameObject {
 		/* Desconta do HP atual a quantidade dada, se morrer, ativa o dead */
 		loseHp(damage);
 	}
-	
+
 	public int getWeaponsReach() {
 		/* Retorna o alcance da arma com maior alcance equipada */
-		int maxReach = 1;		//alcance padrao dos punhos
-		
-		if(attackEquipment[0] != null && attackEquipment[0].getReach() > maxReach) {
+		int maxReach = 1;        //alcance padrao dos punhos
+
+		if (attackEquipment[0] != null && attackEquipment[0].getReach() > maxReach) {
 			maxReach = attackEquipment[0].getReach();
 		}
-		if(attackEquipment[1] != null && attackEquipment[1].getReach() > maxReach) {
+		if (attackEquipment[1] != null && attackEquipment[1].getReach() > maxReach) {
 			maxReach = attackEquipment[1].getReach();
 		}
-		
+
 		return maxReach;
 	}
-	
+
 	private void refreshInventory() {
 		for (int i = 0; i < inventoryLoad; i++) {
-			if (inventory[i] != null && inventory[i] instanceof Attack) {
+			if (inventory[i] instanceof Attack) {
 				addToInventory(inventory[i]);
 				removeFromInventory(i);
 			}
 		}
-		
+
 		if (inventoryLoad == 0) {
 			refreshStatus();
 		}
 	}
-	
+
 	private void verifyWeapon() {
 		if (attackEquipment[1] != null && attackEquipment[1].isBreakable()) {
 			attackEquipment[1] = null;
 		}
-		
+
 		if (attackEquipment[0] != null && attackEquipment[0].isBreakable()) {
 			attackEquipment[0] = attackEquipment[1];
 			attackEquipment[1] = null;
 		}
-		
+
 		refreshInventory();
 	}
 
@@ -265,7 +265,7 @@ public abstract class Character extends GameObject {
 	}
 
 	public void addRandomMoney() {
-		System.out.print(getName()+" tem ");
+		System.out.print(getName() + " tem ");
 		money.addRandomMoney();
 	}
 
@@ -287,16 +287,16 @@ public abstract class Character extends GameObject {
 			hp = 0;
 			dead = true;
 		}
-		System.out.println(getName()+" tomou "+amount+" de dano e ficou com "+hp+" pontos de vida!");
+		System.out.println(getName() + " tomou " + amount + " de dano e ficou com " + hp + " pontos de vida!");
 	}
-	
+
 	private boolean isEquipable(Attack item) {
 		/* Chama verificacao para saber se uma arma eh equipavel pela classe do personagem */
 		WeaponsTypes itemClass = item.getWeaponClass();
 		GameTypeObjects characterId = getId();
 		return WeaponsTypes.isEquipable(characterId, itemClass);
 	}
-	
+
 	private boolean isEquipable(Defense item) {
 		/* Chama verificacao para saber se um item de defesa eh equipavel pela classe do personagem */
 		ArmorClasses itemClass = item.getArmorClass();
@@ -358,9 +358,9 @@ public abstract class Character extends GameObject {
 		} else if (attackEquipment[1] == null) {
 			defenseEquipment[1] = (Defense) unequip(defenseEquipment[1]);        //desequipa possivel escudo
 			attackEquipment[1] = item;
-			
+
 		} else if (attackEquipment[0] != null && attackEquipment[1] != null) {
-			
+
 			if (item.getBonusAttack() > attackEquipment[0].getBonusAttack()) {       //se duas armas equipadas, substitui a mais fraca
 				unequip(attackEquipment[0]);
 				attackEquipment[0] = item;
@@ -368,7 +368,7 @@ public abstract class Character extends GameObject {
 				unequip(attackEquipment[1]);
 				attackEquipment[1] = item;
 			}
-		
+
 		}
 
 		refreshStatus();
@@ -408,7 +408,7 @@ public abstract class Character extends GameObject {
 		if (defenseEquipment[1] != null) {
 			finalDefense += defenseEquipment[1].getBonusDefense();
 		}
-		
+
 	}
 
 	private void setCharacterStandarts(int hp, int intellect, int atkValue, int defValue) {

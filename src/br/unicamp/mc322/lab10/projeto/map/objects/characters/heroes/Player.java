@@ -13,7 +13,7 @@ public class Player extends HeroController {
 		super(personagem);
 		personagem.setPlayerName(name);
 	}
-	
+
 	@Override
 	public boolean playTurn(Map map) {
 		/* Turno de um personagem, caso ja nao esteja em movimento,
@@ -43,18 +43,23 @@ public class Player extends HeroController {
 	public Spell chooseSpell(Spell[] spells, Scanner scanner) {
 		int n;
 		Spell chosenSpell;
-		
+
 		if (spells == null) {
 			System.out.println("Voce nao tem feiticos para usar!");
 			return null;
 		}
-		
-		SpellCaster caster = (SpellCaster)getCharacter();
-		
+
+		SpellCaster caster = (SpellCaster) getCharacter();
+
 		displaySpells();
 		System.out.println("Selecione o numero da magia: ");
+<<<<<<< HEAD
 		n = scanner.nextInt();
 		
+=======
+		n = numberFromKeyboard();
+
+>>>>>>> d4280a4ca9f54c3b0b2ec5a2ee9b60b0c0e3c24f
 		if (n < caster.getQtdSpells()) {
 			chosenSpell = spells[n];
 			return chosenSpell;
@@ -89,6 +94,7 @@ public class Player extends HeroController {
 				break;
 			case ' ':
 				direction = Command.STOP;
+				break;
 			default:
 				break;
 		}
@@ -122,10 +128,10 @@ public class Player extends HeroController {
 		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */
 		readMovementDirection(scanner);
 
-		if(direction != Command.STOP) {
+		if (direction != Command.STOP) {
 			int steps = rollRedDices(MOVE_DICES);        //rola dados de movimento
 			remainingSteps = getFinalSteps(scanner, steps);
-		
+
 			moving = true;
 			callMove(map);
 		}

@@ -36,11 +36,11 @@ public class EquipmentLoad {
 
 		return marketEquipment[chosen];
 	}
-	
+
 	public Equipment[] getRandomEquipment() {
 		/* Retorna um item aleatorio do jogo */
 		Random randomize = new Random();
-		int chosen = randomize.nextInt(WEAPONS_RANGE)+7;
+		int chosen = randomize.nextInt(WEAPONS_RANGE) + 7;
 
 		Equipment[] item = new Equipment[1];
 		item[0] = (Equipment) marketEquipment[chosen];
@@ -50,6 +50,13 @@ public class EquipmentLoad {
 	public CanCarry[] getMarketItems() {
 		return marketEquipment;
 	}
+<<<<<<< HEAD
+=======
+
+	public Equipment[] getGoblinEquipment() {
+		return goblinEquip;
+	}
+>>>>>>> d4280a4ca9f54c3b0b2ec5a2ee9b60b0c0e3c24f
 
 	private void createEquipment() {
 		/* Inicializa todos os equipamentos do jogo */
@@ -66,10 +73,25 @@ public class EquipmentLoad {
 		marketEquipment[10] = new BetterShortSword();
 		marketEquipment[11] = new LongSword();
 		marketEquipment[12] = new BetterLongSword();
+<<<<<<< HEAD
 		marketEquipment[13] = new SimpleHeal();
 		marketEquipment[14] = new Teleport();
 		marketEquipment[15] = new Fireball();
 		marketEquipment[16] = new MagicMissile();
 	}
 	
+=======
+	}
+
+	private void createGoblin() {
+		Random randomize = new Random();
+		int daggers = randomize.nextInt(7) + 3;
+
+		goblinEquip = new Equipment[daggers];
+
+		for (int i = 0; i < daggers; i++) {
+			goblinEquip[i] = new Dagger();
+		}
+	}
+>>>>>>> d4280a4ca9f54c3b0b2ec5a2ee9b60b0c0e3c24f
 }
