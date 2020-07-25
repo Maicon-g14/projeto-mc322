@@ -19,6 +19,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipm
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.Armor;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.Shield;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public abstract class Character extends GameObject {
@@ -232,9 +233,55 @@ public abstract class Character extends GameObject {
 		
 		return maxReach;
 	}
+	
+	private void refreshInventory() {
+		for (int i = 0; i < inventoryLoad; i++) {
+			if (inventory[i] != null && inventory[i] instanceof Attack) {
+				addToInventory(inventory[i]);
+				removeFromInventory(i);
+			}
+		}
+		
+		if (inventoryLoad == 0) {
+			refreshStatus();
+		}
+	}
+	
+	private void verifyWeapon() {
+		if (attackEquipment[1] != null && attackEquipment[1].isBreakable()) {
+			attackEquipment[1] = null;
+		}
+		
+		if (attackEquipment[0] != null && attackEquipment[0].isBreakable()) {
+			attackEquipment[0] = attackEquipment[1];
+			attackEquipment[1] = null;
+		}
+		
+		refreshInventory();
+	}
+	
+	private void showw() {		//DEBUG
+		String a = "arma ";
+		
+		if(attackEquipment[0] != null)
+			a += attackEquipment[0].getName() + " ";
+		if(attackEquipment[1] != null)
+			a += attackEquipment[1].getName() + " ";
+		
+		a+= "\ninventario ";
+		for (CanCarry item:inventory) {
+			if (item != null)
+				a += item.getName() + "\n";
+		}
+		
+		System.out.println(a);
+	}
 
 	public void attack(Character target, int damage) {
 		target.takeDamage(damage);
+		showw();
+		verifyWeapon();
+		showw();
 	}
 
 	public void addRandomMoney() {

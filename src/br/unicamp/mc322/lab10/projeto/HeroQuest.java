@@ -83,8 +83,11 @@ public class HeroQuest {
 		/* Executa o turno dos herois */
 		boolean turn = true;
 
-		for (HeroController heroController : heroesController) {            //heroesController.length
-			turn = heroController.playTurn(map);
+		for (HeroController heroController : heroesController) {
+			
+			if (heroController != null) {
+				turn = heroController.playTurn(map);
+			}
 
 			if (!turn) {
 				return turn;

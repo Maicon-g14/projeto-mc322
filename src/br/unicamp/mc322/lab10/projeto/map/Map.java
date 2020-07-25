@@ -156,7 +156,7 @@ public class Map {
 		int x = position.getX();
 		int y = position.getY();
 		Character target;
-		System.out.println("player "+position);
+		
 		if (isMonsterHunting) {
 			
 			for (int i = -distance; i < distance; i++) {
@@ -164,7 +164,6 @@ public class Map {
 					if (!(i == 0 && j == 0)) {
 						target = checkHeroOnPosition(x+i,y+j);
 						if(target != null) {
-							System.out.println("pos "+(x+i) +" "+(y+j) + " "+target.getName());
 							return getController(target);
 						}
 					}
@@ -177,7 +176,6 @@ public class Map {
 					if (!(i == 0 && j == 0)) {		//desconsiidera a posicao central(onde esta o atacante)
 						target = checkMonsterOnPosition(x+i,y+j);
 						if(target != null) {
-							System.out.println("pos "+(x+i) +" "+(y+j) + " "+target.getName());
 							return getController(target);
 						}
 					}
@@ -219,14 +217,14 @@ public class Map {
 
 	private void remove(Controller target) {		//possivelmente aqui nao ta removendo do vetor de monstros
 		/* Remove um heroi ou monstro do mapa e vetor de herois/monstros */
-		if(target instanceof Monster) {
+		if(target.getCharacter() instanceof Monster) {
 			for(int i = 0; i < monsters[currentMap].length; i++) {
 				if (monsters[currentMap][i] == target) {
 					monsters[currentMap][i] = monsters[currentMap][monsters[currentMap].length-1];
 					monsters[currentMap] = Arrays.copyOf(monsters[currentMap], monsters[currentMap].length - 1);		//diminui vetor de monstros
 				}
 			}
-		} else if (target instanceof Hero) {
+		} else if (target.getCharacter() instanceof Hero) {
 			for(int i = 0; i < heroes.length; i++) {
 				if (heroes != null && heroes[i] == target) {
 					heroes[i] = heroes[heroes.length-1];

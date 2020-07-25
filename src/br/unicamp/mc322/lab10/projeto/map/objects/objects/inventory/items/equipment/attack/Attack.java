@@ -48,6 +48,10 @@ public class Attack extends Equipment {
 	public boolean isTwoHanded() {
 		return twoHands;
 	}
+	
+	public boolean isBreakable() {
+		return breakable;
+	}
 
 	public int getBonusAttack() {
 		/* Bonus de ataque da arma, verificar ao equipar */

@@ -10,7 +10,7 @@ public class Wizard extends SpellCaster {
 	private static final char SPRITE = 'W';
 	private static final String NAME = "Wizard";
 	private static final GameTypeObjects ID = GameTypeObjects.WIZARD;
-	private static final int HP = 4;
+	private static final int HP = 40;
 	private static final int MP = 6;
 	private static final int ATTACK_DICES = 1;
 	private static final int DEFENSE_DICES = 2;
