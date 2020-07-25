@@ -45,4 +45,10 @@ public class CpuHero extends HeroController {
 		return spells[index];
 	}
 
+	@Override
+	public Spell chooseSpell(Spell[] spells, Scanner scanner) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -1,5 +1,8 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes;
 
+import java.util.Scanner;
+
+import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
@@ -48,7 +51,7 @@ public class SpellCaster extends Hero {
 		
 		if (qtdSpells < spells.length) {
 			spells[qtdSpells] = newSpell;
-		
+			qtdSpells++;
 		} else {
 		
 			auxSpells = new Spell[2 * spells.length];
@@ -61,7 +64,7 @@ public class SpellCaster extends Hero {
 			spells = auxSpells;
 		
 		}
-		qtdSpells++;
+		
 	}
 
 	private void removeSpell(int n) {
@@ -83,23 +86,49 @@ public class SpellCaster extends Hero {
 	public void castSpell(Controller target, SelfSpell spell, int dice) {
 		if (dice < getIntelligence()) {
 			if(spell.use(target)) {
-				removeSpell(spell);
-			}
-		}
-	}
-
-	public void castSpell(Controller caster, Controller target, Spell spell, int dice) {
-		if (dice < getIntelligence()) {
-			spell.use(caster, target);
-			removeSpell(spell);
+				//removeSpell(spell);
+			} 
+		} else {
+			System.out.println("Mas erra!");
 		}
 	}
 	
-	public void castSpell(Controller caster, Controller target, Controller[] additionalTargets, Spell spell, int dice) {
+	public void castSpell(Map map, Controller target, SelfSpell spell, int dice) {
+		if (dice < getIntelligence()) {
+			if(spell.use(map, target)) {
+				//removeSpell(spell);
+			}
+		} else {
+			System.out.println("Mas erra!");
+		}
+	}
+	
+	public void castSpell(Map map, Controller target, SelfSpell spell, int dice, Scanner reader) {
+		if (dice < getIntelligence()) {
+			if(spell.use(map, target, reader)) {
+				//removeSpell(spell);
+			}
+		} else {
+			System.out.println("Mas erra!");
+		}
+	}
+
+	public void castSpell(Map map, Controller caster, Controller target, Spell spell, int dice) {
+		if (dice < getIntelligence()) {
+			spell.use(map, caster, target);
+			//removeSpell(spell);
+		} else {
+			System.out.println("Mas erra!");
+		}
+	}
+	
+	public void castSpell(Map map, Controller caster, Controller target, Controller[] additionalTargets, Spell spell, int dice) {
 		AreaSpell areaSpell = (AreaSpell)spell;
 		if (dice < getIntelligence()) {
-			areaSpell.use(caster, target, additionalTargets);
-			removeSpell(spell);
+			areaSpell.use(map, caster, target, additionalTargets);
+			//removeSpell(spell);
+		} else {
+			System.out.println("Mas erra!");
 		}
 	}
 

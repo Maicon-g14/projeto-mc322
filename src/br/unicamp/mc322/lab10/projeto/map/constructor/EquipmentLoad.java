@@ -10,6 +10,10 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipm
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.armors.LightArmor;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.shields.Shield1;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.defense.items.shields.Shield2;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types.Fireball;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types.MagicMissile;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types.SimpleHeal;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types.Teleport;
 
 import java.util.Random;
 
@@ -17,16 +21,12 @@ public class EquipmentLoad {
 	/* Instancia de equipamentos que podem ser encontrados na market ou em monstros/baus */        //testar bem, pode bugar
 	private CanCarry[] marketEquipment;
 
-	private Equipment[] goblinEquip;
-
-	private static final int MARKET_SIZE = 13;
+	private static final int MARKET_SIZE = 17;
 	private static final int WEAPONS_RANGE = 5;
 
 	public EquipmentLoad() {
 		marketEquipment = new CanCarry[MARKET_SIZE];
 		createEquipment();
-
-		createGoblin();
 	}
 
 	public CanCarry getRandomLoot() {
@@ -50,10 +50,6 @@ public class EquipmentLoad {
 	public CanCarry[] getMarketItems() {
 		return marketEquipment;
 	}
-	
-	public Equipment[] getGoblinEquipment() {
-		return goblinEquip;
-	}
 
 	private void createEquipment() {
 		/* Inicializa todos os equipamentos do jogo */
@@ -69,17 +65,11 @@ public class EquipmentLoad {
 		marketEquipment[9] = new ShortSword();
 		marketEquipment[10] = new BetterShortSword();
 		marketEquipment[11] = new LongSword();
-		marketEquipment[12] = new BetterLongSword();		
+		marketEquipment[12] = new BetterLongSword();
+		marketEquipment[13] = new SimpleHeal();
+		marketEquipment[14] = new Teleport();
+		marketEquipment[15] = new Fireball();
+		marketEquipment[16] = new MagicMissile();
 	}
 	
-	private void createGoblin() {
-		Random randomize = new Random();
-		int daggers = randomize.nextInt(7) + 3;
-		
-		goblinEquip = new Equipment[daggers];
-		
-		for (int i = 0; i < daggers; i++) {
-			goblinEquip[i] =  new Dagger();
-		}
-	}
 }

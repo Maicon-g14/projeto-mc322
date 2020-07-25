@@ -5,6 +5,9 @@
 
 package br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types;
 
+import java.util.Scanner;
+
+import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
@@ -19,9 +22,10 @@ public class SimpleHeal extends SelfSpell {
 	private static final SpellElements ELEMENT = SpellElements.WATER;
 	private static final SpellTypes TYPE = SpellTypes.SUPPORT;
 	private static final GameTypeObjects ID = GameTypeObjects.SIMPLE_HEAL;
+	private static final int PRICE = 5;
 
 	public SimpleHeal() {
-		super(NAME, new Sprite(), ID, ELEMENT, TYPE);
+		super(NAME, new Sprite(), ID, ELEMENT, TYPE, PRICE);
 	}
 
 	public boolean use(Controller caster) {
@@ -29,5 +33,23 @@ public class SimpleHeal extends SelfSpell {
 		int amountRecovered = caster.rollRedDices(DICES);
 		caster.getCharacter().recoverHp(amountRecovered);
 		return true;
+	}
+
+	@Override
+	public void use(Map map, Controller caster, Controller target) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean use(Map map, Controller caster) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean use(Map map, Controller caster, Scanner reader) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

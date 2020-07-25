@@ -1,5 +1,7 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes;
 
+import java.util.Scanner;
+
 import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
@@ -11,8 +13,6 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.CommonControllers;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
-
-import java.util.Scanner;
 
 public abstract class HeroController extends CommonControllers {
 
@@ -36,17 +36,6 @@ public abstract class HeroController extends CommonControllers {
 	public int rollDefenseDices() {
 		//rola todos os dados de defesa do personagem e retorna o numero de escudos obtidos
 		return rollWhiteDices(personagem.getDefenseDices(), WhiteDiceSides.HERO_DEFENSE);
-	}
-
-	//Leitura de um numero do teclado, pode ser removida se houver uma classe mais apropriada para ela
-	public int numberFromKeyboard() {
-		@SuppressWarnings("resource")
-		Scanner leitor = new Scanner(System.in);
-
-		int entrada;
-		entrada = leitor.nextInt();
-
-		return entrada;
 	}
 
 	public Hero getCharacter() {
@@ -81,12 +70,12 @@ public abstract class HeroController extends CommonControllers {
 		getCharacter().askPotion();
 	}
 
-	public void useMagic(Map map) {
+	public void useMagic(Map map, Scanner scanner) {
 
 		if (GameTypeObjects.isMagicUser(personagem)) {		//se atacante for do tipo que usa magias
 			
 			SpellCaster caster = (SpellCaster) personagem;
-			Spell spell = chooseSpell(caster.getSpells());
+			Spell spell = chooseSpell(caster.getSpells(), scanner);		//sobrescrever essa parte pro npc
 			
 			if (spell == null) {
 				return;
@@ -96,8 +85,11 @@ public abstract class HeroController extends CommonControllers {
 
 			if (spell.getSpellType() == SpellTypes.SUPPORT) {
 				System.out.println(personagem.getName() + " usa o feitico " + spell.getName() + " em si mesmo!");
-				caster.castSpell(this, (SelfSpell) spell, dice);		//magias de support sao sempre utilizadas no proprio usuario
-
+				if (spell.getId() == GameTypeObjects.TELEPORT) {
+					caster.castSpell(map, this, (SelfSpell) spell, dice, scanner);
+				} else {
+					caster.castSpell(this, (SelfSpell) spell, dice);		//magias de support sao sempre utilizadas no proprio usuario
+				}
 			} else if (spell.getSpellType() == SpellTypes.ATTACK) {
 				castAttack(map,spell,dice,caster);
 			
@@ -114,7 +106,9 @@ public abstract class HeroController extends CommonControllers {
 		
 		if (target != null) {		//cancela ataque caso nao tenha alvo
 			System.out.println(personagem.getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + "!");
-			caster.castSpell(this, target, spell, dice);
+			caster.castSpell(map, this, target, spell, dice);
+		} else {
+			System.out.println("acha nd");
 		}
 	}
 	
@@ -125,9 +119,9 @@ public abstract class HeroController extends CommonControllers {
 		
 		if (target != null) {		//cancela ataque caso nao tenha alvo
 			System.out.println(personagem.getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + " e em todos ao seu redor!");
-			Controller[] additionalTargets = map.getAdjacentTargetsInDelimitedArea(personagem.getPosition(), spell.getAdjacentReach(), IS_MONSTER_HUNTING);		//busca por alvos secundarios em torno do principal na distancia especificada
+			Controller[] additionalTargets = map.getAdjacentTargetsInDelimitedArea(target.getCharacter().getPosition(), spell.getAdjacentReach(), IS_MONSTER_HUNTING);		//busca por alvos secundarios em torno do principal na distancia especificada
 			
-			caster.castSpell(this, target, additionalTargets, spell, dice);
+			caster.castSpell(map, this, target, additionalTargets, spell, dice);
 		}
 	}
 
@@ -137,11 +131,11 @@ public abstract class HeroController extends CommonControllers {
 			SpellCaster caster = (SpellCaster)personagem;
 			spellList = caster.getSpells();
 			for(int i = 0; i < caster.getQtdSpells(); i++) {
-				System.out.println(i + "- " + spellList[i].getName());
+				System.out.println(i + ". " + spellList[i].getName());
 			}
 		}
 	}
 
+	public abstract Spell chooseSpell(Spell[] spells, Scanner scanner);
 	public abstract Spell chooseSpell(Spell[] spells);
-	
 }

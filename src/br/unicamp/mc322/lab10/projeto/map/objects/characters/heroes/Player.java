@@ -40,7 +40,7 @@ public class Player extends HeroController {
 		return turn;
 	}
 
-	public Spell chooseSpell(Spell[] spells) {
+	public Spell chooseSpell(Spell[] spells, Scanner scanner) {
 		int n;
 		Spell chosenSpell;
 		
@@ -53,7 +53,7 @@ public class Player extends HeroController {
 		
 		displaySpells();
 		System.out.println("Selecione o numero da magia: ");
-		n = numberFromKeyboard();
+		n = scanner.nextInt();
 		
 		if (n < caster.getQtdSpells()) {
 			chosenSpell = spells[n];
@@ -104,7 +104,7 @@ public class Player extends HeroController {
 				map.search(getCharacter());
 				break;
 			case "M":
-				useMagic(map);
+				useMagic(map, scanner);
 				break;
 			case "A":
 				map.callAttack(this);
@@ -146,6 +146,12 @@ public class Player extends HeroController {
 		} while (amount > maxSteps || amount < 0);
 
 		return amount;
+	}
+
+	@Override
+	public Spell chooseSpell(Spell[] spells) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

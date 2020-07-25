@@ -9,6 +9,7 @@ import br.unicamp.mc322.lab10.projeto.GameMode;
 import br.unicamp.mc322.lab10.projeto.PlayableClasses;
 import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
 import br.unicamp.mc322.lab10.projeto.map.constructor.EquipmentLoad;
+import br.unicamp.mc322.lab10.projeto.map.constructor.MonstersLoad;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameObject;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Character;
@@ -53,6 +54,7 @@ public class Map {
 	protected CpuMonster[][] monsters;
 	protected EquipmentLoad findableEquipment;
 	protected boolean loaded = true;
+	private MonstersLoad monsterEquipment;
 
 	private static final int TRAP_DAMAGE_STANDARD_MODE = 1;
 	private static final int TRAP_DAMAGE_HARD_MODE = 2;
@@ -60,6 +62,7 @@ public class Map {
 	public Map() {
 		heroes = new HeroController[4];
 		currentMap = 0;
+		monsterEquipment = new MonstersLoad();
 	}
 
 	public boolean previousMap() {
@@ -101,6 +104,65 @@ public class Map {
 		/* Checa se personagem pode se mover para a posicao dada.
 		 * Monstros nao se movem para cima de armadilhas */
 		return isValid(position) && (getPosition(position) == null || (getPosition(position).getId() == GameTypeObjects.TRAP && character instanceof Hero));
+	}
+	
+	public boolean isVisible(Coordinate pos1, Coordinate pos2) {
+		/* Verifica se nao existe nenhum obstaculo entre um ponto e outro, retorna true se nao existir */
+		int x1, x2, y1, y2;
+		x1 = pos1.getX();
+		y1 = pos1.getY();
+		x2 = pos2.getX();
+		y2 = pos2.getY();
+		
+		if (x1 == x2) {
+			int z = y1 - y2;
+			
+			if (z > 0) {
+				for (int i = 1; i <= z; i++) {
+					if (maps[currentMap][x1][y2+i] != null) {
+						return false;
+					}
+				}
+				return true;
+			} else if (z < 0) {
+				z *= -1;		
+				for (int i = 1; i <= z; i++) {
+					if (maps[currentMap][x1][y1+i] != null) {
+						return false;
+					}
+				}
+				return true;
+			}
+			
+		} else if (y1 == y2) {
+			int z = x1 - x2;
+			
+			if (z > 0) {
+				for (int i = 1; i <= z; i++) {
+					if (maps[currentMap][x2+i][y1] != null) {
+						return false;
+					}
+				}
+				return true;
+			} else if (z < 0) {
+				z *= -1;		
+				for (int i = 1; i <= z; i++) {
+					if (maps[currentMap][x1+i][y1] != null) {
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean isTeleportablePosition(Coordinate position, Character character) {
+		if (isEmptyPosition(position,character) && isVisible(position, character.getPosition())) {
+			return true;
+		}
+		return false;
 	}
 
 	public HeroController[] getHeroes() {
@@ -205,7 +267,7 @@ public class Map {
 		}
 	}
 
-	private void remove(Controller target) {		//possivelmente aqui nao ta removendo do vetor de monstros
+	public void remove(Controller target) {
 		/* Remove um heroi ou monstro do mapa e vetor de herois/monstros */
 		if(target.getCharacter() instanceof Monster) {
 			for(int i = 0; i < monsters[currentMap].length; i++) {
@@ -534,11 +596,11 @@ public class Map {
 			case 'C':
 				return createChest(position);
 			case 'M':
-				return increaseMonster(new MageSkeleton(position), mapNumber);
+				return increaseMonster(new MageSkeleton(position, monsterEquipment.getMageSkeletonEquipment()), mapNumber);
 			case 'G':
-				return increaseMonster(new Goblin(position, findableEquipment.getGoblinEquipment()), mapNumber);
+				return increaseMonster(new Goblin(position, monsterEquipment.getGoblinEquipment()), mapNumber);
 			case 'K':
-				return increaseMonster(new Skeleton(position, findableEquipment.getRandomEquipment()), mapNumber);
+				return increaseMonster(new Skeleton(position, monsterEquipment.getSkeletonEquipment()), mapNumber);
 			case 'T':
 				if (gameMode == GameMode.STANDARD) {
 					return new Trap(TRAP_DAMAGE_STANDARD_MODE, position);
@@ -579,8 +641,8 @@ public class Map {
 
 		Barbarian barbarian = new Barbarian(startEquipment.getBarbarian());
 		Dwarf dwarf = new Dwarf(startEquipment.getDwarf());
-		Elf elf = new Elf(startEquipment.getElf());
-		Wizard wizard = new Wizard(startEquipment.getWizard());
+		Elf elf = new Elf(startEquipment.getElf(), startEquipment.getElfSpells());
+		Wizard wizard = new Wizard(startEquipment.getWizard(), startEquipment.getWizardSpells());
 
 		barbarian.setPosition(new Coordinate(j + 1, k));
 		dwarf.setPosition(new Coordinate(j - 1, k));
