@@ -18,7 +18,7 @@ public class Dagger extends Attack {
 	private static final boolean TWO_HANDS = false;
 	private static final int DICE_NUMBER = 1;
 	private static final boolean BREAKABLE = true;
-	private static final int REACH = 1;
+	private static final int REACH = 2;
 	private static final WeaponsTypes WEAPON_CLASS = WeaponsTypes.DAGGER;
 	private static final int PRICE = 5;
 

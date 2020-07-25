@@ -259,29 +259,10 @@ public abstract class Character extends GameObject {
 		
 		refreshInventory();
 	}
-	
-	private void showw() {		//DEBUG
-		String a = "arma ";
-		
-		if(attackEquipment[0] != null)
-			a += attackEquipment[0].getName() + " ";
-		if(attackEquipment[1] != null)
-			a += attackEquipment[1].getName() + " ";
-		
-		a+= "\ninventario ";
-		for (CanCarry item:inventory) {
-			if (item != null)
-				a += item.getName() + "\n";
-		}
-		
-		System.out.println(a);
-	}
 
 	public void attack(Character target, int damage) {
 		target.takeDamage(damage);
-		showw();
 		verifyWeapon();
-		showw();
 	}
 
 	public void addRandomMoney() {
@@ -428,7 +409,6 @@ public abstract class Character extends GameObject {
 			finalDefense += defenseEquipment[1].getBonusDefense();
 		}
 		
-		System.out.println(getName() + " - Status atuais: \nATK: " + finalAttack + "\nDEF: " + finalDefense);
 	}
 
 	private void setCharacterStandarts(int hp, int intellect, int atkValue, int defValue) {
@@ -436,6 +416,8 @@ public abstract class Character extends GameObject {
 		this.intellect = intellect;
 		this.atkValue = atkValue;
 		this.defValue = defValue;
+		this.finalAttack = atkValue;
+		this.finalDefense = defValue;
 
 		maxHP = hp;
 		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];

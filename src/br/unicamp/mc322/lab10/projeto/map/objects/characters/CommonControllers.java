@@ -17,8 +17,8 @@ public abstract class CommonControllers implements Controller {
 	public boolean playTurn(Map map) {
 		/* Acao padrao dos monstros */
 		if (!moving) {
-			newDirection(map);
 			action(map);
+			newDirection(map);
 			
 		} else if (!callMove(map)) {
 			moving = false;

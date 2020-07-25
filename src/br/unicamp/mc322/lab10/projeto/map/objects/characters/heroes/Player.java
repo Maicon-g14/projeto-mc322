@@ -11,7 +11,7 @@ public class Player extends HeroController {
 
 	public Player(Hero personagem, String name) {
 		super(personagem);
-		personagem.setPlayerName(name, personagem.getId());
+		personagem.setPlayerName(name);
 	}
 	
 	@Override
@@ -61,7 +61,7 @@ public class Player extends HeroController {
 		/* Pergunta ao player lado para se mover */
 		char in;
 
-		System.out.println("Lado para se mover(WASD): ");
+		System.out.println("Lado para se mover: (W, A, S ou D)");
 		in = scanner.next().toUpperCase().charAt(0);
 
 		if (in != 'W' && in != 'A' && in != 'S' && in != 'D') {
@@ -90,7 +90,7 @@ public class Player extends HeroController {
 
 	private boolean action(Map map, Scanner scanner) {
 		/* Pergunta ao player se quer fazer outra acao alem de andar */
-		System.out.println("Acao nesse turno: (P = procurar, M = magia, A = atacar, U = usar item)");
+		System.out.println("Acao: (P = procurar, A = atacar, M = usar magia, , U = usar item)");
 		String entrada = scanner.nextLine();
 
 		switch (entrada.toUpperCase()) {

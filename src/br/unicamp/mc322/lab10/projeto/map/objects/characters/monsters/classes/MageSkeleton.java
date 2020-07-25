@@ -11,8 +11,8 @@ public class MageSkeleton extends Monster {
 	private static final char SPRITE = 'M';
 	private static final String NAME = "Mage Skeleton";
 	private static final GameTypeObjects ID = GameTypeObjects.MAGE_SKELETON;
-	private static final int ATTACK_DICES = 1;
-	private static final int DEFENSE_DICES = 1;
+	private static final int ATTACK_DICES = 2;
+	private static final int DEFENSE_DICES = 2;
 	private static final int HP = 3;
 	private static final int MP = 5;
 

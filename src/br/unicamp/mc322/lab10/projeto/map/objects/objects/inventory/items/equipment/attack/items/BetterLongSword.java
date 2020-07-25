@@ -19,7 +19,7 @@ public class BetterLongSword extends Attack {
 	private static final int DICE_NUMBER = 4;
 	private static final int LIFE_BONUS = 1;
 	private static final boolean BREAKABLE = false;
-	private static final int REACH = 1;
+	private static final int REACH = 2;
 	private static final WeaponsTypes WEAPON_CLASS = WeaponsTypes.LONG_SWORD;
 	private static final int PRICE = 100;
 

@@ -52,6 +52,8 @@ public abstract class HeroController extends CommonControllers {
 
 		if (skulls > shields) {
 			personagem.attack(target.getCharacter(), skulls - shields);
+		} else {
+			System.out.println("Mas " + target.getCharacter().getName() + " se defende!");
 		}
 	}
 

@@ -28,19 +28,19 @@ public class Market {
 
 	public Market(CanCarry[] items) {
 		marketItems = items;
-		money.addMoney(INITIAL_FUNDS);
+		money.setMoney(INITIAL_FUNDS);
 	}
 
 	public void doShopping(Hero hero) {
-		/* Loop de compras na loja, chama exibi��o dos itens da loja e selecionado um item
+		/* Loop de compras na loja, chama exibicao dos itens da loja e selecionado um item
 		 * para compra tenta debitar o valor da classe Money no Player, se retornar true,
-		 * adiciona item no invent�rio do Player */
+		 * adiciona item no inventario do Player */
 		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
 		int operation = INVALID_VALUE;
 		int itemNumber;
 
-		System.out.println("Bem vindo a loja!");
+		System.out.println("Seja bem vindo a nossa loja " + hero.getName() + "!");
 
 		do {
 			try {

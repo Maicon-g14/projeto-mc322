@@ -40,11 +40,8 @@ public class GameObject {
 		return id;        //tipo especifico do item
 	}
 
-	public void setPlayerName(String name, GameTypeObjects player) {
-		/* O nome de um objeto so pode ser trocado se o objeto for o nome do player */
-		if (player == GameTypeObjects.PLAYER) {
-			this.name = name;
-		}
+	public void setPlayerName(String name) {
+		this.name = name;
 	}
 
 	public void setPosition(Coordinate position) {

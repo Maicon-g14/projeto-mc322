@@ -53,6 +53,7 @@ public class HeroQuest {
 					heroesController = map.getHeroes();
 					monstersController = map.getMonsters();
 					
+					System.out.println("Seu turno " + heroesController[0].getCharacter().getName() + ":");
 					turn = heroesTurn();
 					monstersTurn();
 	
