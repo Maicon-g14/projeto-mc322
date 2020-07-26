@@ -24,9 +24,9 @@ public class Player extends HeroController {
 		 * consiste em uma acao e a possibilidade de se movimentar */
 		boolean turn = true;
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Seu turno " + getCharacter().getName() + ":");
 
 		if (!moving) {
+			System.out.println("Seu turno " + getCharacter().getName() + ":");
 			turn = action(map, scanner);
 
 			if (!turn) {

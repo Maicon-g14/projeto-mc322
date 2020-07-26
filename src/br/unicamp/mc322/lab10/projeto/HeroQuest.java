@@ -69,7 +69,7 @@ public class HeroQuest {
 					
 					map.printScene();
 					//Delay de 2 segundos entre uma tela e outra
-					Thread.sleep(2000);
+					Thread.sleep(1000);
 
 				}
 	
