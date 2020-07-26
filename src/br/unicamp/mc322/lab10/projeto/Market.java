@@ -5,7 +5,6 @@
 
 package br.unicamp.mc322.lab10.projeto;
 
-import br.unicamp.mc322.lab10.projeto.exceptions.InsufficientFundsException;
 import br.unicamp.mc322.lab10.projeto.exceptions.InvalidOperationException;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
@@ -113,7 +112,7 @@ public class Market {
 				hero.sell(item - 1);
 				System.out.println("---------------------------------------------------------\n		"+inventoryItem.getName() + " vendido por " + price + "PO\n---------------------------------------------------------");
 			} else {
-				throw new InsufficientFundsException("Infelizmente nao tenho como pagar por tal item!");
+				System.out.println("Infelizmente nao tenho como pagar por tal item!");
 			}
 
 		} else if (item < 0 || item > hero.getInventoryLoad()) {

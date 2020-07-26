@@ -7,9 +7,9 @@ public enum WeaponsTypes {
 
 	public static boolean isEquipable(GameTypeObjects person, WeaponsTypes itemClass) {
 		/* Verifica se a classe dada pode equipar o tipo de arma dado
-		 * mago - so equipa adaga
+		 * mago e goblin - so equipa adaga
 		 * elfo/dwarf - adagas ou espadas curtas
-		 * barbaro - pode equipar qualquer arma */
+		 * barbaro/esqueleto - pode equipar qualquer arma */
 		return ((person == GameTypeObjects.WIZARD || person == GameTypeObjects.GOBLIN) && itemClass == DAGGER)
 				|| ((person == GameTypeObjects.ELF || person == GameTypeObjects.DWARF) && (itemClass == DAGGER || itemClass == SHORT_SWORD))
 				|| (person == GameTypeObjects.BARBARIAN || person == GameTypeObjects.SKELETON);

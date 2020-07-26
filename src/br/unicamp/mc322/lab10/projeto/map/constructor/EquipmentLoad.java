@@ -18,7 +18,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types.Teleport;
 import java.util.Random;
 
 public class EquipmentLoad {
-	/* Instancia de equipamentos que podem ser encontrados na market ou em monstros/baus */        //testar bem, pode bugar
+	/* Instancia de equipamentos que podem ser encontrados na market ou em monstros/baus */
 	private CanCarry[] marketEquipment;
 
 	private static final int MARKET_SIZE = 17;

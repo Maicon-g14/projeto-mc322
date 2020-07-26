@@ -23,7 +23,7 @@ public class Teleport extends SelfSpell {
 	private static final SpellElements ELEMENT = SpellElements.AIR;
 	private static final SpellTypes TYPE = SpellTypes.SUPPORT;
 	private static final GameTypeObjects ID = GameTypeObjects.TELEPORT;
-	private static final int PRICE = 200;
+	private static final int PRICE = 80;
 
 	public Teleport() {
 		super(NAME, new Sprite(), ID, ELEMENT, TYPE, PRICE);
@@ -38,7 +38,7 @@ public class Teleport extends SelfSpell {
 			else
 				amount = scanner.nextInt();
 
-		} while (amount > 5 || amount < 0);		//trocar o 5 pela visibilidade do mapa
+		} while (amount < 0);
 		
 		return amount;
 	}

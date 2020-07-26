@@ -20,7 +20,7 @@ public class ShortSword extends Attack {
 	private static final boolean BREAKABLE = false;
 	private static final int REACH = 1;
 	private static final WeaponsTypes WEAPON_CLASS = WeaponsTypes.SHORT_SWORD;
-	private static final int PRICE = 50;
+	private static final int PRICE = 15;
 
 	public ShortSword() {
 		super(NAME, new Sprite(SPRITE), ID, TWO_HANDS, DICE_NUMBER, REACH, BREAKABLE, WEAPON_CLASS, PRICE);

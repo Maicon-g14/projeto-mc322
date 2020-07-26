@@ -15,9 +15,9 @@ public class LightArmor extends Armor {
 	private static final char SPRITE = 'a';
 	private static final GameTypeObjects ID = GameTypeObjects.LIGHT_ARMOR1;
 	private static final String NAME = "Better Light Armor";
-	private static final int DICE_NUMBER = 0;
+	private static final int DICE_NUMBER = 1;
 	private static final ArmorClasses ARMOR_CLASS = ArmorClasses.LIGHT_ARMOR;
-	private static final int PRICE = 100;
+	private static final int PRICE = 20;
 
 	public LightArmor() {
 		super(NAME, new Sprite(SPRITE), ID, ARMOR_CLASS, DICE_NUMBER, PRICE);

@@ -234,7 +234,6 @@ public class Map {
 		return null;
 	}
 
-
 	public void callAttack(Controller person) {
 		/* Chama verificacao de oponente na area de ataque do atacante, caso exista,
 		 * chama funcao de ataque do atacante para com o oponente */
@@ -313,7 +312,7 @@ public class Map {
 	}
 
 	private GameObject[] getFindable(Coordinate center) {
-		/* Se pos do player for igual a de algum objeto CanCarry no chao, pega ele pra por no inventario */
+		/* Cria um vetor com os itens encontraveis em torno do player e retorna ele */
 		GameObject[] surroundings = new GameObject[4];
 		Coordinate side = new Coordinate(center.getX(), center.getY());
 
@@ -413,8 +412,12 @@ public class Map {
 		try {
 			Coordinate pos;
 			Random randomize = new Random();
+			int monstersAmount;
 
-			int monstersAmount = randomize.nextInt(3) + 3;
+			if (gameMode == GameMode.HARD)
+				monstersAmount = randomize.nextInt(3) + 3;
+			else
+				monstersAmount = randomize.nextInt(2) + 1;
 
 			for (int b = 0; b < monstersAmount; b++) {
 				pos = getEmptyPosition(i);
