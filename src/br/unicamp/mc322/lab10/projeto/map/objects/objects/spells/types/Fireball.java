@@ -20,7 +20,7 @@ public class Fireball extends AreaSpell {
 	private static final SpellElements ELEMENT = SpellElements.FIRE;
 	private static final SpellTypes TYPE = SpellTypes.AREA_ATTACK;
 	private static final GameTypeObjects ID = GameTypeObjects.FIREBALL;
-	private static final int PRICE = 10;
+	private static final int PRICE = 250;
 	private static final int REACH = 3;		//distancia maxima do atacante ate o alvo
 	private static final int ADJACENT_RANGE = 1;		//distancia adjacente ao alvo em que os oponentes podem sofrer dano	
 

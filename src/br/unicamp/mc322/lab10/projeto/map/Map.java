@@ -92,7 +92,7 @@ public class Map {
 	public boolean allMonstersDefeated() {
 		/* Retorna true em caso de fim de jogo por derrotar todos os monstros */
 		for (int i = 0; i < mapsAmount; i++) {
-			if (monsters != null && monsters[i].length > 0) {
+			if (monsters != null && monsters[i] != null && monsters[i].length > 0) {
 				return false;
 			}
 		}
@@ -706,17 +706,25 @@ public class Map {
 		int j = mapsHeight / 2;
 		int k = mapsWidth / 2;
 
-		maps[currentMap][j + 1][k] = heroes[0].getCharacter();
-		maps[currentMap][j + 1][k].setPosition(new Coordinate(j + 1, k));
+		if (heroes[0] != null) {
+			maps[currentMap][j + 1][k] = heroes[0].getCharacter();
+			maps[currentMap][j + 1][k].setPosition(new Coordinate(j + 1, k));
+		}
 
-		maps[currentMap][j][k + 1] = heroes[1].getCharacter();
-		maps[currentMap][j][k + 1].setPosition(new Coordinate(j, k + 1));
+		if (heroes[1] != null) {
+			maps[currentMap][j][k + 1] = heroes[1].getCharacter();
+			maps[currentMap][j][k + 1].setPosition(new Coordinate(j, k + 1));
+		}
 
-		maps[currentMap][j - 1][k] = heroes[2].getCharacter();
-		maps[currentMap][j - 1][k].setPosition(new Coordinate(j - 1, k));
+		if (heroes[2] != null) {
+			maps[currentMap][j - 1][k] = heroes[2].getCharacter();
+			maps[currentMap][j - 1][k].setPosition(new Coordinate(j - 1, k));
+		}
 
-		maps[currentMap][j][k - 1] = heroes[3].getCharacter();
-		maps[currentMap][j][k - 1].setPosition(new Coordinate(j, k - 1));
+		if (heroes[3] != null) {
+			maps[currentMap][j][k - 1] = heroes[3].getCharacter();
+			maps[currentMap][j][k - 1].setPosition(new Coordinate(j, k - 1));
+		}
 	}
 
 	private void trap(Hero hero, Coordinate position) {

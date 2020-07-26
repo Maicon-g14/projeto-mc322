@@ -1,16 +1,16 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes;
 
-import java.util.Scanner;
+import java.util.Random;
 
 import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
 import br.unicamp.mc322.lab10.projeto.map.Map;
-import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes.SpellCaster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SelfSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
+import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.CommonControllers;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
 
@@ -42,19 +42,6 @@ public abstract class HeroController extends CommonControllers {
 		return personagem;
 	}
 	
-	@Override
-	public void attack(Controller target) {
-		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a funcao de ataque do personagem
-		int skulls = rollAttackDices();
-		int shields = target.rollDefenseDices();
-
-		if (skulls > shields) {
-			personagem.attack(target.getCharacter(), skulls - shields);
-		} else {
-			System.out.println("Mas " + target.getCharacter().getName() + " se defende!");
-		}
-	}
-
 	public void addToInventory(CanCarry item) {
 		/* Adiciona um item qualquer(carregavel) ao inventario, se for equipamento e melhor que o atual,
 		 * equipa automaticamente */
@@ -69,50 +56,18 @@ public abstract class HeroController extends CommonControllers {
 	public void askPotion() {
 		getCharacter().askPotion();
 	}
-
-	public void useMagic(Map map, Scanner scanner) {
-
-		if (GameTypeObjects.isMagicUser(personagem)) {		//se atacante for do tipo que usa magias
-			
-			SpellCaster caster = (SpellCaster) personagem;
-			Spell spell = chooseSpell(caster.getSpells(), scanner);		//sobrescrever essa parte pro npc
-			
-			if (spell == null) {
-				return;
-			}
-			
-			int dice = rollRedDices(1);		//rolagem do dado que define se a magia foi sucesso ou nao
-
-			if (spell.getSpellType() == SpellTypes.SUPPORT) {
-				System.out.println(personagem.getName() + " usa o feitico " + spell.getName() + " em si mesmo!");
-				if (spell.getId() == GameTypeObjects.TELEPORT) {
-					caster.castSpell(map, this, (SelfSpell) spell, dice, scanner);
-				} else {
-					caster.castSpell(this, (SelfSpell) spell, dice);		//magias de support sao sempre utilizadas no proprio usuario
-				}
-			} else if (spell.getSpellType() == SpellTypes.ATTACK) {
-				castAttack(map,spell,dice,caster);
-			
-			} else if (spell.getSpellType() == SpellTypes.AREA_ATTACK) {
-				castAreaAttack(map,(AreaSpell) spell,dice,caster);
-			}
-		}
-
-	}
 	
-	private void castAttack(Map map, Spell spell, int dice, SpellCaster caster) {
+	protected void castAttack(Map map, Spell spell, int dice, SpellCaster caster) {
 		/* Lanca ataque magico no oponente se estiver no raio de ataque */
 		Controller target = map.findSpellTarget(personagem.getPosition(), spell.getReach(), IS_MONSTER_HUNTING);
 		
 		if (target != null) {		//cancela ataque caso nao tenha alvo
 			System.out.println(personagem.getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + "!");
 			caster.castSpell(map, this, target, spell, dice);
-		} else {
-			System.out.println("acha nd");
 		}
 	}
 	
-	private void castAreaAttack(Map map, AreaSpell spell, int dice, SpellCaster caster) {
+	protected void castAreaAttack(Map map, AreaSpell spell, int dice, SpellCaster caster) {
 		/* Procura por alvo mais proximo dentro do raio dado, se encontrar,
 		 * ataca ele e os possiveis alvos adjacentes a ele com o feitico */
 		Controller target = map.findSpellTarget(personagem.getPosition(), spell.getReach(), IS_MONSTER_HUNTING);		//busca por alvo principal
@@ -124,18 +79,48 @@ public abstract class HeroController extends CommonControllers {
 			caster.castSpell(map, this, target, additionalTargets, spell, dice);
 		}
 	}
-
-	public void displaySpells() {
-		Spell[] spellList;
-		if(GameTypeObjects.isMagicUser(personagem)) {
-			SpellCaster caster = (SpellCaster)personagem;
-			spellList = caster.getSpells();
-			for(int i = 0; i < caster.getQtdSpells(); i++) {
-				System.out.println(i + ". " + spellList[i].getName());
-			}
+	
+	private Spell chooseSpell(Spell[] spells) {
+		Random gerador = new Random();
+		SpellCaster caster = (SpellCaster)getCharacter();
+		
+		if (caster.getQtdSpells() > 0) {
+			int index = gerador.nextInt(caster.getQtdSpells());
+			return spells[index];
 		}
+		return null;
 	}
+	
+	public boolean useMagic(Map map) {
 
-	public abstract Spell chooseSpell(Spell[] spells, Scanner scanner);
-	public abstract Spell chooseSpell(Spell[] spells);
+		if (GameTypeObjects.isMagicUser(getCharacter())) {		//se atacante for do tipo que usa magias
+			
+			SpellCaster caster = (SpellCaster) getCharacter();
+			Spell spell = chooseSpell(caster.getSpells());		//sobrescrever essa parte pro npc
+			
+			if (spell == null) {
+				return false;
+			}
+			
+			int dice = rollRedDices(1);		//rolagem do dado que define se a magia foi sucesso ou nao
+
+			if (spell.getSpellType() == SpellTypes.SUPPORT) {
+				System.out.println(getCharacter().getName() + " usa o feitico " + spell.getName() + " em si mesmo!");
+				if (spell.getId() == GameTypeObjects.TELEPORT) {
+					caster.castSpell(map, this, (SelfSpell) spell, dice);
+				} else {
+					caster.castSpell(this, (SelfSpell) spell, dice);		//magias de support sao sempre utilizadas no proprio usuario
+				}
+			} else if (spell.getSpellType() == SpellTypes.ATTACK) {
+				castAttack(map,spell,dice,caster);
+			
+			} else if (spell.getSpellType() == SpellTypes.AREA_ATTACK) {
+				castAreaAttack(map,(AreaSpell) spell,dice,caster);
+			}
+		} else {
+			return false;
+		}
+		return true;
+	}
+	
 }

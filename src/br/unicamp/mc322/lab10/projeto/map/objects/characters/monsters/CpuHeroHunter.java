@@ -82,7 +82,9 @@ public class CpuHeroHunter extends CpuMonster {
 
 		int chosenHero = smallestEllement(range);
 
-		setNearest(position, heroes[chosenHero].getCharacter().getPosition());
+		if (heroes[chosenHero] != null) {
+			setNearest(position, heroes[chosenHero].getCharacter().getPosition());
+		}
 	}
 
 }

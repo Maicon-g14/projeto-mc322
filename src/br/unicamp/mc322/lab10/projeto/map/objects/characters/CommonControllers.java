@@ -44,10 +44,22 @@ public abstract class CommonControllers implements Controller {
 		callMove(map);
 	}
 	
+	protected boolean randomChoice() {
+		/* Aleatoriamente retorna true ou false */
+		Random randomize = new Random();
+		return randomize.nextBoolean();
+	}
+	
 	private void action(Map map) {
 		/* Acao do monstro alem de andar(por padrao eh atacar tudo que estiver no alcance) */
-		map.callAttack(this);
-	}
+		if (randomChoice())	{
+			map.callAttack(this);
+		} else {
+			if (!useMagic(map)) {
+				map.callAttack(this);
+			}
+		}
+	}	
 	
 	protected boolean callMove(Map map) {
 		/* Chama movimentacao do monstro */
@@ -97,6 +109,19 @@ public abstract class CommonControllers implements Controller {
 		}
 
 		return sum;
+	}
+	
+	@Override
+	public void attack(Controller target) {
+		//rola os dados de ataque do personagem, faz o alvo rolar os dados de defesa e chama a funcao de ataque do personagem
+		int skulls = rollAttackDices();
+		int shields = target.rollDefenseDices();
+
+		if (skulls > shields) {
+			getCharacter().attack(target.getCharacter(), skulls - shields);
+		} else {
+			System.out.println("Mas " + target.getCharacter().getName() + " se defende!");
+		}
 	}
 
 }

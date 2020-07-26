@@ -6,7 +6,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
 
-public class MageSkeleton extends Monster {
+public class MageSkeleton extends MonsterSpellCaster {
 
 	private static final char SPRITE = 'M';
 	private static final String NAME = "Mage Skeleton";

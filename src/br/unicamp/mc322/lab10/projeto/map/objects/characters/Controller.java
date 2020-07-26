@@ -22,5 +22,7 @@ public interface Controller {
 	
 	int rollMagicDefenseDices();
 	
-	public abstract void attack(Controller target);
+	abstract boolean useMagic(Map map);
+	
+	abstract void attack(Controller target);
 }

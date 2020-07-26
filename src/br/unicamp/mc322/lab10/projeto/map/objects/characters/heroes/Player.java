@@ -2,8 +2,12 @@ package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes;
 
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;
+import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes.SpellCaster;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SelfSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
 
 import java.util.Scanner;
 
@@ -20,6 +24,7 @@ public class Player extends HeroController {
 		 * consiste em uma acao e a possibilidade de se movimentar */
 		boolean turn = true;
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("Seu turno " + getCharacter().getName() + ":");
 
 		if (!moving) {
 			turn = action(map, scanner);
@@ -62,6 +67,47 @@ public class Player extends HeroController {
 
 		return null;
 	}
+	
+	private void displaySpells() {
+		Spell[] spellList;
+		if(GameTypeObjects.isMagicUser(getCharacter())) {
+			SpellCaster caster = (SpellCaster)getCharacter();
+			spellList = caster.getSpells();
+			for(int i = 0; i < caster.getQtdSpells(); i++) {
+				System.out.println(i + ". " + spellList[i].getName());
+			}
+		}
+	}
+	
+	private void useMagic(Map map, Scanner scanner) {
+
+		if (GameTypeObjects.isMagicUser(getCharacter())) {		//se atacante for do tipo que usa magias
+			
+			SpellCaster caster = (SpellCaster) getCharacter();
+			Spell spell = chooseSpell(caster.getSpells(), scanner);		//sobrescrever essa parte pro npc
+			
+			if (spell == null) {
+				return;
+			}
+			
+			int dice = rollRedDices(1);		//rolagem do dado que define se a magia foi sucesso ou nao
+
+			if (spell.getSpellType() == SpellTypes.SUPPORT) {
+				System.out.println(getCharacter().getName() + " usa o feitico " + spell.getName() + " em si mesmo!");
+				if (spell.getId() == GameTypeObjects.TELEPORT) {
+					caster.castSpell(map, this, (SelfSpell) spell, dice, scanner);
+				} else {
+					caster.castSpell(this, (SelfSpell) spell, dice);		//magias de support sao sempre utilizadas no proprio usuario
+				}
+			} else if (spell.getSpellType() == SpellTypes.ATTACK) {
+				castAttack(map,spell,dice,caster);
+			
+			} else if (spell.getSpellType() == SpellTypes.AREA_ATTACK) {
+				castAreaAttack(map,(AreaSpell) spell,dice,caster);
+			}
+		}
+
+	}
 
 	public void readMovementDirection(Scanner scanner) {
 		/* Pergunta ao player lado para se mover */
@@ -96,7 +142,7 @@ public class Player extends HeroController {
 
 	private boolean action(Map map, Scanner scanner) {
 		/* Pergunta ao player se quer fazer outra acao alem de andar */
-		System.out.println("Acao: (P = procurar, A = atacar, M = usar magia, , U = usar item)");
+		System.out.println("Acao: (P = procurar, A = atacar, M = usar magia, U = usar item)");
 		String entrada = scanner.nextLine();
 
 		switch (entrada.toUpperCase()) {
@@ -148,10 +194,5 @@ public class Player extends HeroController {
 		return amount;
 	}
 
-	@Override
-	public Spell chooseSpell(Spell[] spells) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

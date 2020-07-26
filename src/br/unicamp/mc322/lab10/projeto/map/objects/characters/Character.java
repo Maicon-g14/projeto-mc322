@@ -8,8 +8,10 @@ import br.unicamp.mc322.lab10.projeto.map.objects.Command;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameObject;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
+import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes.SpellCaster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.money.Money;
+import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.consumable.items.HealthPotion;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.Equipment;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment.attack.Attack;
@@ -167,6 +169,9 @@ public abstract class Character extends GameObject {
 				equipAttack((Attack) item);
 			} else if (item instanceof Defense && isEquipable((Defense) item) && isBestArmor((Defense) item)) {
 				equipDefense((Defense) item);
+			} else if (this instanceof SpellCaster && item instanceof Spell) {
+				SpellCaster person = (SpellCaster) this;
+				person.addSpell((Spell) item);
 			} else {
 				inventory[inventoryLoad++] = item;
 			}

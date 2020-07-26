@@ -13,6 +13,7 @@ import br.unicamp.mc322.lab10.projeto.map.constructor.PresetMap;
 import br.unicamp.mc322.lab10.projeto.map.constructor.RandomMap;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.Hero;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.HeroController;
+import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.Player;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.CpuMonster;
 
 public class HeroQuest {
@@ -22,6 +23,7 @@ public class HeroQuest {
 	private Market market;
 	private boolean running = false;
 	private CpuMonster[] monstersController;
+	private boolean victory = false;
 
 	public HeroQuest(GameMode gameMode, MapMode mapMode, PlayableClasses chosenClass, String playerName) {
 		/* Inicializa as classes principais e carrega o mapa do jogo com os componentes de cada cena */
@@ -53,19 +55,31 @@ public class HeroQuest {
 					heroesController = map.getHeroes();
 					monstersController = map.getMonsters();
 					
-					System.out.println("Seu turno " + heroesController[0].getCharacter().getName() + ":");
 					turn = heroesTurn();
-					//monstersTurn();
+					
+					if(checkGameOver()) {
+						break;
+					}
+					
+					monstersTurn();
+					
+					if(checkGameOver()) {
+						break;
+					}
 	
 					map.printScene();
-					checkGameOver();
+					
 				}
 	
-				market();
+				if (!checkGameOver()) {
+					market();
+				}
 	
-			} while (running && map.nextMap());
+			} while (running && !checkGameOver() && map.nextMap());
 	
-			System.out.println("Game terminated. Bye!");
+			status();
+			
+			System.out.println("\nGame terminated. Bye!");
 		}
 	}
 
@@ -102,25 +116,45 @@ public class HeroQuest {
 		/* Executa o turno dos monstros */
 		if (monstersController != null) {
 			for (CpuMonster cpuMonster : monstersController) {
+				
+				if (heroesController[0] == null) {
+					return;
+				}
+				
 				cpuMonster.playTurn(map);
 			}
 		}
 	}
+	
+	private void status() {
+		if (victory) {
+			System.out.println("----------------\n-  Game Over!  -\n- Voce ganhou! -\n----------------");
+		} else {
+			System.out.println("----------------\n-  Game Over!  -\n- Voce perdeu! -\n----------------");
+		}
+			
+	}
 
-	private void checkGameOver() {
+	private boolean checkGameOver() {
 		/* A cada turno checa se o player esta vivo e se ainda existem monstros no mapa,
 		 * caso o player morra, ou nao existam mais monstros no mapa finaliza a execucao
 		 * do jogo */
-		Hero player = heroesController[0].getCharacter();
 
 		if (map.allMonstersDefeated()) {
-			System.out.println("----------------\n-  Game Over!  -\n- Voce ganhou! -\n----------------");
+			victory = true;
 			running = false;
+			return true;
 		}
 
-		if (player.isDead()) {
-			System.out.println("----------------\n-  Game Over!  -\n- Voce perdeu! -\n----------------");
-			running = false;
+		if (heroesController[0] != null && heroesController[0] instanceof Player) {
+			Hero player = heroesController[0].getCharacter();
+			if (player.isDead()) {
+				running = false;
+				return true;
+			} 
+		} else {
+			return true;
 		}
+		return false;
 	}
 }

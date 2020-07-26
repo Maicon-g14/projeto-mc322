@@ -20,7 +20,7 @@ public class MagicMissile extends Spell {
 	private static final SpellElements ELEMENT = SpellElements.AIR;
 	private static final SpellTypes TYPE = SpellTypes.ATTACK;
 	private static final GameTypeObjects ID = GameTypeObjects.MAGIC_MISSILE;
-	private static final int PRICE = 5;
+	private static final int PRICE = 150;
 	private static final int DAMAGE_MULTIPLIER = 3;
 	private static final int NO_DAMAGE = 0;
 	private static final int REACH = 3;		//distancia maxima do atacante ate o alvo

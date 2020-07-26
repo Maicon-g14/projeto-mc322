@@ -22,7 +22,7 @@ public class SimpleHeal extends SelfSpell {
 	private static final SpellElements ELEMENT = SpellElements.WATER;
 	private static final SpellTypes TYPE = SpellTypes.SUPPORT;
 	private static final GameTypeObjects ID = GameTypeObjects.SIMPLE_HEAL;
-	private static final int PRICE = 5;
+	private static final int PRICE = 1;
 
 	public SimpleHeal() {
 		super(NAME, new Sprite(), ID, ELEMENT, TYPE, PRICE);

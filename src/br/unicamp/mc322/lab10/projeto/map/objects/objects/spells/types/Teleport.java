@@ -5,6 +5,7 @@
 
 package br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types;
 
+import java.util.Random;
 import java.util.Scanner;
 
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
@@ -22,7 +23,7 @@ public class Teleport extends SelfSpell {
 	private static final SpellElements ELEMENT = SpellElements.AIR;
 	private static final SpellTypes TYPE = SpellTypes.SUPPORT;
 	private static final GameTypeObjects ID = GameTypeObjects.TELEPORT;
-	private static final int PRICE = 10;
+	private static final int PRICE = 200;
 
 	public Teleport() {
 		super(NAME, new Sprite(), ID, ELEMENT, TYPE, PRICE);
@@ -41,46 +42,39 @@ public class Teleport extends SelfSpell {
 		
 		return amount;
 	}
-
-	public boolean use(Map map, Controller target, Scanner scanner) {
-		/* Pergunta e teleporta o usuario para uma posicao visivel por ele */
-		int x = target.getCharacter().getPosition().getX();
-		int y = target.getCharacter().getPosition().getY();
+	
+	private boolean doTeleport(Map map, Controller caster, int side, int distance) {
+		int x = caster.getCharacter().getPosition().getX();
+		int y = caster.getCharacter().getPosition().getY();
 		Coordinate newPosition = new Coordinate(x,y);
-		
-		System.out.println("Para qual dos lados deseja se teleportar: (1. Direita, 2. Esquerda, 3. Cima, 4. Baixo)");
-		int side = readInteger(scanner);
-		
-		System.out.print("Quantas casas quer se mover: ");
-		int distance = readInteger(scanner);
 		
 		switch(side) {
 		case 1:
 			newPosition.setY(y + distance);
 
-			if (map.isTeleportablePosition(newPosition, target.getCharacter())) {
-				map.setPosition(target.getCharacter(), newPosition);
+			if (map.isTeleportablePosition(newPosition, caster.getCharacter())) {
+				map.setPosition(caster.getCharacter(), newPosition);
 				return true;
 			}
 		case 2:
 			newPosition.setY(y - distance);
 
-			if (map.isTeleportablePosition(newPosition, target.getCharacter())) {
-				map.setPosition(target.getCharacter(), newPosition);
+			if (map.isTeleportablePosition(newPosition, caster.getCharacter())) {
+				map.setPosition(caster.getCharacter(), newPosition);
 				return true;
 			}
 		case 3:
 			newPosition.setX(x - distance);
 
-			if (map.isTeleportablePosition(newPosition, target.getCharacter())) {
-				map.setPosition(target.getCharacter(), newPosition);
+			if (map.isTeleportablePosition(newPosition, caster.getCharacter())) {
+				map.setPosition(caster.getCharacter(), newPosition);
 				return true;
 			}
 		case 4:
 			newPosition.setX(x + distance);
 
-			if (map.isTeleportablePosition(newPosition, target.getCharacter())) {
-				map.setPosition(target.getCharacter(), newPosition);
+			if (map.isTeleportablePosition(newPosition, caster.getCharacter())) {
+				map.setPosition(caster.getCharacter(), newPosition);
 				return true;
 			}
 		default:
@@ -88,6 +82,18 @@ public class Teleport extends SelfSpell {
 		}
 		
 		return false;
+	}
+
+	public boolean use(Map map, Controller target, Scanner scanner) {
+		/* Pergunta e teleporta o usuario para uma posicao visivel por ele */
+		
+		System.out.println("Para qual dos lados deseja se teleportar: (1. Direita, 2. Esquerda, 3. Cima, 4. Baixo)");
+		int side = readInteger(scanner);
+		
+		System.out.print("Quantas casas quer se mover: ");
+		int distance = readInteger(scanner);
+		
+		return doTeleport(map, target, side, distance);
 	}
 
 	@Override
@@ -98,8 +104,14 @@ public class Teleport extends SelfSpell {
 
 	@Override
 	public boolean use(Map map, Controller caster) {
-		// TODO Auto-generated method stub
-		return false;
+		/* Teleporte aleatorio de npcs */
+		Random randomize = new Random();
+		
+		int side = randomize.nextInt(4)+1;
+		
+		int distance = randomize.nextInt(4)+1;
+		
+		return doTeleport(map, caster, side, distance);
 	}
 
 	@Override
