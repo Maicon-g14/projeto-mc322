@@ -1,3 +1,8 @@
+//RAs
+//221329
+//224956 
+//242233
+
 package br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.equipment;
 
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;

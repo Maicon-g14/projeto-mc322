@@ -1,7 +1,7 @@
 //RAs
-//
-//
-//
+//221329
+//224956 
+//242233
 
 package br.unicamp.mc322.lab10.projeto.map;
 
@@ -126,7 +126,7 @@ public class Map {
 				return true;
 			} else if (z < 0) {
 				z *= -1;
-				for (int i = 1; i <= z; i++) {
+				for (int i = 0; i < z; i++) {
 					if (maps[currentMap][x1][y1 + i] != null) {
 						return false;
 					}
@@ -146,7 +146,7 @@ public class Map {
 				return true;
 			} else if (z < 0) {
 				z *= -1;
-				for (int i = 1; i <= z; i++) {
+				for (int i = 0; i < z; i++) {
 					if (maps[currentMap][x1 + i][y1] != null) {
 						return false;
 					}

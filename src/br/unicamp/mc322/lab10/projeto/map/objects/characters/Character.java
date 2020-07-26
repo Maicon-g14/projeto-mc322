@@ -1,3 +1,8 @@
+//RAs
+//221329
+//224956 
+//242233
+
 package br.unicamp.mc322.lab10.projeto.map.objects.characters;
 
 import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
@@ -275,7 +280,7 @@ public abstract class Character extends GameObject {
 	}
 
 	public void recoverHp(int amount) {
-		System.out.print("Body points restaurados!		HP: " + hp + "->");
+		System.out.print("Body points restaurados!		HP: " + hp + " -> ");
 		if (hp + amount < maxHP) {
 			hp += amount;
 		} else {
