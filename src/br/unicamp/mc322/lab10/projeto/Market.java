@@ -40,7 +40,7 @@ public class Market {
 		int operation = INVALID_VALUE;
 		int itemNumber;
 
-		System.out.println("===========================\nSeja bem vindo a nossa loja " + hero.getName() + "!\n===========================");
+		System.out.println("==========================================================\n	Seja bem vindo a nossa loja " + hero.getName() + "!\n==========================================================");
 
 		do {
 			try {
@@ -82,7 +82,7 @@ public class Market {
 
 		} while (operation != OUT);
 
-		System.out.println("===========================\n          Volte sempre!\n===========================");
+		System.out.println("==========================================================\n          		Volte sempre!\n==========================================================");
 
 	}
 
@@ -91,7 +91,7 @@ public class Market {
 		if (item > 0 && item <= marketItems.length) {
 			CanCarry chosen = marketItems[item - 1];
 			if (hero.buy(chosen)) {
-				System.out.println("++++++++++++++++++++++++\n" + chosen.getName() + " Adquirido!\n++++++++++++++++++++++++");
+				System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n		" + chosen.getName() + " Adquirido!\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 				money.addMoney(chosen.getPrice());
 			}
 
@@ -111,7 +111,7 @@ public class Market {
 
 			if (money.removeMoney(price)) {
 				hero.sell(item - 1);
-				System.out.println("----------------------------\n"+inventoryItem.getName() + " vendido por " + price + "PO\n----------------------------");
+				System.out.println("---------------------------------------------------------\n		"+inventoryItem.getName() + " vendido por " + price + "PO\n---------------------------------------------------------");
 			} else {
 				throw new InsufficientFundsException("Infelizmente nao tenho como pagar por tal item!");
 			}
