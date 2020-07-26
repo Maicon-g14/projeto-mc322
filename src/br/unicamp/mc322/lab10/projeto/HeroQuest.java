@@ -68,6 +68,13 @@ public class HeroQuest {
 					}
 					
 					map.printScene();
+					//Delay de 2 segundos entre uma tela e outra
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 				}
 	
