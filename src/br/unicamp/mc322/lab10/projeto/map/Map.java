@@ -535,9 +535,46 @@ public class Map {
 		}
 
 	}
+	
+	private void discoverMap() {
+		heroes[0].getCharacter().showSprite();
+		Coordinate player = heroes[0].getCharacter().getPosition();
+		int playerX = player.getX();
+		int playerY = player.getY();
+		
+		for (int x = playerX+1; x < mapsHeight; x++) {		//baixo
+			if (maps[currentMap][x][playerY] != null && maps[currentMap][x][playerY].getId() != GameTypeObjects.TRAP) {
+				maps[currentMap][x][playerY].showSprite();
+				break;
+			}
+		}
+		
+		for (int x = playerX-1; x >= 0; x--) {		//cima
+			if (maps[currentMap][x][playerY] != null && maps[currentMap][x][playerY].getId() != GameTypeObjects.TRAP) {
+				maps[currentMap][x][playerY].showSprite();
+				break;
+			}
+		}
+		
+		for (int y = playerY+1; y < mapsWidth; y++) {		//direita
+			if (maps[currentMap][playerX][y] != null && maps[currentMap][playerX][y].getId() != GameTypeObjects.TRAP) {
+				maps[currentMap][playerX][y].showSprite();
+				break;
+			}
+		}
+		
+		for (int y = playerY-1; y >= 0; y--) {		//esquerda
+			if (maps[currentMap][playerX][y] != null && maps[currentMap][playerX][y].getId() != GameTypeObjects.TRAP) {
+				maps[currentMap][playerX][y].showSprite();
+				break;
+			}
+		}
+	}
 
 	public void printScene() {
 		/* Chama refreshMap e mostra map recebido na tela */
+		discoverMap();
+		
 		for (int j = 0; j < mapsHeight; j++) {
 			for (int k = 0; k < mapsWidth; k++) {
 				if (maps[currentMap][j][k] == null) {
@@ -696,6 +733,17 @@ public class Map {
 		return chest;
 	}
 
+	private void hideMap() {		//ver se eh necessario
+		/* Oculta todas as sprites do mapa */
+		for (int y = 0; y < mapsHeight; y++) {
+			for (int z = 0; z < mapsWidth; z++) {
+				if (maps[currentMap][y][z] != null) {
+					maps[currentMap][y][z].hideSprite();
+				}
+			}
+		}
+	}
+	
 	private void resetHeroesPosition() {
 		/* Ao subir ou decer um andar, move os player para o entorno da escada no centro da sala*/
 		int j = mapsHeight / 2;
@@ -720,6 +768,8 @@ public class Map {
 			maps[currentMap][j][k - 1] = heroes[3].getCharacter();
 			maps[currentMap][j][k - 1].setPosition(new Coordinate(j, k - 1));
 		}
+		
+		//hideMap();
 	}
 
 	private void trap(Hero hero, Coordinate position) {

@@ -124,10 +124,11 @@ public abstract class Character extends GameObject {
 			addToInventory(item);
 			return true;
 		} else if (inventoryLoad < INVENTORY_MAX_AMOUNT) {
-			throw new InsufficientFundsException("Saldo insuficiente!");
+			System.out.println("Saldo insuficiente!");		//nao por throw aqui pois faz o player sair da loja
 		} else {
-			throw new FullInventoryException("Inventario cheio!");
+			System.out.println("Inventario cheio!");
 		}
+		return false;
 	}
 
 	public int getIntelligence() {
@@ -202,7 +203,7 @@ public abstract class Character extends GameObject {
 	public void sell(int id) {
 		/* Funcao auxiliar na venda de itens */
 		int price = inventory[id].getPrice();
-		money.addMoney(price);
+		money.addMoney(price-5);
 		removeFromInventory(id);
 	}
 
@@ -423,6 +424,7 @@ public abstract class Character extends GameObject {
 		this.defValue = defValue;
 		this.finalAttack = atkValue;
 		this.finalDefense = defValue;
+		money.setMoney(50);		//dinheiro inicial
 
 		maxHP = hp;
 		inventory = new CanCarry[INVENTORY_MAX_AMOUNT];

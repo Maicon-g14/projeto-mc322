@@ -12,6 +12,7 @@ public class Sprite {
 		hide = ' ';
 		now = 0;
 		sprite[now] = '?';
+		hidden = true;
 	}
 
 	public Sprite(char sprite) {
@@ -19,6 +20,7 @@ public class Sprite {
 		hide = ' ';
 		now = 0;
 		this.sprite[now] = sprite;
+		hidden = true;
 	}
 
 	public Sprite(char sprite, char hide) {
@@ -26,18 +28,21 @@ public class Sprite {
 		this.hide = hide;
 		now = 0;
 		this.sprite[now] = sprite;
+		hidden = true;
 	}
 
 	public Sprite(char[] sprite) {
 		hide = ' ';
 		now = 0;
 		this.sprite = sprite;
+		hidden = true;
 	}
 
 	public Sprite(char[] sprite, char hide) {
 		this.hide = hide;
 		now = 0;
 		this.sprite = sprite;
+		hidden = true;
 	}
 
 	public void nextSprite() {

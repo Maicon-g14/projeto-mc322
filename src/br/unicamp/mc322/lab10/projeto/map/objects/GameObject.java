@@ -52,11 +52,11 @@ public class GameObject {
 		sprite.showSprite();
 	}
 
-	public void nextSprite(int n) {
+	public void nextSprite() {
 		sprite.nextSprite();
 	}
 
-	public void previousSprite(int n) {
+	public void previousSprite() {
 		sprite.prevSprite();
 	}
 
