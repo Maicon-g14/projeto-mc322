@@ -22,7 +22,7 @@ import java.util.Random;
 
 public class RandomMap extends Map {
 
-	private static final String PATH = "./src\\br\\unicamp\\mc322\\lab10\\projeto\\map\\constructor\\";
+	private static final String PATH = "./src\\br\\unicamp\\mc322\\lab10\\projeto\\map\\constructor\\";		//funciona assim no windows com eclipse, parece q se for no linux precisa trocar os \\ por /
 	private static final String FILENAME = "standartWalls.txt";
 	private static final int MAPS_WIDTH = 36;        //valores padrao pra mapa aleatorio
 	private static final int MAPS_HEIGHT = 27;

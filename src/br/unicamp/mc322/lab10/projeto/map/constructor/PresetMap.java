@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
 public class PresetMap extends Map {
 	/* le do HD os mapas e os armazena em um vetor, cria um mapa de strings
 	 * retornando o primeiro mapa e marcando a posicao atual. */
-	private static final String PATH = "./src\\br\\unicamp\\mc322\\lab10\\projeto\\map\\constructor\\";
+	private static final String PATH = "./src\\br\\unicamp\\mc322\\lab10\\projeto\\map\\constructor\\";		//funciona assim no windows com eclipse, parece q se for no linux precisa trocar os \\ por /
 	private static final String FILENAME = "map.txt";
 
 	public PresetMap(GameMode gameMode, PlayableClasses chosenClass, String playerName, EquipmentLoad findableEquipment) {
