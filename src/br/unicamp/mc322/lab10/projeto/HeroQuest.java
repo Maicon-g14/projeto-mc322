@@ -38,7 +38,7 @@ public class HeroQuest {
 		market = new Market(findableEquipment.getMarketItems());
 	}
 
-	public void startGame() {
+	public void startGame() throws InterruptedException {
 		/* Loop principal do jogo, chama os turnos, print do estado atual do jogo
 		 * e verifica a sua finalizacao */
 		if (map.isSuccessfullyLoaded()) {
@@ -69,13 +69,8 @@ public class HeroQuest {
 					
 					map.printScene();
 					//Delay de 2 segundos entre uma tela e outra
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
+					Thread.sleep(2000);
+
 				}
 	
 				if (!checkGameOver()) {
@@ -153,7 +148,7 @@ public class HeroQuest {
 			return true;
 		}
 
-		if (heroesController[0] != null && heroesController[0] instanceof Player) {
+		if (heroesController[0] instanceof Player) {
 			Hero player = heroesController[0].getCharacter();
 			if (player.isDead()) {
 				running = false;

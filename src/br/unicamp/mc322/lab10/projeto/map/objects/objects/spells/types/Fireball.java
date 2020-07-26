@@ -66,7 +66,7 @@ public class Fireball extends AreaSpell {
 
 	@Override
 	public void use(Map map, Controller caster, Controller target) {
-		// TODO Auto-generated method stub
+		//metodo vazio
 
 	}
 }

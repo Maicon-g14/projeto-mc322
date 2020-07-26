@@ -106,7 +106,6 @@ public class Teleport extends SelfSpell {
 
 	@Override
 	public boolean use(Controller caster) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -124,8 +123,6 @@ public class Teleport extends SelfSpell {
 
 	@Override
 	public void use(Map map, Controller caster, Controller target) {
-		// TODO Auto-generated method stub
-		
+		//metodo vazio
 	}
-
 }

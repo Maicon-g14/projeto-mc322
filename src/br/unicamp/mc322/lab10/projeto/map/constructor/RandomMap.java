@@ -7,6 +7,7 @@ package br.unicamp.mc322.lab10.projeto.map.constructor;
 
 import br.unicamp.mc322.lab10.projeto.GameMode;
 import br.unicamp.mc322.lab10.projeto.PlayableClasses;
+import br.unicamp.mc322.lab10.projeto.exceptions.InvalidTypeException;
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameObject;
@@ -14,7 +15,6 @@ import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.CpuMonster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.Door;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.Wall;
-import com.sun.jdi.InvalidTypeException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

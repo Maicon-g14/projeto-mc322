@@ -8,6 +8,7 @@ package br.unicamp.mc322.lab10.projeto.map;
 import br.unicamp.mc322.lab10.projeto.GameMode;
 import br.unicamp.mc322.lab10.projeto.PlayableClasses;
 import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
+import br.unicamp.mc322.lab10.projeto.exceptions.InvalidTypeException;
 import br.unicamp.mc322.lab10.projeto.map.constructor.EquipmentLoad;
 import br.unicamp.mc322.lab10.projeto.map.constructor.MonstersLoad;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameObject;
@@ -36,7 +37,7 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.ty
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.HiddenDoor;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.Stair;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.map.items.structure.types.Wall;
-import com.sun.jdi.InvalidTypeException;
+
 
 import java.util.Arrays;
 import java.util.Random;

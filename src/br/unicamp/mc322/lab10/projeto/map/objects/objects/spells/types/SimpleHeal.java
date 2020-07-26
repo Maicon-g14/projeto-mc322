@@ -37,19 +37,17 @@ public class SimpleHeal extends SelfSpell {
 
 	@Override
 	public void use(Map map, Controller caster, Controller target) {
-		// TODO Auto-generated method stub
+		//metodo vazio
 
 	}
 
 	@Override
 	public boolean use(Map map, Controller caster) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean use(Map map, Controller caster, Scanner reader) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

@@ -16,11 +16,6 @@ public class Coordinate {
 		onMap = true;
 	}
 
-// Verificar necessidade desse método e se for o caso fazer override e mudar o parâmetro
-//	public boolean equals(Coordinate position) {
-//		return x == position.getX() && y == position.getY();
-//	}
-
 	public int getX() {
 		if (!onMap) {
 			return -1;
