@@ -36,11 +36,11 @@ public class EquipmentLoad {
 
 		return marketEquipment[chosen];
 	}
-	
+
 	public Equipment[] getRandomEquipment() {
 		/* Retorna um item aleatorio do jogo */
 		Random randomize = new Random();
-		int chosen = randomize.nextInt(WEAPONS_RANGE)+7;
+		int chosen = randomize.nextInt(WEAPONS_RANGE) + 7;
 
 		Equipment[] item = new Equipment[1];
 		item[0] = (Equipment) marketEquipment[chosen];
@@ -71,5 +71,5 @@ public class EquipmentLoad {
 		marketEquipment[15] = new Fireball();
 		marketEquipment[16] = new MagicMissile();
 	}
-	
+
 }

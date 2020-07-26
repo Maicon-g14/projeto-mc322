@@ -19,7 +19,7 @@ public class Skeleton extends Monster {
 	public Skeleton(Coordinate position) {
 		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
 	}
-	
+
 	public Skeleton(Coordinate position, CanCarry[] initialEquipment) {
 		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
 	}

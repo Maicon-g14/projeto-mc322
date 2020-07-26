@@ -5,8 +5,6 @@
 
 package br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.types;
 
-import java.util.Scanner;
-
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
@@ -14,6 +12,8 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SelfSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellElements;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SpellTypes;
+
+import java.util.Scanner;
 
 public class SimpleHeal extends SelfSpell {
 
@@ -38,7 +38,7 @@ public class SimpleHeal extends SelfSpell {
 	@Override
 	public void use(Map map, Controller caster, Controller target) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

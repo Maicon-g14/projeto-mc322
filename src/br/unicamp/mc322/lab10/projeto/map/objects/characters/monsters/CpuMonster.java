@@ -6,7 +6,6 @@ import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.CommonControllers;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
-
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.WhiteDiceSides;
 import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.classes.MonsterSpellCaster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
@@ -22,7 +21,7 @@ public class CpuMonster extends CommonControllers {
 	public CpuMonster(Monster monster) {
 		this.monster = monster;
 	}
-	
+
 	@Override
 	public int rollAttackDices() {
 		//rola todos os dados de ataque do getCharacter() e retorna o numero de caveiras obtidas
@@ -33,7 +32,7 @@ public class CpuMonster extends CommonControllers {
 	public int rollDefenseDices() {
 		return rollWhiteDices(monster.getDefenseDices(), WhiteDiceSides.MONSTER_DEFENSE);
 	}
-	
+
 	@Override
 	public int rollMagicDefenseDices() {
 		return rollWhiteDices(monster.getIntelligence(), WhiteDiceSides.MONSTER_DEFENSE);
@@ -112,5 +111,5 @@ public class CpuMonster extends CommonControllers {
 		}
 		return true;
 	}
-	
+
 }

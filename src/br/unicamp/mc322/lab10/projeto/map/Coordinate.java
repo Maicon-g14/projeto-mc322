@@ -16,9 +16,10 @@ public class Coordinate {
 		onMap = true;
 	}
 
-	public boolean equals(Coordinate position) {
-		return x == position.getX() && y == position.getY();
-	}
+// Verificar necessidade desse método e se for o caso fazer override e mudar o parâmetro
+//	public boolean equals(Coordinate position) {
+//		return x == position.getX() && y == position.getY();
+//	}
 
 	public int getX() {
 		if (!onMap) {
@@ -39,13 +40,10 @@ public class Coordinate {
 	public int measureDistance(Coordinate position) {
 		/* Retorna a soma das distancias em X e Y da coordenada passada
 		 * com a do objeto atual */
-		int positionX = getX() - position.getX();
-		int positionY = getY() - position.getY();
-		
-		positionX = positivize(positionX);
-		positionY = positivize(positionY);
-		
-		return (positionX + positionY)/2;
+		int positionX = positivize(getX() - position.getX());
+		int positionY = positivize(getY() - position.getY());
+
+		return (positionX + positionY) / 2;
 	}
 
 	public String toString() {

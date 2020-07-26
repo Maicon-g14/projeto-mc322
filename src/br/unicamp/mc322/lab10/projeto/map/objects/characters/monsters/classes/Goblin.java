@@ -19,7 +19,7 @@ public class Goblin extends Monster {
 	public Goblin(Coordinate position) {
 		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
 	}
-	
+
 	public Goblin(Coordinate position, CanCarry[] initialEquipment) {
 		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
 	}

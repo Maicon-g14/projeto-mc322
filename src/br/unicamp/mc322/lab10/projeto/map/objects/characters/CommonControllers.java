@@ -95,7 +95,8 @@ public abstract class CommonControllers implements Controller {
 		 * Ex: funcao eh chamada buscando o ataque do jogador com 6 dados,
 		 * logo sao rolados 6 dados e eh somado a quantidade de vezes que cada dado obteve a face
 		 * ataque. */
-		int sum = 0, number;
+		int sum = 0;
+		int number;
 		Random dice = new Random();
 
 		for (int i = 0; i < qtde; i++) {

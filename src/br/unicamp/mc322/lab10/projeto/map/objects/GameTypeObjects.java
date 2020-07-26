@@ -17,10 +17,8 @@ public enum GameTypeObjects {
 	GOBLIN, MAGE_SKELETON, SKELETON,
 	TELEPORT, FIREBALL, MAGIC_MISSILE, SIMPLE_HEAL,
 	MONSTER, HERO, GAME_OBJECT;
-	
+
 	public static boolean isMagicUser(Character person) {
-		if(person.getId() == GameTypeObjects.ELF || person.getId() == GameTypeObjects.WIZARD || person.getId() == GameTypeObjects.MAGE_SKELETON)
-			return true;
-		return false;
+		return person.getId() == GameTypeObjects.ELF || person.getId() == GameTypeObjects.WIZARD || person.getId() == GameTypeObjects.MAGE_SKELETON;
 	}
 }

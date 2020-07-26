@@ -41,16 +41,16 @@ public class HeroQuest {
 	public void startGame() {
 		/* Loop principal do jogo, chama os turnos, print do estado atual do jogo
 		 * e verifica a sua finalizacao */
-		if(map.isSuccessfullyLoaded()) {
+		if (map.isSuccessfullyLoaded()) {
 			boolean turn;
 			running = true;
-	
+
 			System.out.println("Game started!");
-			
+
 			do {
 				turn = true;
 				map.printScene();
-	
+
 				while (running && turn) {
 					heroesController = map.getHeroes();
 					monstersController = map.getMonsters();
@@ -66,7 +66,7 @@ public class HeroQuest {
 					if(checkGameOver()) {
 						break;
 					}
-	
+					
 					map.printScene();
 					
 				}
@@ -99,7 +99,7 @@ public class HeroQuest {
 		boolean turn = true;
 
 		for (HeroController heroController : heroesController) {
-			
+
 			if (heroController != null) {
 				turn = heroController.playTurn(map);
 			}

@@ -1,7 +1,5 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters.heroes.classes;
 
-import java.util.Scanner;
-
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
@@ -11,6 +9,8 @@ import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCar
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.AreaSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.SelfSpell;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.spells.Spell;
+
+import java.util.Scanner;
 
 public class SpellCaster extends Hero {
 
@@ -52,23 +52,23 @@ public class SpellCaster extends Hero {
 	public void addSpell(Spell newSpell) {
 		//Adiciona uma nova magia
 		Spell[] auxSpells;
-		
+
 		if (qtdSpells < spells.length) {
 			spells[qtdSpells] = newSpell;
 			qtdSpells++;
 		} else {
-		
+
 			auxSpells = new Spell[2 * spells.length];
-			
+
 			for (int i = 0; i < qtdSpells; i++) {
 				auxSpells[i] = spells[i];
 			}
-			
+
 			auxSpells[qtdSpells++] = newSpell;
 			spells = auxSpells;
-		
+
 		}
-		
+
 	}
 
 	private void removeSpell(int n) {
@@ -77,16 +77,16 @@ public class SpellCaster extends Hero {
 		}
 		qtdSpells--;
 	}
-	
+
 	public void removeSpell(Spell spell) {
 		for (int i = 0; i < qtdSpells - 1; i++) {
-			if(spells[i] == spell) {
+			if (spells[i] == spell) {
 				removeSpell(i);
 				break;
 			}
 		}
 	}
-	
+
 	public void castSpell(Controller target, SelfSpell spell, int dice) {
 		if (dice < getIntelligence()) {
 			spell.use(target);
@@ -94,7 +94,7 @@ public class SpellCaster extends Hero {
 			System.out.println("Mas erra!");
 		}
 	}
-	
+
 	public void castSpell(Map map, Controller target, SelfSpell spell, int dice) {
 		if (dice < getIntelligence()) {
 			spell.use(map, target);
@@ -102,7 +102,7 @@ public class SpellCaster extends Hero {
 			System.out.println("Mas erra!");
 		}
 	}
-	
+
 	public void castSpell(Map map, Controller target, SelfSpell spell, int dice, Scanner reader) {
 		if (dice < getIntelligence()) {
 			spell.use(map, target, reader);
@@ -118,9 +118,9 @@ public class SpellCaster extends Hero {
 			System.out.println("Mas erra!");
 		}
 	}
-	
+
 	public void castSpell(Map map, Controller caster, Controller target, Controller[] additionalTargets, Spell spell, int dice) {
-		AreaSpell areaSpell = (AreaSpell)spell;
+		AreaSpell areaSpell = (AreaSpell) spell;
 		if (dice < getIntelligence()) {
 			areaSpell.use(map, caster, target, additionalTargets);
 		} else {
@@ -131,7 +131,7 @@ public class SpellCaster extends Hero {
 	public Spell getSpell(int n) {
 		return spells[n];
 	}
-	
+
 	public int getQtdSpells() {
 		return qtdSpells;
 	}

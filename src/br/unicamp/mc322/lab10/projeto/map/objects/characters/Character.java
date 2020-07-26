@@ -240,7 +240,7 @@ public abstract class Character extends GameObject {
 	
 	private void refreshInventory() {
 		for (int i = 0; i < inventoryLoad; i++) {
-			if (inventory[i] != null && inventory[i] instanceof Attack) {
+			if (inventory[i] instanceof Attack) {
 				addToInventory(inventory[i]);
 				removeFromInventory(i);
 			}

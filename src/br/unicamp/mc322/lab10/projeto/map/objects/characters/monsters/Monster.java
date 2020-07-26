@@ -11,7 +11,7 @@ public class Monster extends Character {
 	public Monster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position) {
 		super(name, id, hp, mp, sprite, attackDices, defenseDices, position);
 	}
-	
+
 	public Monster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices, int defenseDices, Coordinate position, CanCarry[] initialEquipment) {
 		super(name, id, hp, mp, sprite, attackDices, defenseDices, position, initialEquipment);
 	}

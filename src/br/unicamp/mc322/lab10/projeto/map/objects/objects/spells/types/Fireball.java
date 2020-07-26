@@ -31,7 +31,7 @@ public class Fireball extends AreaSpell {
 	public void use(Map map, Controller caster, Controller mainTarget, Controller[] adjacentTargets) {
 		int damage = caster.rollMagicAttack(DICES);
 		int shields = mainTarget.rollDefenseDices();
-				
+
 		if (damage - shields > 0) {
 			mainTarget.getCharacter().takeDamage(damage - shields);
 			if (mainTarget.getCharacter().isDead()) {
@@ -42,20 +42,20 @@ public class Fireball extends AreaSpell {
 		}
 
 		if (adjacentTargets != null) {
-			damage = caster.rollMagicAttack(DICES/2);		//metade do dano
+			damage = caster.rollMagicAttack(DICES / 2);        //metade do dano
 
 			for (Controller adjacentTarget : adjacentTargets) {
-				
-				if(adjacentTarget != null) {
+
+				if (adjacentTarget != null) {
 					shields = adjacentTarget.rollDefenseDices();
-				
+
 					if (damage - shields > 0) {
 						adjacentTarget.getCharacter().takeDamage(damage - shields);
-						
+
 						if (adjacentTarget.getCharacter().isDead()) {
 							map.remove(adjacentTarget);
 						}
-					
+
 					} else {
 						System.out.println(adjacentTarget.getCharacter().getName() + " se defende sem tomar dano!");
 					}
@@ -67,6 +67,6 @@ public class Fireball extends AreaSpell {
 	@Override
 	public void use(Map map, Controller caster, Controller target) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

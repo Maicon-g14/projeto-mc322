@@ -41,11 +41,11 @@ public class StartEquipment {
 	public CanCarry[] getWizard() {
 		return wizardEquip;
 	}
-	
+
 	public Spell[] getElfSpells() {
 		return elfSpell;
 	}
-	
+
 	public Spell[] getWizardSpells() {
 		return wizardSpell;
 	}
@@ -77,5 +77,5 @@ public class StartEquipment {
 		wizardSpell[1] = new Teleport();
 		wizardSpell[2] = new Fireball();
 	}
-	
+
 }
