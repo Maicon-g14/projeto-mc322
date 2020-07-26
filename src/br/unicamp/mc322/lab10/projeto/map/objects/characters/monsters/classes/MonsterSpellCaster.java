@@ -18,30 +18,30 @@ public class MonsterSpellCaster extends Monster{
 	private Spell[] spells;
 	private int qtdSpells;
 	
-	public MonsterSpellCaster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices,
+	public MonsterSpellCaster(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int attackDices,
 			int defenseDices, Coordinate position) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices, position);
+		super(name, id, hp, intelligence, sprite, attackDices, defenseDices, position);
 		spells = null;
 		qtdSpells = 0;
 	}
 	
-	public MonsterSpellCaster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices,
+	public MonsterSpellCaster(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int attackDices,
 			int defenseDices, Coordinate position, CanCarry[] initialEquipment) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices, position, initialEquipment);
+		super(name, id, hp, intelligence, sprite, attackDices, defenseDices, position, initialEquipment);
 		spells = null;
 		qtdSpells = 0;
 	}
 
-	public MonsterSpellCaster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices,
+	public MonsterSpellCaster(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int attackDices,
 			   int defenseDices, Coordinate position, Spell[] spells) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices, position);
+		super(name, id, hp, intelligence, sprite, attackDices, defenseDices, position);
 		this.spells = spells;
 		qtdSpells = spells.length;
 	}
 	
-	public MonsterSpellCaster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices,
+	public MonsterSpellCaster(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int attackDices,
 				   int defenseDices, Coordinate position, CanCarry[] initialEquipment, Spell[] spells) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices, position, initialEquipment);
+		super(name, id, hp, intelligence, sprite, attackDices, defenseDices, position, initialEquipment);
 		this.spells = spells;
 		qtdSpells = spells.length;
 	}
@@ -70,7 +70,7 @@ public class MonsterSpellCaster extends Monster{
 		if (dice < getIntelligence()) {
 			spell.use(target);
 		} else {
-			System.out.println("Mas erra!");
+			System.out.println("Mas nao consegue completar o feitico!");
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class MonsterSpellCaster extends Monster{
 		if (dice < getIntelligence()) {
 			spell.use(map, target);
 		} else {
-			System.out.println("Mas erra!");
+			System.out.println("Mas parece que era um feitico avancado demais pra ele!");
 		}
 	}
 	
@@ -86,7 +86,7 @@ public class MonsterSpellCaster extends Monster{
 		if (dice < getIntelligence()) {
 			spell.use(map, target, reader);
 		} else {
-			System.out.println("Mas erra!");
+			System.out.println("Mas falha miseravelmente!");
 		}
 	}
 
@@ -94,7 +94,7 @@ public class MonsterSpellCaster extends Monster{
 		if (dice < getIntelligence()) {
 			spell.use(map, caster, target);
 		} else {
-			System.out.println("Mas erra!");
+			System.out.println("Mas nao tem sucesso!");
 		}
 	}
 	
@@ -103,7 +103,7 @@ public class MonsterSpellCaster extends Monster{
 		if (dice < getIntelligence()) {
 			areaSpell.use(map, caster, target, additionalTargets);
 		} else {
-			System.out.println("Mas erra!");
+			System.out.println("Mas falha!");
 		}
 	}
 

@@ -14,13 +14,13 @@ public class Skeleton extends Monster {
 	private static final int ATTACK_DICES = 2;
 	private static final int DEFENSE_DICES = 2;
 	private static final int HP = 4;
-	private static final int MP = 2;
+	private static final int INTELLIGENCE = 2;
 
 	public Skeleton(Coordinate position) {
-		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
+		super(NAME, ID, HP, INTELLIGENCE, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
 	}
 
 	public Skeleton(Coordinate position, CanCarry[] initialEquipment) {
-		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
+		super(NAME, ID, HP, INTELLIGENCE, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
 	}
 }

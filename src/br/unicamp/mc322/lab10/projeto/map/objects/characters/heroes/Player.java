@@ -13,14 +13,14 @@ import java.util.Scanner;
 
 public class Player extends HeroController {
 
-	public Player(Hero personagem, String name) {
-		super(personagem);
-		personagem.setPlayerName(name);
+	public Player(Hero person, String name) {
+		super(person);
+		person.setPlayerName(name);
 	}
 
 	@Override
 	public boolean playTurn(Map map) {
-		/* Turno de um personagem, caso ja nao esteja em movimento,
+		/* Turno de um person, caso ja nao esteja em movimento,
 		 * consiste em uma acao e a possibilidade de se movimentar */
 		boolean turn = true;
 		Scanner scanner = new Scanner(System.in);
@@ -50,7 +50,7 @@ public class Player extends HeroController {
 		Spell chosenSpell;
 
 		if (spells == null) {
-			System.out.println("Voce nao tem feiticos para usar!");
+			System.out.println("Voce nao sabe nenhum feitico!");
 			return null;
 		}
 
@@ -59,8 +59,9 @@ public class Player extends HeroController {
 		displaySpells();
 		System.out.println("Selecione o numero da magia: ");
 		n = scanner.nextInt();
+		n--;
 
-		if (n < caster.getQtdSpells()) {
+		if (n > 0 && n < caster.getQtdSpells()) {
 			chosenSpell = spells[n];
 			return chosenSpell;
 		}
@@ -74,7 +75,7 @@ public class Player extends HeroController {
 			SpellCaster caster = (SpellCaster)getCharacter();
 			spellList = caster.getSpells();
 			for(int i = 0; i < caster.getQtdSpells(); i++) {
-				System.out.println(i + ". " + spellList[i].getName());
+				System.out.println(i+1 + ". " + spellList[i].getName());
 			}
 		}
 	}
@@ -93,7 +94,7 @@ public class Player extends HeroController {
 			int dice = rollRedDices(1);		//rolagem do dado que define se a magia foi sucesso ou nao
 
 			if (spell.getSpellType() == SpellTypes.SUPPORT) {
-				System.out.println(getCharacter().getName() + " usa o feitico " + spell.getName() + " em si mesmo!");
+				System.out.println(getCharacter().getName() + " tenta usar o feitico " + spell.getName() + " em si mesmo!");
 				if (spell.getId() == GameTypeObjects.TELEPORT) {
 					caster.castSpell(map, this, (SelfSpell) spell, dice, scanner);
 				} else {
@@ -166,7 +167,7 @@ public class Player extends HeroController {
 	}
 
 	private void newDirection(Map map, Scanner scanner) {
-		/* Define direcao e distancia que o personagem deve andar ao longo dos trunos */
+		/* Define direcao e distancia que o person deve andar ao longo dos trunos */
 		readMovementDirection(scanner);
 
 		if (direction != Command.STOP) {

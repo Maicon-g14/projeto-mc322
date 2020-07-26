@@ -17,30 +17,30 @@ public class SpellCaster extends Hero {
 	private Spell[] spells;
 	private int qtdSpells;
 
-	public SpellCaster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices,
+	public SpellCaster(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int attackDices,
 					   int defenseDices) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices);
+		super(name, id, hp, intelligence, sprite, attackDices, defenseDices);
 		this.spells = null;
 		qtdSpells = 0;
 	}
 
-	public SpellCaster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices,
+	public SpellCaster(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int attackDices,
 					   int defenseDices, Spell[] spells) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices);
+		super(name, id, hp, intelligence, sprite, attackDices, defenseDices);
 		this.spells = spells;
 		qtdSpells = spells.length;
 	}
 
-	public SpellCaster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices,
+	public SpellCaster(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int attackDices,
 					   int defenseDices, CanCarry[] initialEquipment) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices, initialEquipment);
+		super(name, id, hp, intelligence, sprite, attackDices, defenseDices, initialEquipment);
 		this.spells = null;
 		qtdSpells = 0;
 	}
 
-	public SpellCaster(String name, GameTypeObjects id, int hp, int mp, Sprite sprite, int attackDices,
+	public SpellCaster(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int attackDices,
 					   int defenseDices, CanCarry[] initialEquipment, Spell[] spells) {
-		super(name, id, hp, mp, sprite, attackDices, defenseDices, initialEquipment);
+		super(name, id, hp, intelligence, sprite, attackDices, defenseDices, initialEquipment);
 		this.spells = spells;
 		qtdSpells = spells.length;
 	}

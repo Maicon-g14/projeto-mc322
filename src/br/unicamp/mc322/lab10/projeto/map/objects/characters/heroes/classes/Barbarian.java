@@ -11,16 +11,16 @@ public class Barbarian extends Hero {
 	private static final String NAME = "Barbarian";
 	private static final GameTypeObjects ID = GameTypeObjects.BARBARIAN;
 	private static final int HP = 8;
-	private static final int MP = 2;
+	private static final int INTELLIGENCE = 2;
 	private static final int ATTACK_DICES = 3;
 	private static final int DEFENSE_DICES = 2;
 
 	public Barbarian() {
-		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES);
+		super(NAME, ID, HP, INTELLIGENCE, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES);
 	}
 
 	public Barbarian(CanCarry[] initialEquipment) {
-		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, initialEquipment);
+		super(NAME, ID, HP, INTELLIGENCE, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, initialEquipment);
 	}
 
 }

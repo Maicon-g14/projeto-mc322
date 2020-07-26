@@ -17,29 +17,29 @@ import br.unicamp.mc322.lab10.projeto.map.objects.characters.Controller;
 public abstract class HeroController extends CommonControllers {
 
 	private static final boolean IS_MONSTER_HUNTING = false;
-	private Hero personagem;
+	private Hero person;
 
-	public HeroController(Hero personagem) {
-		this.personagem = personagem;
+	public HeroController(Hero person) {
+		this.person = person;
 	}
 
 	public int rollAttackDices() {
-		//rola todos os dados de ataque do personagem e retorna o numero de caveiras obtidas
-		return rollWhiteDices(personagem.getAttackDices(), WhiteDiceSides.ATTACK);
+		//rola todos os dados de ataque do person e retorna o numero de caveiras obtidas
+		return rollWhiteDices(person.getAttackDices(), WhiteDiceSides.ATTACK);
 	}
 
 	public int rollMagicDefenseDices() {
-		/*Rola dados brancos de acordo com a inteligencia do personagem e retorna o numero de escudos obtidos*/
-		return rollWhiteDices(personagem.getIntelligence(), WhiteDiceSides.HERO_DEFENSE);
+		/*Rola dados brancos de acordo com a inteligencia do person e retorna o numero de escudos obtidos*/
+		return rollWhiteDices(person.getIntelligence(), WhiteDiceSides.HERO_DEFENSE);
 	}
 
 	public int rollDefenseDices() {
-		//rola todos os dados de defesa do personagem e retorna o numero de escudos obtidos
-		return rollWhiteDices(personagem.getDefenseDices(), WhiteDiceSides.HERO_DEFENSE);
+		//rola todos os dados de defesa do person e retorna o numero de escudos obtidos
+		return rollWhiteDices(person.getDefenseDices(), WhiteDiceSides.HERO_DEFENSE);
 	}
 
 	public Hero getCharacter() {
-		return personagem;
+		return person;
 	}
 	
 	public void addToInventory(CanCarry item) {
@@ -59,10 +59,10 @@ public abstract class HeroController extends CommonControllers {
 	
 	protected void castAttack(Map map, Spell spell, int dice, SpellCaster caster) {
 		/* Lanca ataque magico no oponente se estiver no raio de ataque */
-		Controller target = map.findSpellTarget(personagem.getPosition(), spell.getReach(), IS_MONSTER_HUNTING);
+		Controller target = map.findSpellTarget(person.getPosition(), spell.getReach(), IS_MONSTER_HUNTING);
 
 		if (target != null) {        //cancela ataque caso nao tenha alvo
-			System.out.println(personagem.getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + "!");
+			System.out.println(person.getName() + " tenta lancar feitico " + spell.getName() + " em " + target.getCharacter().getName() + "!");
 			caster.castSpell(map, this, target, spell, dice);
 		}
 	}
@@ -70,10 +70,10 @@ public abstract class HeroController extends CommonControllers {
 	protected void castAreaAttack(Map map, AreaSpell spell, int dice, SpellCaster caster) {
 		/* Procura por alvo mais proximo dentro do raio dado, se encontrar,
 		 * ataca ele e os possiveis alvos adjacentes a ele com o feitico */
-		Controller target = map.findSpellTarget(personagem.getPosition(), spell.getReach(), IS_MONSTER_HUNTING);        //busca por alvo principal
+		Controller target = map.findSpellTarget(person.getPosition(), spell.getReach(), IS_MONSTER_HUNTING);        //busca por alvo principal
 
 		if (target != null) {        //cancela ataque caso nao tenha alvo
-			System.out.println(personagem.getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + " e em todos ao seu redor!");
+			System.out.println(person.getName() + " tenta lancar feitico " + spell.getName() + " em " + target.getCharacter().getName() + " e em todos ao seu redor!");
 			Controller[] additionalTargets = map.getAdjacentTargetsInDelimitedArea(target.getCharacter().getPosition(), spell.getAdjacentReach(), IS_MONSTER_HUNTING);        //busca por alvos secundarios em torno do principal na distancia especificada
 
 			caster.castSpell(map, this, target, additionalTargets, spell, dice);
@@ -105,7 +105,7 @@ public abstract class HeroController extends CommonControllers {
 			int dice = rollRedDices(1);		//rolagem do dado que define se a magia foi sucesso ou nao
 
 			if (spell.getSpellType() == SpellTypes.SUPPORT) {
-				System.out.println(getCharacter().getName() + " usa o feitico " + spell.getName() + " em si mesmo!");
+				System.out.println(getCharacter().getName() + " tenta usar o feitico " + spell.getName() + " em si mesmo!");
 				if (spell.getId() == GameTypeObjects.TELEPORT) {
 					caster.castSpell(map, this, (SelfSpell) spell, dice);
 				} else {

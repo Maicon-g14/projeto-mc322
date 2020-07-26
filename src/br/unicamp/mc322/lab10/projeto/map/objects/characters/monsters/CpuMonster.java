@@ -50,7 +50,7 @@ public class CpuMonster extends CommonControllers {
 		Controller target = map.findSpellTarget(getCharacter().getPosition(), spell.getReach(), IS_MONSTER_HUNTING);
 		
 		if (target != null) {		//cancela ataque caso nao tenha alvo
-			System.out.println(getCharacter().getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + "!");
+			System.out.println(getCharacter().getName() + " tenta lancar feitico " + spell.getName() + " em " + target.getCharacter().getName() + "!");
 			caster.castSpell(map, this, target, spell, dice);
 		}
 	}
@@ -61,7 +61,7 @@ public class CpuMonster extends CommonControllers {
 		Controller target = map.findSpellTarget(getCharacter().getPosition(), spell.getReach(), IS_MONSTER_HUNTING);		//busca por alvo principal
 		
 		if (target != null) {		//cancela ataque caso nao tenha alvo
-			System.out.println(getCharacter().getName() + " lanca feitico " + spell.getName() + " em " + target.getCharacter().getName() + " e em todos ao seu redor!");
+			System.out.println(getCharacter().getName() + " tenta lancar feitico " + spell.getName() + " em " + target.getCharacter().getName() + " e em todos ao seu redor!");
 			Controller[] additionalTargets = map.getAdjacentTargetsInDelimitedArea(target.getCharacter().getPosition(), spell.getAdjacentReach(), IS_MONSTER_HUNTING);		//busca por alvos secundarios em torno do principal na distancia especificada
 			
 			caster.castSpell(map, this, target, additionalTargets, spell, dice);
@@ -94,7 +94,7 @@ public class CpuMonster extends CommonControllers {
 			int dice = rollRedDices(1);		//rolagem do dado que define se a magia foi sucesso ou nao
 
 			if (spell.getSpellType() == SpellTypes.SUPPORT) {
-				System.out.println(getCharacter().getName() + " usa o feitico " + spell.getName() + " em si mesmo!");
+				System.out.println(getCharacter().getName() + " tenta usar o feitico " + spell.getName() + " em si mesmo!");
 				if (spell.getId() == GameTypeObjects.TELEPORT) {
 					caster.castSpell(map, this, (SelfSpell) spell, dice);
 				} else {

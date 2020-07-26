@@ -14,13 +14,13 @@ public class Goblin extends Monster {
 	private static final int ATTACK_DICES = 3;
 	private static final int DEFENSE_DICES = 1;
 	private static final int HP = 6;
-	private static final int MP = 1;
+	private static final int INTELLIGENCE = 1;
 
 	public Goblin(Coordinate position) {
-		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
+		super(NAME, ID, HP, INTELLIGENCE, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
 	}
 
 	public Goblin(Coordinate position, CanCarry[] initialEquipment) {
-		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
+		super(NAME, ID, HP, INTELLIGENCE, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
 	}
 }

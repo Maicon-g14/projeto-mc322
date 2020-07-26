@@ -13,13 +13,13 @@ public class MageSkeleton extends MonsterSpellCaster {
 	private static final int ATTACK_DICES = 2;
 	private static final int DEFENSE_DICES = 2;
 	private static final int HP = 3;
-	private static final int MP = 5;
+	private static final int INTELLIGENCE = 5;
 
 	public MageSkeleton(Coordinate position) {
-		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
+		super(NAME, ID, HP, INTELLIGENCE, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position);
 	}
 
 	public MageSkeleton(Coordinate position, CanCarry[] initialEquipment) {
-		super(NAME, ID, HP, MP, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
+		super(NAME, ID, HP, INTELLIGENCE, new Sprite(SPRITE), ATTACK_DICES, DEFENSE_DICES, position, initialEquipment);
 	}
 }

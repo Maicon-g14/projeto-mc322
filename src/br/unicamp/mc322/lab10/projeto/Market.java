@@ -40,7 +40,7 @@ public class Market {
 		int operation = INVALID_VALUE;
 		int itemNumber;
 
-		System.out.println("Seja bem vindo a nossa loja " + hero.getName() + "!");
+		System.out.println("===========================\nSeja bem vindo a nossa loja " + hero.getName() + "!\n===========================");
 
 		do {
 			try {
@@ -82,7 +82,7 @@ public class Market {
 
 		} while (operation != OUT);
 
-		System.out.println("Volte sempre!");
+		System.out.println("===========================\n          Volte sempre!\n===========================");
 
 	}
 
@@ -91,7 +91,7 @@ public class Market {
 		if (item > 0 && item <= marketItems.length) {
 			CanCarry chosen = marketItems[item - 1];
 			if (hero.buy(chosen)) {
-				System.out.println(chosen.getName() + " Adquirido!");
+				System.out.println("++++++++++++++++++++++++\n" + chosen.getName() + " Adquirido!\n++++++++++++++++++++++++");
 				money.addMoney(chosen.getPrice());
 			}
 
@@ -111,9 +111,9 @@ public class Market {
 
 			if (money.removeMoney(price)) {
 				hero.sell(item - 1);
-				System.out.println(inventoryItem.getName() + " vendido por " + price + "PO");
+				System.out.println("----------------------------\n"+inventoryItem.getName() + " vendido por " + price + "PO\n----------------------------");
 			} else {
-				throw new InsufficientFundsException("Nao tenho fundos para aceitar tal oferta!");
+				throw new InsufficientFundsException("Infelizmente nao tenho como pagar por tal item!");
 			}
 
 		} else if (item < 0 || item > hero.getInventoryLoad()) {
@@ -124,7 +124,7 @@ public class Market {
 
 	private void showMarketItems(Hero hero) {
 		/* Exibe os itens da loja e seus respectivos pre�os */
-		System.out.println("Fundos atuais da loja: " + money.getMoney() + "PO\nDinheiro do player: " + hero.showMoney() + "PO\nItems disponiveis para venda:");
+		System.out.println("Fundos atuais da loja: " + money.getMoney() + "PO\nDinheiro do player: " + hero.showMoney() + "PO\n+-+-+-+-+ Items disponiveis para venda: +-+-+-+-+");
 
 		for (int i = 0; i < marketItems.length; i++) {
 			System.out.println(i + 1 + ". " + marketItems[i].getName() + "   " + marketItems[i].getPrice() + "PO");
@@ -135,10 +135,10 @@ public class Market {
 		/* Exibe os itens do inventario e seus respectivos pre�os */
 		CanCarry[] inventory = hero.getInventory();
 
-		System.out.println("Fundos atuais da loja: " + money.getMoney() + "PO\nDinheiro do player: " + hero.showMoney() + "PO\nSeus items:");
+		System.out.println("Fundos atuais da loja: " + money.getMoney() + "PO\nDinheiro do player: " + hero.showMoney() + "PO\n+-+-+-+-+ Seus items: +-+-+-+-+");
 
 		for (int i = 0; i < hero.getInventoryLoad(); i++) {
-			System.out.println(i + 1 + ". " + inventory[i].getName() + "   " + inventory[i].getPrice() + "PO");
+			System.out.println(i + 1 + ". " + inventory[i].getName() + "   " + (inventory[i].getPrice()-5) + "PO");
 		}
 	}
 }

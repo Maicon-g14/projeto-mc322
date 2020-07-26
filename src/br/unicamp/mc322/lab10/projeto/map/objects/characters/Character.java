@@ -26,7 +26,7 @@ public abstract class Character extends GameObject {
 
 	private int hp;
 	private int maxHP;
-	private int intellect;
+	private int intelligence;
 	private int atkValue;
 	private int defValue;
 	protected CanCarry[] inventory;        //todos os seres vivos precisam de inventario, pois � onde fica o drop deles que deve cair no chao caso morrerem
@@ -41,25 +41,25 @@ public abstract class Character extends GameObject {
 
 	private static final int INVENTORY_MAX_AMOUNT = 30;
 
-	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int atkValue, int defValue) {
+	public Character(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int atkValue, int defValue) {
 		super(name, sprite, id);
-		setCharacterStandarts(hp, intellect, atkValue, defValue);
+		setCharacterStandarts(hp, intelligence, atkValue, defValue);
 	}
 
-	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int atkValue, int defValue, CanCarry[] initialEquipment) {
+	public Character(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int atkValue, int defValue, CanCarry[] initialEquipment) {
 		super(name, sprite, id);
-		setCharacterStandarts(hp, intellect, atkValue, defValue);
+		setCharacterStandarts(hp, intelligence, atkValue, defValue);
 		addToInventory(initialEquipment);
 	}
 
-	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int atkValue, int defValue, Coordinate position) {
+	public Character(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int atkValue, int defValue, Coordinate position) {
 		super(name, sprite, id, position);
-		setCharacterStandarts(hp, intellect, atkValue, defValue);
+		setCharacterStandarts(hp, intelligence, atkValue, defValue);
 	}
 
-	public Character(String name, GameTypeObjects id, int hp, int intellect, Sprite sprite, int atkValue, int defValue, Coordinate position, CanCarry[] initialEquipment) {
+	public Character(String name, GameTypeObjects id, int hp, int intelligence, Sprite sprite, int atkValue, int defValue, Coordinate position, CanCarry[] initialEquipment) {
 		super(name, sprite, id, position);
-		setCharacterStandarts(hp, intellect, atkValue, defValue);
+		setCharacterStandarts(hp, intelligence, atkValue, defValue);
 		addToInventory(initialEquipment);
 	}
 
@@ -132,7 +132,7 @@ public abstract class Character extends GameObject {
 
 	public int getIntelligence() {
 		/* Retorna inteligencia do personagem, usado pra lancar magias */
-		return intellect;
+		return intelligence;
 	}
 
 	public int getHp() {
@@ -416,9 +416,9 @@ public abstract class Character extends GameObject {
 		
 	}
 
-	private void setCharacterStandarts(int hp, int intellect, int atkValue, int defValue) {
+	private void setCharacterStandarts(int hp, int intelligence, int atkValue, int defValue) {
 		this.hp = hp;
-		this.intellect = intellect;
+		this.intelligence = intelligence;
 		this.atkValue = atkValue;
 		this.defValue = defValue;
 		this.finalAttack = atkValue;
