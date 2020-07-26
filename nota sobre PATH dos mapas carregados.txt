@@ -1,0 +1,10 @@
+﻿nos arquivos RandomMap.java e PresetMap.java pode acontecer um erro por causa da diferença como
+o SO lê o PATH, assim, o modo atual esta configurado para rodar no Eclipse do Windows com
+
+PATH = "./src\\br\\unicamp\\mc322\\lab10\\projeto\\map\\constructor\\"
+
+porem no Linux (Ubuntu) pode ser necessario alterar para
+
+PATH = "./src/br/unicamp/mc322/lab10/projeto/map/constructor/"
+
+nos dois arquivos citados.

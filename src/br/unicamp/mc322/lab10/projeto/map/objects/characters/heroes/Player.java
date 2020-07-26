@@ -61,7 +61,7 @@ public class Player extends HeroController {
 		n = scanner.nextInt();
 		n--;
 
-		if (n > 0 && n < caster.getQtdSpells()) {
+		if (n >= 0 && n < caster.getQtdSpells()) {
 			chosenSpell = spells[n];
 			return chosenSpell;
 		}
