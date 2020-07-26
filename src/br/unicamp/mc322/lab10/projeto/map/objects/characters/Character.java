@@ -1,7 +1,6 @@
 package br.unicamp.mc322.lab10.projeto.map.objects.characters;
 
 import br.unicamp.mc322.lab10.projeto.exceptions.FullInventoryException;
-import br.unicamp.mc322.lab10.projeto.exceptions.InsufficientFundsException;
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.Map;
 import br.unicamp.mc322.lab10.projeto.map.objects.Command;

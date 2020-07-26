@@ -3,7 +3,6 @@ package br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.classes;
 import br.unicamp.mc322.lab10.projeto.map.Coordinate;
 import br.unicamp.mc322.lab10.projeto.map.objects.GameTypeObjects;
 import br.unicamp.mc322.lab10.projeto.map.objects.Sprite;
-import br.unicamp.mc322.lab10.projeto.map.objects.characters.monsters.Monster;
 import br.unicamp.mc322.lab10.projeto.map.objects.objects.inventory.items.CanCarry;
 
 public class MageSkeleton extends MonsterSpellCaster {

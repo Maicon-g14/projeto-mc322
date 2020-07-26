@@ -732,17 +732,6 @@ public class Map {
 
 		return chest;
 	}
-
-	private void hideMap() {		//ver se eh necessario
-		/* Oculta todas as sprites do mapa */
-		for (int y = 0; y < mapsHeight; y++) {
-			for (int z = 0; z < mapsWidth; z++) {
-				if (maps[currentMap][y][z] != null) {
-					maps[currentMap][y][z].hideSprite();
-				}
-			}
-		}
-	}
 	
 	private void resetHeroesPosition() {
 		/* Ao subir ou decer um andar, move os player para o entorno da escada no centro da sala*/
@@ -769,7 +758,6 @@ public class Map {
 			maps[currentMap][j][k - 1].setPosition(new Coordinate(j, k - 1));
 		}
 		
-		//hideMap();
 	}
 
 	private void trap(Hero hero, Coordinate position) {
